@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <utility>
 
-// #include "imsrg/quantum_numbers/coupling/total_ang_mom.h"
+#include "imsrg/quantum_numbers/coupling/jj.h"
 
 #include "tests/catch.hpp"
 
