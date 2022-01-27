@@ -5,6 +5,7 @@
 #include <utility>
 
 #include "imsrg/quantum_numbers/coupling/jj.h"
+#include "imsrg/quantum_numbers/parity.h"
 
 #include "tests/catch.hpp"
 
@@ -196,5 +197,21 @@ TEST_CASE("Test >=.") {
 
       REQUIRE((l1 >= l2) == (imsrg::JJ(x1) >= imsrg::JJ(x2)));
     }
+  }
+}
+
+TEST_CASE("Test even parity.") {
+  for (const auto& x : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}) {
+    imsrg::OrbitalAngMom l(2 * x);
+
+    REQUIRE(l.Parity() == imsrg::Parity::Even());
+  }
+}
+
+TEST_CASE("Test odd parity.") {
+  for (const auto& x : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}) {
+    imsrg::OrbitalAngMom l(2 * x + 1);
+
+    REQUIRE(l.Parity() == imsrg::Parity::Odd());
   }
 }

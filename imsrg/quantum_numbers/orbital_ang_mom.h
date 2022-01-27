@@ -7,6 +7,7 @@
 #include "lib/GSL/include/gsl/assert"
 
 #include "imsrg/quantum_numbers/coupling/jj.h"
+#include "imsrg/quantum_numbers/parity.h"
 
 namespace imsrg {
 class OrbitalAngMom {
@@ -24,6 +25,12 @@ class OrbitalAngMom {
 
   int AsInt() const { return l_; }
   JJ AsJJ() const { return JJ(2 * l_); }
+  imsrg::Parity Parity() const {
+    if (l_ % 2 == 0) {
+      return Parity::Even();
+    }
+    return Parity::Odd();
+  }
 
   void swap(OrbitalAngMom& other) noexcept {
     using std::swap;
