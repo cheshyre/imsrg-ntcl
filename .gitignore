@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+# VS code
+.vscode/
+
+# External libs
+lib/src
+lib/build
+
+# Build files
+build/
+tests/build/
