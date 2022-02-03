@@ -9,11 +9,11 @@ cd lib/src/wigxjpf/
 # Clean directory if necessary
 make clean
 # Make library locally
-make
+make HAVE_QUADMATH=0
 # Copy libs to destination
-cp -r lib/* $DEST_DIR/lib/
-# Copy headers to destination
-cp -r inc/* $DEST_DIR/include/
+cp -r lib/libwigxjpf.* $DEST_DIR/lib/
+# Copy only relevant header to destination
+cp -r inc/wigxjpf.h $DEST_DIR/include/
 # Clean up build directory
 make clean
 # Create empty file to indicate that abseil was installed
