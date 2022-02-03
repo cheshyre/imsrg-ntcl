@@ -4,7 +4,7 @@
 
 #include <utility>
 
-#include "lib/GSL/include/gsl/assert"
+#include "gsl/assert"
 
 #include "imsrg/quantum_numbers/coupling/jj.h"
 

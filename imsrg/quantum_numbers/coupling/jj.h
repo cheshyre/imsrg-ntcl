@@ -4,7 +4,7 @@
 
 #include <utility>
 
-#include "lib/GSL/include/gsl/assert"
+#include "gsl/assert"
 
 namespace imsrg {
 class JJ {
