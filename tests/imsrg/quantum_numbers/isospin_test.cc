@@ -63,7 +63,7 @@ TEST_CASE("Test move contructor.") {
   }
 }
 
-TEST_CASE("Test copy attignment.") {
+TEST_CASE("Test copy assignment.") {
   REQUIRE(std::is_copy_assignable<imsrg::Isospin>::value);
 
   for (const auto& tt : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}) {
@@ -78,7 +78,7 @@ TEST_CASE("Test copy attignment.") {
   }
 }
 
-TEST_CASE("Test move attignment.") {
+TEST_CASE("Test move assignment.") {
   REQUIRE(std::is_nothrow_move_assignable<imsrg::Isospin>::value);
 
   for (const auto& tt : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}) {
