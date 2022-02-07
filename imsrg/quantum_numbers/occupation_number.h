@@ -25,6 +25,7 @@ class OccupationNumber {
   // Default copy, move, and destructor
 
   double AsDouble() const { return n_; }
+  double NBarAsDouble() const { return 1.0 - n_; }
   bool IsHole() const { return n_ == 1.0; }
   bool IsParticle() const { return n_ == 0.0; }
   bool IsValence() const { return n_ > 0.0 && n_ < 1.0; }

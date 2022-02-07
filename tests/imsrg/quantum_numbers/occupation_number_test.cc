@@ -12,6 +12,7 @@ TEST_CASE("Test double constructor and AsDouble().") {
     imsrg::OccupationNumber n_o(n);
 
     REQUIRE(n_o.AsDouble() == n);
+    REQUIRE(n_o.NBarAsDouble() == 1.0 - n);
   }
 }
 
@@ -33,6 +34,8 @@ TEST_CASE("Test 0 occupation is particle.") {
   REQUIRE(!n_o.IsHole());
   REQUIRE(n_o.IsParticle());
   REQUIRE(!n_o.IsValence());
+
+  REQUIRE(n_o.NBarAsDouble() == 1.0);
 }
 
 TEST_CASE("Test fractional occupation is valence.") {
@@ -51,6 +54,8 @@ TEST_CASE("Test 1 occupation is hole.") {
   REQUIRE(n_o.IsHole());
   REQUIRE(!n_o.IsParticle());
   REQUIRE(!n_o.IsValence());
+
+  REQUIRE(n_o.NBarAsDouble() == 0.0);
 }
 
 TEST_CASE("Test hole static factory constructor.") {
