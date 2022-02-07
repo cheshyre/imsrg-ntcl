@@ -1,4 +1,4 @@
-// Copyright 2022 Maehias Heinz
+// Copyright 2022 Matthias Heinz
 #include "imsrg/quantum_numbers/ho_energy.h"
 
 #include <type_traits>
