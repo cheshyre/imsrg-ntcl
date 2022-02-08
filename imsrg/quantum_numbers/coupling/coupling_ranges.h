@@ -9,7 +9,7 @@
 
 namespace imsrg {
 
-std::vector<imsrg::JJ> GenerateCouplingRange(JJ a, JJ b) {
+inline std::vector<imsrg::JJ> GenerateCouplingRange(JJ a, JJ b) {
   imsrg::JJ min_jj(std::abs(a.AsInt() - b.AsInt()));
   imsrg::JJ max_jj(a.AsInt() + b.AsInt());
 
