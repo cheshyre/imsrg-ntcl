@@ -25,6 +25,9 @@ class JJ_P_M_TT {
   Parity P() const { return p_; }
   IsospinProj M_TT() const { return m_tt_; }
 
+  template <typename H>
+  friend H AbslHashValue(H h, const JJ_P_M_TT& jjpmtt);
+
   void swap(JJ_P_M_TT& other) noexcept {
     using std::swap;
     swap(jj_, other.jj_);
@@ -41,6 +44,11 @@ inline bool operator!=(const JJ_P_M_TT& a, const JJ_P_M_TT& b) {
 }
 
 inline void swap(JJ_P_M_TT& a, JJ_P_M_TT& b) noexcept { a.swap(b); }
+
+template <typename H>
+H AbslHashValue(H h, const JJ_P_M_TT& jjpmtt) {
+  return H::combine(std::move(h), jjpmtt.jj_, jjpmtt.p_, jjpmtt.m_tt_);
+}
 
 }  // namespace imsrg
 

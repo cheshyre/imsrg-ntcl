@@ -28,6 +28,11 @@ class TotalAngMom {
     using std::swap;
     swap(jj_, other.jj_);
   }
+
+  template <typename H>
+  friend H AbslHashValue(H h, const TotalAngMom& o) {
+    return H::combine(std::move(h), o.jj_);
+  }
 };
 
 inline void swap(TotalAngMom& a, TotalAngMom& b) noexcept { a.swap(b); }

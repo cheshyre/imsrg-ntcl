@@ -5,6 +5,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "absl/hash/hash_testing.h"
+
 #include "imsrg/quantum_numbers/coupling/m_jj.h"
 
 #include "tests/catch.hpp"
@@ -230,4 +232,11 @@ TEST_CASE("Test operator-.") {
       REQUIRE(m_tt4.AsInt() == x2 - x1);
     }
   }
+}
+
+TEST_CASE("Test proper abseil hash.") {
+  using imsrg::IsospinProj;
+  REQUIRE(absl::VerifyTypeImplementsAbslHashCorrectly(
+      {IsospinProj(-3), IsospinProj(-2), IsospinProj(-1), IsospinProj(0),
+       IsospinProj(1), IsospinProj(2), IsospinProj(3)}));
 }

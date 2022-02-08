@@ -35,6 +35,11 @@ class IsospinProj {
     using std::swap;
     swap(m_tt_, other.m_tt_);
   }
+
+  template <typename H>
+  friend H AbslHashValue(H h, const IsospinProj& o) {
+    return H::combine(std::move(h), o.m_tt_);
+  }
 };
 
 inline void swap(IsospinProj& a, IsospinProj& b) noexcept { a.swap(b); }

@@ -4,6 +4,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "absl/hash/hash_testing.h"
+
 #include "imsrg/quantum_numbers/coupling/jj.h"
 
 #include "tests/catch.hpp"
@@ -190,4 +192,17 @@ TEST_CASE("Test >=.") {
       REQUIRE((jj1 >= jj2) == (imsrg::JJ(x1) >= imsrg::JJ(x2)));
     }
   }
+}
+
+TEST_CASE("Test proper abseil hash.") {
+  using imsrg::TotalAngMom;
+  REQUIRE(absl::VerifyTypeImplementsAbslHashCorrectly(
+      {TotalAngMom(0),  TotalAngMom(1),  TotalAngMom(2),  TotalAngMom(3),
+       TotalAngMom(4),  TotalAngMom(5),  TotalAngMom(6),  TotalAngMom(7),
+       TotalAngMom(8),  TotalAngMom(9),  TotalAngMom(10), TotalAngMom(11),
+       TotalAngMom(12), TotalAngMom(13), TotalAngMom(14), TotalAngMom(15),
+       TotalAngMom(16), TotalAngMom(17), TotalAngMom(18), TotalAngMom(19),
+       TotalAngMom(20), TotalAngMom(21), TotalAngMom(22), TotalAngMom(23),
+       TotalAngMom(24), TotalAngMom(25), TotalAngMom(26), TotalAngMom(27),
+       TotalAngMom(28), TotalAngMom(29), TotalAngMom(30)}));
 }

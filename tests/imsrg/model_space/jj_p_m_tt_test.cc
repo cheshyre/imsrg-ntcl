@@ -4,6 +4,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "absl/hash/hash_testing.h"
+
 #include "imsrg/quantum_numbers/isospin_projection.h"
 #include "imsrg/quantum_numbers/parity.h"
 #include "imsrg/quantum_numbers/total_ang_mom.h"
@@ -348,4 +350,39 @@ TEST_CASE("Test !=.") {
       }
     }
   }
+}
+
+TEST_CASE("Test proper abseil hash.") {
+  using imsrg::JJ_P_M_TT;
+  REQUIRE(absl::VerifyTypeImplementsAbslHashCorrectly(
+      {JJ_P_M_TT(TotalAngMom(0), Parity::Even(), IsospinProj(-2)),
+       JJ_P_M_TT(TotalAngMom(0), Parity::Even(), IsospinProj(-1)),
+       JJ_P_M_TT(TotalAngMom(0), Parity::Even(), IsospinProj(0)),
+       JJ_P_M_TT(TotalAngMom(0), Parity::Even(), IsospinProj(1)),
+       JJ_P_M_TT(TotalAngMom(0), Parity::Even(), IsospinProj(2)),
+       JJ_P_M_TT(TotalAngMom(1), Parity::Even(), IsospinProj(-2)),
+       JJ_P_M_TT(TotalAngMom(1), Parity::Even(), IsospinProj(-1)),
+       JJ_P_M_TT(TotalAngMom(1), Parity::Even(), IsospinProj(0)),
+       JJ_P_M_TT(TotalAngMom(1), Parity::Even(), IsospinProj(1)),
+       JJ_P_M_TT(TotalAngMom(1), Parity::Even(), IsospinProj(2)),
+       JJ_P_M_TT(TotalAngMom(2), Parity::Even(), IsospinProj(-2)),
+       JJ_P_M_TT(TotalAngMom(2), Parity::Even(), IsospinProj(-1)),
+       JJ_P_M_TT(TotalAngMom(2), Parity::Even(), IsospinProj(0)),
+       JJ_P_M_TT(TotalAngMom(2), Parity::Even(), IsospinProj(1)),
+       JJ_P_M_TT(TotalAngMom(2), Parity::Even(), IsospinProj(2)),
+       JJ_P_M_TT(TotalAngMom(3), Parity::Even(), IsospinProj(-2)),
+       JJ_P_M_TT(TotalAngMom(3), Parity::Even(), IsospinProj(-1)),
+       JJ_P_M_TT(TotalAngMom(3), Parity::Even(), IsospinProj(0)),
+       JJ_P_M_TT(TotalAngMom(3), Parity::Even(), IsospinProj(1)),
+       JJ_P_M_TT(TotalAngMom(3), Parity::Even(), IsospinProj(2)),
+       JJ_P_M_TT(TotalAngMom(4), Parity::Even(), IsospinProj(-2)),
+       JJ_P_M_TT(TotalAngMom(4), Parity::Even(), IsospinProj(-1)),
+       JJ_P_M_TT(TotalAngMom(4), Parity::Even(), IsospinProj(0)),
+       JJ_P_M_TT(TotalAngMom(4), Parity::Even(), IsospinProj(1)),
+       JJ_P_M_TT(TotalAngMom(4), Parity::Even(), IsospinProj(2)),
+       JJ_P_M_TT(TotalAngMom(5), Parity::Even(), IsospinProj(-2)),
+       JJ_P_M_TT(TotalAngMom(5), Parity::Even(), IsospinProj(-1)),
+       JJ_P_M_TT(TotalAngMom(5), Parity::Even(), IsospinProj(0)),
+       JJ_P_M_TT(TotalAngMom(5), Parity::Even(), IsospinProj(1)),
+       JJ_P_M_TT(TotalAngMom(5), Parity::Even(), IsospinProj(2))}));
 }

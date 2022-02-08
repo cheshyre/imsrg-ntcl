@@ -33,6 +33,11 @@ class Parity {
     using std::swap;
     swap(p_, other.p_);
   }
+
+  template <typename H>
+  friend H AbslHashValue(H h, const Parity& o) {
+    return H::combine(std::move(h), o.p_);
+  }
 };
 
 inline void swap(Parity& a, Parity& b) noexcept { a.swap(b); }
