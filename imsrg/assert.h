@@ -30,10 +30,9 @@ inline void CheckPrecondition(bool val, const char* file, int line,
                               const char* assertion) {
   if constexpr (imsrg::kRuntimePreconditionCheck) {
     if (!val) {
-      spdlog::error("Precondition failed (line {} in {}): {}", line, file,
-                    assertion);
+      spdlog::error("Precondition failed ({}:{}): {}", file, line, assertion);
       throw imsrg::PreconditionError(fmt::format(
-          "Precondition failed (line {} in {}): {}", line, file, assertion));
+          "Precondition failed ({}:{}): {}", file, line, assertion));
     }
   }
 }
@@ -42,10 +41,9 @@ inline void CheckPostcondition(bool val, const char* file, int line,
                                const char* assertion) {
   if constexpr (imsrg::kRuntimePostconditionCheck) {
     if (!val) {
-      spdlog::error("Postcondition failed (line {} in {}): {}", line, file,
-                    assertion);
-      throw imsrg::PreconditionError(fmt::format(
-          "Postcondition failed (line {} in {}): {}", line, file, assertion));
+      spdlog::error("Postcondition failed ({}:{}): {}", file, line, assertion);
+      throw imsrg::PostconditionError(fmt::format(
+          "Postcondition failed ({}:{}): {}", file, line, assertion));
     }
   }
 }
