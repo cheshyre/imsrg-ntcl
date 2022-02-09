@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "absl/container/flat_hash_map.h"
-#include "fmt/core.h"
 
 #include "imsrg/model_space/basis/sp_channel_key.h"
 #include "imsrg/model_space/jj_p_m_tt.h"
