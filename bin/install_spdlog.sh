@@ -7,7 +7,7 @@ rm -rf build
 # Make and enter build directory
 mkdir build && cd build
 # Configure cmake to build spdlog here and target install directory
-cmake -DCMAKE_INSTALL_PREFIX:PATH=$DEST_DIR ..
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$DEST_DIR -DCMAKE_CXX_STANDARD=17 ..
 # Build and install
 cmake --build . --target install --config Release
 # Clean up build directory
