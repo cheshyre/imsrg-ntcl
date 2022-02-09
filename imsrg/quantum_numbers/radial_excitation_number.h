@@ -4,7 +4,7 @@
 
 #include <utility>
 
-#include "gsl/assert"
+#include "imsrg/assert.h"
 
 namespace imsrg {
 class RadialExcitationNumber {

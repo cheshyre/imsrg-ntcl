@@ -5,8 +5,7 @@
 #include <utility>
 #include <vector>
 
-#include "gsl/assert"
-
+#include "imsrg/assert.h"
 #include "imsrg/quantum_numbers/orbital_ang_mom.h"
 #include "imsrg/quantum_numbers/radial_excitation_number.h"
 

@@ -4,8 +4,7 @@
 
 #include <utility>
 
-#include "gsl/assert"
-
+#include "imsrg/assert.h"
 #include "imsrg/quantum_numbers/coupling/jj.h"
 #include "imsrg/quantum_numbers/parity.h"
 
