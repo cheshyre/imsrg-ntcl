@@ -32,15 +32,7 @@ class HOEnergy {
 
   int AsInt() const { return e_; }
 
-  std::vector<N_L> GenerateSubShellQuantumNumbers() const {
-    std::vector<N_L> shells;
-    shells.reserve(e_ / 2 + 1);
-    for (int n = 0; n <= e_ / 2; n++) {
-      int l = e_ - 2 * n;
-      shells.push_back({RadialExcitationNumber(n), OrbitalAngMom(l)});
-    }
-    return shells;
-  }
+  std::vector<N_L> GenerateSubShellQuantumNumbers() const;
 
   void swap(HOEnergy& other) noexcept {
     using std::swap;
@@ -64,16 +56,7 @@ inline bool operator>=(HOEnergy a, HOEnergy b) {
   return a.AsInt() >= b.AsInt();
 }
 
-inline std::vector<HOEnergy> GenerateHOEnergyShells(HOEnergy emax) {
-  std::vector<HOEnergy> shells;
-  shells.reserve(emax.AsInt() + 1);
-
-  for (int e = 0; HOEnergy(e) <= emax; e++) {
-    shells.push_back(HOEnergy(e));
-  }
-
-  return shells;
-}
+std::vector<HOEnergy> GenerateHOEnergyShells(HOEnergy emax);
 
 }  // namespace imsrg
 
