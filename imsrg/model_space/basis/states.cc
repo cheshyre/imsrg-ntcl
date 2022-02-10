@@ -29,15 +29,6 @@ imsrg::JJ_P_M_TT SPState::GetJJ_P_M_TT() const {
   return imsrg::JJ_P_M_TT(jj_, l_.Parity(), m_tt_);
 }
 
-void SPState::swap(SPState& other) noexcept {
-  using std::swap;
-  swap(n_, other.n_);
-  swap(l_, other.l_);
-  swap(jj_, other.jj_);
-  swap(m_tt_, other.m_tt_);
-  swap(occ_, other.occ_);
-}
-
 bool operator==(const SPState& a, const SPState& b) {
   return (a.RadialN() == b.RadialN()) && (a.L() == b.L()) &&
          (a.JJ() == b.JJ()) && (a.M_TT() == b.M_TT()) &&

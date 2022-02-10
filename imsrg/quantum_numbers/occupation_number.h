@@ -10,9 +10,6 @@
 namespace imsrg {
 
 class OccupationNumber {
- private:
-  double n_;
-
  public:
   explicit OccupationNumber(double n) : n_(n) {
     Expects(n >= 0.0);
@@ -34,6 +31,9 @@ class OccupationNumber {
     using std::swap;
     swap(n_, other.n_);
   }
+
+ private:
+  double n_;
 };
 
 inline void swap(OccupationNumber& a, OccupationNumber& b) noexcept {

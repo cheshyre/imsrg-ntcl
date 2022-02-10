@@ -16,13 +16,6 @@ SPChannel::SPChannel(SPChannelKey chan_key,
   // chan_key)
 }
 
-void SPChannel::swap(SPChannel& other) noexcept {
-  using std::swap;
-  swap(chan_key_, other.chan_key_);
-  swap(basis_ptr_, other.basis_ptr_);
-  swap(size_, other.size_);
-}
-
 bool operator==(const SPChannel& a, const SPChannel& b) {
   return a.Index() == b.Index();
 }

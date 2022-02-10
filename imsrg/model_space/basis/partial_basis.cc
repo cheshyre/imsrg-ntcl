@@ -20,14 +20,6 @@ SPPartialBasis::SPPartialBasis(const std::vector<SPState>& states)
       occs_(imsrg::detail::ExtractOccsFromStatesVector(states)),
       occs_bar_(imsrg::detail::ExtractOccsBarFromStatesVector(states)) {}
 
-void SPPartialBasis::swap(SPPartialBasis& other) noexcept {
-  using std::swap;
-
-  swap(states_, other.states_);
-  swap(occs_, other.occs_);
-  swap(occs_bar_, other.occs_bar_);
-}
-
 absl::flat_hash_map<imsrg::JJ_P_M_TT, std::shared_ptr<const SPPartialBasis>>
 PartitionSPFullBasisIntoSPPartialBases(const imsrg::SPFullBasis& full_basis) {
   absl::flat_hash_set<imsrg::JJ_P_M_TT> jjpmtts;

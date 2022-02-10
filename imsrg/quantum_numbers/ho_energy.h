@@ -18,9 +18,6 @@ struct N_L {
 };
 
 class HOEnergy {
- private:
-  int e_;
-
  public:
   explicit HOEnergy(int e) : e_(e) { Expects(e >= 0); }
   explicit HOEnergy(OrbitalAngMom l, RadialExcitationNumber n)
@@ -38,6 +35,9 @@ class HOEnergy {
     using std::swap;
     swap(e_, other.e_);
   }
+
+ private:
+  int e_;
 };
 
 inline void swap(HOEnergy& a, HOEnergy& b) noexcept { a.swap(b); }

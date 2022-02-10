@@ -14,13 +14,6 @@
 
 namespace imsrg {
 class SPState {
- private:
-  imsrg::RadialExcitationNumber n_;
-  imsrg::OrbitalAngMom l_;
-  imsrg::TotalAngMom jj_;
-  imsrg::IsospinProj m_tt_;
-  imsrg::OccupationNumber occ_;
-
  public:
   // Construct single-particle state
   explicit SPState(imsrg::RadialExcitationNumber n, imsrg::OrbitalAngMom l,
@@ -49,7 +42,21 @@ class SPState {
 
   imsrg::JJ_P_M_TT GetJJ_P_M_TT() const;
 
-  void swap(SPState& other) noexcept;
+  void swap(SPState& other) noexcept {
+    using std::swap;
+    swap(n_, other.n_);
+    swap(l_, other.l_);
+    swap(jj_, other.jj_);
+    swap(m_tt_, other.m_tt_);
+    swap(occ_, other.occ_);
+  }
+
+ private:
+  imsrg::RadialExcitationNumber n_;
+  imsrg::OrbitalAngMom l_;
+  imsrg::TotalAngMom jj_;
+  imsrg::IsospinProj m_tt_;
+  imsrg::OccupationNumber occ_;
 };
 
 inline void swap(SPState& a, SPState& b) noexcept { a.swap(b); }

@@ -10,9 +10,6 @@
 
 namespace imsrg {
 class OrbitalAngMom {
- private:
-  int l_;
-
  public:
   explicit OrbitalAngMom(int l) : l_(l) { Expects(l >= 0); }
   explicit OrbitalAngMom(JJ ll) : OrbitalAngMom(ll.AsInt() / 2) {
@@ -35,6 +32,9 @@ class OrbitalAngMom {
     using std::swap;
     swap(l_, other.l_);
   }
+
+ private:
+  int l_;
 };
 
 inline void swap(OrbitalAngMom& a, OrbitalAngMom& b) noexcept { a.swap(b); }

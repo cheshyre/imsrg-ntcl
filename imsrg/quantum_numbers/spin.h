@@ -9,9 +9,6 @@
 
 namespace imsrg {
 class Spin {
- private:
-  int jj_;
-
  public:
   explicit Spin(int jj) : jj_(jj) { Expects(jj >= 0); }
   explicit Spin(JJ jj) : Spin(jj.AsInt()) { Expects(jj >= JJ(0)); }
@@ -27,6 +24,9 @@ class Spin {
     using std::swap;
     swap(jj_, other.jj_);
   }
+
+ private:
+  int jj_;
 };
 
 inline void swap(Spin& a, Spin& b) noexcept { a.swap(b); }

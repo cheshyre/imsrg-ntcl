@@ -41,14 +41,6 @@ SPChannelKey::SPChannelKey(TotalAngMom jj, Parity p, IsospinProj m_tt)
 SPChannelKey::SPChannelKey(JJ_P_M_TT jjpmtt)
     : SPChannelKey(jjpmtt.JJ(), jjpmtt.P(), jjpmtt.M_TT()) {}
 
-void SPChannelKey::swap(SPChannelKey& other) noexcept {
-  using std::swap;
-  swap(jj_, other.jj_);
-  swap(p_, other.p_);
-  swap(m_tt_, other.m_tt_);
-  swap(index_, other.index_);
-}
-
 bool operator==(const SPChannelKey& a, const SPChannelKey& b) {
   return a.Index() == b.Index();
 }

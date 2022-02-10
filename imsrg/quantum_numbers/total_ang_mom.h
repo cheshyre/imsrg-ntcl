@@ -9,9 +9,6 @@
 
 namespace imsrg {
 class TotalAngMom {
- private:
-  int jj_;
-
  public:
   explicit TotalAngMom(int jj) : jj_(jj) { Expects(jj >= 0); }
   explicit TotalAngMom(JJ jj) : TotalAngMom(jj.AsInt()) {
@@ -32,6 +29,9 @@ class TotalAngMom {
   friend H AbslHashValue(H h, const TotalAngMom& o) {
     return H::combine(std::move(h), o.jj_);
   }
+
+ private:
+  int jj_;
 };
 
 inline void swap(TotalAngMom& a, TotalAngMom& b) noexcept { a.swap(b); }

@@ -15,14 +15,6 @@
 namespace imsrg {
 
 class SPPartialBasis {
- private:
-  std::vector<SPState> states_;
-  // Vector of occupations for fast access
-  std::vector<double> occs_;
-  // Vector of inverse occupations for fast access
-  std::vector<double> occs_bar_;
-  // TODO(mheinz): add lookup table for states to indices
-
  public:
   explicit SPPartialBasis(const std::vector<SPState>& states);
 
@@ -32,7 +24,20 @@ class SPPartialBasis {
 
   SPState at(std::size_t index) const { return states_[index]; }
 
-  void swap(SPPartialBasis& other) noexcept;
+  void swap(SPPartialBasis& other) noexcept {
+    using std::swap;
+    swap(states_, other.states_);
+    swap(occs_, other.occs_);
+    swap(occs_bar_, other.occs_bar_);
+  }
+
+ private:
+  std::vector<SPState> states_;
+  // Vector of occupations for fast access
+  std::vector<double> occs_;
+  // Vector of inverse occupations for fast access
+  std::vector<double> occs_bar_;
+  // TODO(mheinz): add lookup table for states to indices
 };
 
 inline void swap(SPPartialBasis& a, SPPartialBasis& b) noexcept { a.swap(b); }

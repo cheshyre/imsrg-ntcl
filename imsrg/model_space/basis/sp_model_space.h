@@ -11,9 +11,6 @@
 namespace imsrg {
 
 class SPModelSpace {
- private:
-  std::vector<SPChannel> chans_;
-
  public:
   // Make model space from vector of *unique* channels
   explicit SPModelSpace(const std::vector<SPChannel>& chans);
@@ -26,6 +23,9 @@ class SPModelSpace {
     using std::swap;
     swap(chans_, other.chans_);
   }
+
+ private:
+  std::vector<SPChannel> chans_;
 };
 
 inline void swap(SPModelSpace& a, SPModelSpace& b) noexcept { a.swap(b); }

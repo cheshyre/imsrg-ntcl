@@ -8,9 +8,6 @@
 
 namespace imsrg {
 class RadialExcitationNumber {
- private:
-  int n_;
-
  public:
   explicit RadialExcitationNumber(int n) : n_(n) { Expects(n >= 0); }
 
@@ -22,6 +19,9 @@ class RadialExcitationNumber {
     using std::swap;
     swap(n_, other.n_);
   }
+
+ private:
+  int n_;
 };
 
 inline void swap(RadialExcitationNumber& a,

@@ -8,9 +8,6 @@
 
 namespace imsrg {
 class JJ {
- private:
-  int jj_;
-
  public:
   /**
    * @brief Construct new JJ (2 * j, where j is angular momentum) from integer.
@@ -27,6 +24,9 @@ class JJ {
     using std::swap;
     swap(jj_, other.jj_);
   }
+
+ private:
+  int jj_;
 };
 
 inline void swap(JJ& a, JJ& b) noexcept { a.swap(b); }

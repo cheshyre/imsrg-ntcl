@@ -11,11 +11,6 @@
 namespace imsrg {
 
 class SPChannel {
- private:
-  SPChannelKey chan_key_;
-  std::shared_ptr<const SPPartialBasis> basis_ptr_;
-  std::size_t size_;
-
  public:
   explicit SPChannel(SPChannelKey chan_key,
                      std::shared_ptr<const SPPartialBasis> basis_ptr);
@@ -28,7 +23,17 @@ class SPChannel {
   // Get size of basis
   std::size_t size() const { return size_; }
 
-  void swap(SPChannel& other) noexcept;
+  void swap(SPChannel& other) noexcept {
+    using std::swap;
+    swap(chan_key_, other.chan_key_);
+    swap(basis_ptr_, other.basis_ptr_);
+    swap(size_, other.size_);
+  }
+
+ private:
+  SPChannelKey chan_key_;
+  std::shared_ptr<const SPPartialBasis> basis_ptr_;
+  std::size_t size_;
 };
 
 inline void swap(SPChannel& a, SPChannel& b) noexcept { a.swap(b); }

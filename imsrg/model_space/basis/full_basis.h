@@ -11,16 +11,13 @@
 namespace imsrg {
 
 class SPFullBasis {
- private:
-  std::vector<SPState> states_;
-
  public:
-  explicit SPFullBasis(const std::vector<SPState>& states) : states_(states) {}
-
   static SPFullBasis FromEMax(HOEnergy emax);
 
   // TODO(mheinz): implement factory method that includes reference state
   // information
+
+  explicit SPFullBasis(const std::vector<SPState>& states) : states_(states) {}
 
   // Default copy, move, and destructor
 
@@ -30,9 +27,11 @@ class SPFullBasis {
 
   void swap(SPFullBasis& other) noexcept {
     using std::swap;
-
     swap(states_, other.states_);
   }
+
+ private:
+  std::vector<SPState> states_;
 };
 
 inline void swap(SPFullBasis& a, SPFullBasis& b) noexcept { a.swap(b); }
