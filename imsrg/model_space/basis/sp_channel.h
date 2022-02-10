@@ -18,12 +18,7 @@ class SPChannel {
 
  public:
   explicit SPChannel(SPChannelKey chan_key,
-                     std::shared_ptr<const SPPartialBasis> basis_ptr)
-      : chan_key_(chan_key), basis_ptr_(basis_ptr), size_(basis_ptr_->size()) {
-    // TODO(mheinz) add a nullptr check
-    // Expects(all states in partial basis to have same JJ, P, and T as
-    // chan_key)
-  }
+                     std::shared_ptr<const SPPartialBasis> basis_ptr);
 
   TotalAngMom JJ() const { return chan_key_.JJ(); }
   Parity P() const { return chan_key_.P(); }
@@ -33,28 +28,17 @@ class SPChannel {
   // Get size of basis
   std::size_t size() const { return size_; }
 
-  void swap(SPChannel& other) noexcept {
-    using std::swap;
-    swap(chan_key_, other.chan_key_);
-    swap(basis_ptr_, other.basis_ptr_);
-    swap(size_, other.size_);
-  }
+  void swap(SPChannel& other) noexcept;
 };
 
 inline void swap(SPChannel& a, SPChannel& b) noexcept { a.swap(b); }
 
-inline bool operator==(const SPChannel& a, const SPChannel& b) {
-  return a.Index() == b.Index();
-}
+bool operator==(const SPChannel& a, const SPChannel& b);
 
-inline bool operator!=(const SPChannel& a, const SPChannel& b) {
-  return a.Index() != b.Index();
-}
+bool operator!=(const SPChannel& a, const SPChannel& b);
 
 // Defined for sorting purposes
-inline bool operator<(const SPChannel& a, const SPChannel& b) {
-  return a.Index() < b.Index();
-}
+bool operator<(const SPChannel& a, const SPChannel& b);
 
 }  // namespace imsrg
 
