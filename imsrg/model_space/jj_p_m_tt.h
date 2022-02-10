@@ -16,8 +16,7 @@ class JJ_P_M_TT {
   IsospinProj m_tt_;
 
  public:
-  explicit JJ_P_M_TT(TotalAngMom jj, Parity p, IsospinProj m_tt)
-      : jj_(jj), p_(p), m_tt_(m_tt) {}
+  explicit JJ_P_M_TT(TotalAngMom jj, Parity p, IsospinProj m_tt);
 
   // Default copy, move, and destructor
 
@@ -25,12 +24,7 @@ class JJ_P_M_TT {
   Parity P() const { return p_; }
   IsospinProj M_TT() const { return m_tt_; }
 
-  void swap(JJ_P_M_TT& other) noexcept {
-    using std::swap;
-    swap(jj_, other.jj_);
-    swap(p_, other.p_);
-    swap(m_tt_, other.m_tt_);
-  }
+  void swap(JJ_P_M_TT& other) noexcept;
 
   template <typename H>
   friend H AbslHashValue(H h, const JJ_P_M_TT& jjpmtt) {
@@ -38,14 +32,10 @@ class JJ_P_M_TT {
   }
 };
 
-inline bool operator==(const JJ_P_M_TT& a, const JJ_P_M_TT& b) {
-  return (a.JJ() == b.JJ()) && (a.P() == b.P()) && (a.M_TT() == b.M_TT());
-}
-inline bool operator!=(const JJ_P_M_TT& a, const JJ_P_M_TT& b) {
-  return !(a == b);
-}
-
 inline void swap(JJ_P_M_TT& a, JJ_P_M_TT& b) noexcept { a.swap(b); }
+
+bool operator==(const JJ_P_M_TT& a, const JJ_P_M_TT& b);
+bool operator!=(const JJ_P_M_TT& a, const JJ_P_M_TT& b);
 
 }  // namespace imsrg
 
