@@ -16,12 +16,7 @@ class SPModelSpace {
 
  public:
   // Make model space from vector of *unique* channels
-  explicit SPModelSpace(const std::vector<SPChannel>& chans) : chans_(chans) {
-    // Expects(chans are unique)
-    // Sort channels in order of increasing index
-    std::sort(chans_.begin(), chans_.end());
-    // Ensures(chans are sorted)
-  }
+  explicit SPModelSpace(const std::vector<SPChannel>& chans);
 
   // Default copy, move, and dtor
 
