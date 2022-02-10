@@ -25,14 +25,7 @@ inline std::vector<imsrg::JJ> GenerateCouplingRange(JJ a, JJ b) {
 template <typename T3, typename T1, typename T2>
 std::vector<T3> GenerateCouplingRange(T1 a, T2 b) {
   std::vector<imsrg::JJ> jjs = GenerateCouplingRange(a.AsJJ(), b.AsJJ());
-  std::vector<T3> result;
-  result.reserve(jjs.size());
-
-  for (const auto& jj : jjs) {
-    result.push_back(T3(jj));
-  }
-
-  return result;
+  return std::vector<T3>(jjs.begin(), jjs.end());
 }
 
 }  // namespace imsrg
