@@ -25,15 +25,11 @@ class SPState {
   // Construct single-particle state
   explicit SPState(imsrg::RadialExcitationNumber n, imsrg::OrbitalAngMom l,
                    imsrg::TotalAngMom jj, imsrg::IsospinProj m_tt,
-                   imsrg::OccupationNumber occ)
-      : n_(n), l_(l), jj_(jj), m_tt_(m_tt), occ_(occ) {
-    // Possible check for |2 * l - jj| == 1
-  }
+                   imsrg::OccupationNumber occ);
 
   // Construct particle (occ=0) state (at least initially)
   explicit SPState(imsrg::RadialExcitationNumber n, imsrg::OrbitalAngMom l,
-                   imsrg::TotalAngMom jj, imsrg::IsospinProj m_tt)
-      : SPState(n, l, jj, m_tt, imsrg::OccupationNumber::Particle()) {}
+                   imsrg::TotalAngMom jj, imsrg::IsospinProj m_tt);
 
   // Default copy, move, and destructor
 
@@ -47,31 +43,18 @@ class SPState {
 
   imsrg::OccupationNumber OccupationN() const { return occ_; }
 
-  imsrg::HOEnergy E() const { return imsrg::HOEnergy(n_, l_); }
+  imsrg::HOEnergy E() const;
 
   void SetOccupationN(imsrg::OccupationNumber occ) { occ_ = occ; }
 
-  imsrg::JJ_P_M_TT GetJJ_P_M_TT() const {
-    return imsrg::JJ_P_M_TT(jj_, l_.Parity(), m_tt_);
-  }
+  imsrg::JJ_P_M_TT GetJJ_P_M_TT() const;
 
-  void swap(SPState& other) noexcept {
-    using std::swap;
-    swap(n_, other.n_);
-    swap(l_, other.l_);
-    swap(jj_, other.jj_);
-    swap(m_tt_, other.m_tt_);
-    swap(occ_, other.occ_);
-  }
+  void swap(SPState& other) noexcept;
 };
 
 inline void swap(SPState& a, SPState& b) noexcept { a.swap(b); }
 
-inline bool operator==(const SPState& a, const SPState& b) {
-  return (a.RadialN() == b.RadialN()) && (a.L() == b.L()) &&
-         (a.JJ() == b.JJ()) && (a.M_TT() == b.M_TT()) &&
-         (a.OccupationN() == b.OccupationN());
-}
+bool operator==(const SPState& a, const SPState& b);
 
 inline bool operator!=(const SPState& a, const SPState& b) { return !(a == b); }
 
