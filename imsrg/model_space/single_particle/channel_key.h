@@ -1,6 +1,6 @@
 // Copyright 2022 Matthias Heinz
-#ifndef IMSRG_MODEL_SPACE_BASIS_SP_CHANNEL_KEY_H_
-#define IMSRG_MODEL_SPACE_BASIS_SP_CHANNEL_KEY_H_
+#ifndef IMSRG_MODEL_SPACE_SINGLE_PARTICLE_CHANNEL_KEY_H_
+#define IMSRG_MODEL_SPACE_SINGLE_PARTICLE_CHANNEL_KEY_H_
 
 #include <utility>
 
@@ -58,4 +58,4 @@ bool operator>=(const SPChannelKey& a, const SPChannelKey& b);
 
 }  // namespace imsrg
 
-#endif  // IMSRG_MODEL_SPACE_BASIS_SP_CHANNEL_KEY_H_
+#endif  // IMSRG_MODEL_SPACE_SINGLE_PARTICLE_CHANNEL_KEY_H_

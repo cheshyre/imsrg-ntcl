@@ -1,12 +1,12 @@
 // Copyright 2022 Matthias Heinz
-#ifndef IMSRG_MODEL_SPACE_BASIS_SP_MODEL_SPACE_H_
-#define IMSRG_MODEL_SPACE_BASIS_SP_MODEL_SPACE_H_
+#ifndef IMSRG_MODEL_SPACE_SINGLE_PARTICLE_MODEL_SPACE_H_
+#define IMSRG_MODEL_SPACE_SINGLE_PARTICLE_MODEL_SPACE_H_
 
 #include <algorithm>
 #include <utility>
 #include <vector>
 
-#include "imsrg/model_space/basis/sp_channel.h"
+#include "imsrg/model_space/single_particle/channel.h"
 
 namespace imsrg {
 
@@ -32,4 +32,4 @@ inline void swap(SPModelSpace& a, SPModelSpace& b) noexcept { a.swap(b); }
 
 }  // namespace imsrg
 
-#endif  // IMSRG_MODEL_SPACE_BASIS_SP_MODEL_SPACE_H_
+#endif  // IMSRG_MODEL_SPACE_SINGLE_PARTICLE_MODEL_SPACE_H_

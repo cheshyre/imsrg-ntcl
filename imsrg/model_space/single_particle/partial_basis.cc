@@ -1,5 +1,5 @@
 // Copyright 2022 Matthias Heinz
-#include "imsrg/model_space/basis/partial_basis.h"
+#include "imsrg/model_space/single_particle/partial_basis.h"
 
 #include <utility>
 #include <vector>

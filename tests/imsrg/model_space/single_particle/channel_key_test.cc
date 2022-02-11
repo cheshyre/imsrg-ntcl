@@ -1,5 +1,5 @@
 // Copyright 2022 Matthias Heinz
-#include "imsrg/model_space/basis/sp_channel_key.h"
+#include "imsrg/model_space/single_particle/channel_key.h"
 
 #include <vector>
 

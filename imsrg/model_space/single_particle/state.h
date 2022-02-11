@@ -1,6 +1,6 @@
 // Copyright 2022 Matthias Heinz
-#ifndef IMSRG_MODEL_SPACE_BASIS_STATES_H_
-#define IMSRG_MODEL_SPACE_BASIS_STATES_H_
+#ifndef IMSRG_MODEL_SPACE_SINGLE_PARTICLE_STATE_H_
+#define IMSRG_MODEL_SPACE_SINGLE_PARTICLE_STATE_H_
 
 #include <utility>
 
@@ -67,4 +67,4 @@ inline bool operator!=(const SPState& a, const SPState& b) { return !(a == b); }
 
 }  // namespace imsrg
 
-#endif  // IMSRG_MODEL_SPACE_BASIS_STATES_H_
+#endif  // IMSRG_MODEL_SPACE_SINGLE_PARTICLE_STATE_H_

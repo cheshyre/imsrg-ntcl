@@ -1,10 +1,9 @@
 // Copyright 2022 Matthias Heinz
-#include "imsrg/model_space/basis/partial_basis.h"
+#include "imsrg/model_space/single_particle/full_basis.h"
 
 #include <vector>
 
-#include "imsrg/model_space/basis/full_basis.h"
-#include "imsrg/model_space/basis/states.h"
+#include "imsrg/model_space/single_particle/state.h"
 #include "imsrg/quantum_numbers/ho_energy.h"
 #include "imsrg/quantum_numbers/isospin_projection.h"
 #include "imsrg/quantum_numbers/occupation_number.h"
@@ -13,8 +12,7 @@
 
 #include "tests/catch.hpp"
 
-static bool IsStateInBasis(imsrg::SPState s,
-                           const imsrg::SPPartialBasis& basis) {
+static bool IsStateInBasis(imsrg::SPState s, const imsrg::SPFullBasis& basis) {
   for (std::size_t i = 0; i < basis.size(); i++) {
     if (basis.at(i) == s) {
       return true;
@@ -54,7 +52,7 @@ TEST_CASE(
 
   std::vector<SPState> states = {p_0s1_hole, n_0p1_hole};
 
-  imsrg::SPPartialBasis basis(states);
+  imsrg::SPFullBasis basis(states);
 
   REQUIRE(basis.size() == 2);
 
@@ -66,27 +64,27 @@ TEST_CASE(
 }
 
 TEST_CASE("Test copy contructor.") {
-  REQUIRE(std::is_copy_constructible<imsrg::SPPartialBasis>::value);
+  REQUIRE(std::is_copy_constructible<imsrg::SPFullBasis>::value);
 }
 
 TEST_CASE("Test move contructor.") {
-  REQUIRE(std::is_nothrow_move_constructible<imsrg::SPPartialBasis>::value);
+  REQUIRE(std::is_nothrow_move_constructible<imsrg::SPFullBasis>::value);
 }
 
 TEST_CASE("Test copy assignment.") {
-  REQUIRE(std::is_copy_assignable<imsrg::SPPartialBasis>::value);
+  REQUIRE(std::is_copy_assignable<imsrg::SPFullBasis>::value);
 }
 
 TEST_CASE("Test move assignment.") {
-  REQUIRE(std::is_nothrow_move_assignable<imsrg::SPPartialBasis>::value);
+  REQUIRE(std::is_nothrow_move_assignable<imsrg::SPFullBasis>::value);
 }
 
 TEST_CASE("Test destructor.") {
-  REQUIRE(std::is_nothrow_destructible<imsrg::SPPartialBasis>::value);
+  REQUIRE(std::is_nothrow_destructible<imsrg::SPFullBasis>::value);
 }
 
 TEST_CASE("Test member swap.") {
-  REQUIRE(std::is_nothrow_swappable<imsrg::SPPartialBasis>::value);
+  REQUIRE(std::is_nothrow_swappable<imsrg::SPFullBasis>::value);
 
   using imsrg::IsospinProj;
   using imsrg::OccupationNumber;
@@ -118,8 +116,8 @@ TEST_CASE("Test member swap.") {
   std::vector<SPState> states1 = {p_0s1_hole, n_0p1_hole};
   std::vector<SPState> states2 = {p_0d5_hole, p_2d5_part, n_3f7_part};
 
-  imsrg::SPPartialBasis basis1(states1);
-  imsrg::SPPartialBasis basis2(states2);
+  imsrg::SPFullBasis basis1(states1);
+  imsrg::SPFullBasis basis2(states2);
 
   REQUIRE(basis1.size() == states1.size());
   REQUIRE(basis2.size() == states2.size());
@@ -144,7 +142,7 @@ TEST_CASE("Test member swap.") {
 
 TEST_CASE("Test nonmember swap.") {
   using std::swap;
-  REQUIRE(std::is_nothrow_swappable<imsrg::SPPartialBasis>::value);
+  REQUIRE(std::is_nothrow_swappable<imsrg::SPFullBasis>::value);
 
   using imsrg::IsospinProj;
   using imsrg::OccupationNumber;
@@ -176,8 +174,8 @@ TEST_CASE("Test nonmember swap.") {
   std::vector<SPState> states1 = {p_0s1_hole, n_0p1_hole};
   std::vector<SPState> states2 = {p_0d5_hole, p_2d5_part, n_3f7_part};
 
-  imsrg::SPPartialBasis basis1(states1);
-  imsrg::SPPartialBasis basis2(states2);
+  imsrg::SPFullBasis basis1(states1);
+  imsrg::SPFullBasis basis2(states2);
 
   REQUIRE(basis1.size() == states1.size());
   REQUIRE(basis2.size() == states2.size());
@@ -200,78 +198,123 @@ TEST_CASE("Test nonmember swap.") {
   }
 }
 
-TEST_CASE("Test emax=2 SPFullBasis partitioning.") {
-  imsrg::HOEnergy emax(2);
-  auto full_basis = imsrg::SPFullBasis::FromEMax(emax);
-  auto partitioning = imsrg::PartitionSPFullBasisIntoSPPartialBases(full_basis);
+TEST_CASE("Test FromEMax factory method (no occs, emax=2).") {
+  using imsrg::HOEnergy;
+  using imsrg::IsospinProj;
+  using imsrg::OccupationNumber;
+  using imsrg::OrbitalAngMom;
+  using imsrg::RadialExcitationNumber;
+  using imsrg::SPState;
+  using imsrg::TotalAngMom;
 
-  for (std::size_t i = 0; i < full_basis.size(); i++) {
-    auto x = full_basis.at(i);
-    auto x_jjpmtt = x.GetJJ_P_M_TT();
+  HOEnergy emax(2);
 
-    for (const auto& [jjpmtt, p_basis_ptr] : partitioning) {
-      if (x_jjpmtt == jjpmtt) {
-        REQUIRE(IsStateInBasis(x, *p_basis_ptr));
-      } else {
-        REQUIRE_FALSE(IsStateInBasis(x, *p_basis_ptr));
-      }
-    }
+  std::vector<SPState> sampled_emax2_states = {
+      SPState(RadialExcitationNumber(0), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Proton(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(0), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Neutron(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(1), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Proton(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(1), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Neutron(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(0), OrbitalAngMom(2), TotalAngMom(3),
+              IsospinProj::Proton(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(0), OrbitalAngMom(2), TotalAngMom(3),
+              IsospinProj::Neutron(), OccupationNumber::Particle())};
+
+  std::vector<SPState> sampled_non_emax2_states = {
+      SPState(RadialExcitationNumber(2), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Proton(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(2), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Neutron(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(2), OrbitalAngMom(5), TotalAngMom(1),
+              IsospinProj::Proton(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(2), OrbitalAngMom(5), TotalAngMom(1),
+              IsospinProj::Neutron(), OccupationNumber::Particle())};
+
+  auto basis = imsrg::SPFullBasis::FromEMax(emax);
+
+  REQUIRE(basis.size() == 12);
+
+  for (const auto& x : sampled_emax2_states) {
+    REQUIRE(IsStateInBasis(x, basis));
+  }
+
+  for (const auto& x : sampled_non_emax2_states) {
+    REQUIRE_FALSE(IsStateInBasis(x, basis));
   }
 }
 
-TEST_CASE("Test emax=4 SPFullBasis partitioning.") {
-  imsrg::HOEnergy emax(4);
-  auto full_basis = imsrg::SPFullBasis::FromEMax(emax);
-  auto partitioning = imsrg::PartitionSPFullBasisIntoSPPartialBases(full_basis);
+TEST_CASE("Test FromEMax factory method (no occs, emax=4).") {
+  using imsrg::HOEnergy;
+  using imsrg::IsospinProj;
+  using imsrg::OccupationNumber;
+  using imsrg::OrbitalAngMom;
+  using imsrg::RadialExcitationNumber;
+  using imsrg::SPState;
+  using imsrg::TotalAngMom;
 
-  for (std::size_t i = 0; i < full_basis.size(); i++) {
-    auto x = full_basis.at(i);
-    auto x_jjpmtt = x.GetJJ_P_M_TT();
+  HOEnergy emax(4);
 
-    for (const auto& [jjpmtt, p_basis_ptr] : partitioning) {
-      if (x_jjpmtt == jjpmtt) {
-        REQUIRE(IsStateInBasis(x, *p_basis_ptr));
-      } else {
-        REQUIRE_FALSE(IsStateInBasis(x, *p_basis_ptr));
-      }
-    }
+  std::vector<SPState> sampled_emax2_states = {
+      SPState(RadialExcitationNumber(0), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Proton(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(0), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Neutron(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(1), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Proton(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(1), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Neutron(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(0), OrbitalAngMom(2), TotalAngMom(3),
+              IsospinProj::Proton(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(0), OrbitalAngMom(2), TotalAngMom(3),
+              IsospinProj::Neutron(), OccupationNumber::Particle())};
+
+  std::vector<SPState> sampled_emax4_states = {
+      SPState(RadialExcitationNumber(2), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Proton(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(2), OrbitalAngMom(0), TotalAngMom(1),
+              IsospinProj::Neutron(), OccupationNumber::Particle())};
+
+  std::vector<SPState> sampled_non_emax4_states = {
+      SPState(RadialExcitationNumber(2), OrbitalAngMom(5), TotalAngMom(1),
+              IsospinProj::Proton(), OccupationNumber::Particle()),
+      SPState(RadialExcitationNumber(2), OrbitalAngMom(5), TotalAngMom(1),
+              IsospinProj::Neutron(), OccupationNumber::Particle())};
+
+  auto basis = imsrg::SPFullBasis::FromEMax(emax);
+
+  REQUIRE(basis.size() == 30);
+
+  for (const auto& x : sampled_emax2_states) {
+    REQUIRE(IsStateInBasis(x, basis));
+  }
+  for (const auto& x : sampled_emax4_states) {
+    REQUIRE(IsStateInBasis(x, basis));
+  }
+
+  for (const auto& x : sampled_non_emax4_states) {
+    REQUIRE_FALSE(IsStateInBasis(x, basis));
   }
 }
 
-TEST_CASE("Test emax=6 SPFullBasis partitioning.") {
-  imsrg::HOEnergy emax(6);
-  auto full_basis = imsrg::SPFullBasis::FromEMax(emax);
-  auto partitioning = imsrg::PartitionSPFullBasisIntoSPPartialBases(full_basis);
+TEST_CASE("Test FromEMax factory method (no occs, emax=6).") {
+  using imsrg::HOEnergy;
 
-  for (std::size_t i = 0; i < full_basis.size(); i++) {
-    auto x = full_basis.at(i);
-    auto x_jjpmtt = x.GetJJ_P_M_TT();
+  HOEnergy emax(6);
 
-    for (const auto& [jjpmtt, p_basis_ptr] : partitioning) {
-      if (x_jjpmtt == jjpmtt) {
-        REQUIRE(IsStateInBasis(x, *p_basis_ptr));
-      } else {
-        REQUIRE_FALSE(IsStateInBasis(x, *p_basis_ptr));
-      }
-    }
-  }
+  auto basis = imsrg::SPFullBasis::FromEMax(emax);
+
+  REQUIRE(basis.size() == 56);
 }
 
-TEST_CASE("Test emax=8 SPFullBasis partitioning.") {
-  imsrg::HOEnergy emax(8);
-  auto full_basis = imsrg::SPFullBasis::FromEMax(emax);
-  auto partitioning = imsrg::PartitionSPFullBasisIntoSPPartialBases(full_basis);
+TEST_CASE("Test FromEMax factory method (no occs, emax=8).") {
+  using imsrg::HOEnergy;
 
-  for (std::size_t i = 0; i < full_basis.size(); i++) {
-    auto x = full_basis.at(i);
-    auto x_jjpmtt = x.GetJJ_P_M_TT();
+  HOEnergy emax(8);
 
-    for (const auto& [jjpmtt, p_basis_ptr] : partitioning) {
-      if (x_jjpmtt == jjpmtt) {
-        REQUIRE(IsStateInBasis(x, *p_basis_ptr));
-      } else {
-        REQUIRE_FALSE(IsStateInBasis(x, *p_basis_ptr));
-      }
-    }
-  }
+  auto basis = imsrg::SPFullBasis::FromEMax(emax);
+
+  REQUIRE(basis.size() == 90);
 }

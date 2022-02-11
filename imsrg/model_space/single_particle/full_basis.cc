@@ -1,9 +1,9 @@
 // Copyright 2022 Matthias Heinz
-#include "imsrg/model_space/basis/full_basis.h"
+#include "imsrg/model_space/single_particle/full_basis.h"
 
 #include <vector>
 
-#include "imsrg/model_space/basis/states.h"
+#include "imsrg/model_space/single_particle/state.h"
 #include "imsrg/quantum_numbers/coupling/coupling_ranges.h"
 #include "imsrg/quantum_numbers/ho_energy.h"
 #include "imsrg/quantum_numbers/isospin_projection.h"

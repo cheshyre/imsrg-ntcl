@@ -1,11 +1,11 @@
 // Copyright 2022 Matthias Heinz
-#include "imsrg/model_space/basis/sp_channel.h"
+#include "imsrg/model_space/single_particle/channel.h"
 
 #include <memory>
 #include <utility>
 
-#include "imsrg/model_space/basis/partial_basis.h"
-#include "imsrg/model_space/basis/sp_channel_key.h"
+#include "imsrg/model_space/single_particle/channel_key.h"
+#include "imsrg/model_space/single_particle/partial_basis.h"
 
 namespace imsrg {
 SPChannel::SPChannel(SPChannelKey chan_key,

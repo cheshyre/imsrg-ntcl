@@ -1,12 +1,12 @@
 // Copyright 2022 Matthias Heinz
-#ifndef IMSRG_MODEL_SPACE_BASIS_SP_CHANNEL_H_
-#define IMSRG_MODEL_SPACE_BASIS_SP_CHANNEL_H_
+#ifndef IMSRG_MODEL_SPACE_SINGLE_PARTICLE_CHANNEL_H_
+#define IMSRG_MODEL_SPACE_SINGLE_PARTICLE_CHANNEL_H_
 
 #include <memory>
 #include <utility>
 
-#include "imsrg/model_space/basis/partial_basis.h"
-#include "imsrg/model_space/basis/sp_channel_key.h"
+#include "imsrg/model_space/single_particle/channel_key.h"
+#include "imsrg/model_space/single_particle/partial_basis.h"
 
 namespace imsrg {
 
@@ -49,4 +49,4 @@ bool operator<(const SPChannel& a, const SPChannel& b);
 
 }  // namespace imsrg
 
-#endif  //  IMSRG_MODEL_SPACE_BASIS_SP_CHANNEL_H_
+#endif  // IMSRG_MODEL_SPACE_SINGLE_PARTICLE_CHANNEL_H_

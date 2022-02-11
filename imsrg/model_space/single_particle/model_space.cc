@@ -1,11 +1,11 @@
 // Copyright 2022 Matthias Heinz
-#include "imsrg/model_space/basis/sp_model_space.h"
+#include "imsrg/model_space/single_particle/model_space.h"
 
 #include <algorithm>
 #include <utility>
 #include <vector>
 
-#include "imsrg/model_space/basis/sp_channel.h"
+#include "imsrg/model_space/single_particle/channel.h"
 
 namespace imsrg {
 SPModelSpace::SPModelSpace(const std::vector<SPChannel>& chans)

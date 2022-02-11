@@ -1,12 +1,12 @@
 // Copyright 2022 Matthias Heinz
-#include "imsrg/model_space/basis/sp_model_space.h"
+#include "imsrg/model_space/single_particle/model_space.h"
 
 #include <memory>
 #include <vector>
 
-#include "imsrg/model_space/basis/sp_channel.h"
-#include "imsrg/model_space/basis/sp_channel_key.h"
 #include "imsrg/model_space/jj_p_m_tt.h"
+#include "imsrg/model_space/single_particle/channel.h"
+#include "imsrg/model_space/single_particle/channel_key.h"
 #include "imsrg/quantum_numbers/isospin_projection.h"
 #include "imsrg/quantum_numbers/parity.h"
 #include "imsrg/quantum_numbers/total_ang_mom.h"

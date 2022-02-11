@@ -1,5 +1,5 @@
 // Copyright 2022 Matthias Heinz
-#include "imsrg/model_space/basis/states.h"
+#include "imsrg/model_space/single_particle/state.h"
 
 #include <utility>
 

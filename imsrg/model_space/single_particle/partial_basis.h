@@ -1,6 +1,6 @@
 // Copyright 2022 Matthias Heinz
-#ifndef IMSRG_MODEL_SPACE_BASIS_PARTIAL_BASIS_H_
-#define IMSRG_MODEL_SPACE_BASIS_PARTIAL_BASIS_H_
+#ifndef IMSRG_MODEL_SPACE_SINGLE_PARTICLE_PARTIAL_BASIS_H_
+#define IMSRG_MODEL_SPACE_SINGLE_PARTICLE_PARTIAL_BASIS_H_
 
 #include <memory>
 #include <utility>
@@ -8,9 +8,9 @@
 
 #include "absl/container/flat_hash_map.h"
 
-#include "imsrg/model_space/basis/full_basis.h"
-#include "imsrg/model_space/basis/states.h"
 #include "imsrg/model_space/jj_p_m_tt.h"
+#include "imsrg/model_space/single_particle/full_basis.h"
+#include "imsrg/model_space/single_particle/state.h"
 
 namespace imsrg {
 
@@ -47,4 +47,4 @@ PartitionSPFullBasisIntoSPPartialBases(const imsrg::SPFullBasis& full_basis);
 
 }  // namespace imsrg
 
-#endif  // IMSRG_MODEL_SPACE_BASIS_PARTIAL_BASIS_H_
+#endif  // IMSRG_MODEL_SPACE_SINGLE_PARTICLE_PARTIAL_BASIS_H_

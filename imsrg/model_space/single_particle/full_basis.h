@@ -1,11 +1,11 @@
 // Copyright 2022 Matthias Heinz
-#ifndef IMSRG_MODEL_SPACE_BASIS_FULL_BASIS_H_
-#define IMSRG_MODEL_SPACE_BASIS_FULL_BASIS_H_
+#ifndef IMSRG_MODEL_SPACE_SINGLE_PARTICLE_FULL_BASIS_H_
+#define IMSRG_MODEL_SPACE_SINGLE_PARTICLE_FULL_BASIS_H_
 
 #include <utility>
 #include <vector>
 
-#include "imsrg/model_space/basis/states.h"
+#include "imsrg/model_space/single_particle/state.h"
 #include "imsrg/quantum_numbers/ho_energy.h"
 
 namespace imsrg {
@@ -38,4 +38,4 @@ inline void swap(SPFullBasis& a, SPFullBasis& b) noexcept { a.swap(b); }
 
 }  // namespace imsrg
 
-#endif  // IMSRG_MODEL_SPACE_BASIS_FULL_BASIS_H_
+#endif  // IMSRG_MODEL_SPACE_SINGLE_PARTICLE_FULL_BASIS_H_
