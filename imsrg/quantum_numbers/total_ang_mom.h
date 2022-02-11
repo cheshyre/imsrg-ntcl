@@ -11,14 +11,15 @@ namespace imsrg {
 class TotalAngMom {
  public:
   explicit TotalAngMom(int jj) : jj_(jj) { Expects(jj >= 0); }
-  explicit TotalAngMom(JJ jj) : TotalAngMom(jj.AsInt()) {
-    Expects(jj >= JJ(0));
-  }
+  explicit TotalAngMom(JJ jj) : TotalAngMom(jj.AsInt()) {}
 
   // Default copy, move, and destructor
 
   int AsInt() const { return jj_; }
   JJ AsJJ() const { return JJ(jj_); }
+
+  bool IsHalfInteger() const { return jj_ % 2 == 1; }
+  bool IsInteger() const { return jj_ % 2 == 0; }
 
   void swap(TotalAngMom& other) noexcept {
     using std::swap;

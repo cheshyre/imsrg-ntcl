@@ -27,6 +27,24 @@ TEST_CASE("Test JJ constructor and AsJJ().") {
   }
 }
 
+TEST_CASE("Test IsHalfInteger() and IsInteger() on even jj.") {
+  for (const auto& jj : {0, 2, 4, 6, 8}) {
+    imsrg::TotalAngMom jj_o(jj);
+
+    REQUIRE(jj_o.IsInteger());
+    REQUIRE_FALSE(jj_o.IsHalfInteger());
+  }
+}
+
+TEST_CASE("Test IsHalfInteger() and IsInteger() on odd jj.") {
+  for (const auto& jj : {1, 3, 5, 7, 9}) {
+    imsrg::TotalAngMom jj_o(jj);
+
+    REQUIRE_FALSE(jj_o.IsInteger());
+    REQUIRE(jj_o.IsHalfInteger());
+  }
+}
+
 TEST_CASE("Test negative int constructor.", "[!hide][!shouldfail]") {
   imsrg::TotalAngMom jj_o(-1);
 

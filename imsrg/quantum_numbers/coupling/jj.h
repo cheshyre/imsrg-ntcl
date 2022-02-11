@@ -20,6 +20,9 @@ class JJ {
 
   int AsInt() const { return jj_; }
 
+  bool IsHalfInteger() const { return jj_ % 2 == 1; }
+  bool IsInteger() const { return jj_ % 2 == 0; }
+
   void swap(JJ& other) noexcept {
     using std::swap;
     swap(jj_, other.jj_);

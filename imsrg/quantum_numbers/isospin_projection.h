@@ -2,6 +2,7 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_ISOSPIN_PROJECTION_H_
 #define IMSRG_QUANTUM_NUMBERS_ISOSPIN_PROJECTION_H_
 
+#include <cmath>
 #include <utility>
 
 #include "imsrg/quantum_numbers/coupling/m_jj.h"
@@ -18,6 +19,9 @@ class IsospinProj {
 
   int AsInt() const { return m_tt_; }
   M_JJ AsM_JJ() const { return M_JJ(m_tt_); }
+
+  bool IsHalfInteger() const { return std::abs(m_tt_) % 2 == 1; }
+  bool IsInteger() const { return std::abs(m_tt_) % 2 == 0; }
 
   IsospinProj& operator+=(IsospinProj other) {
     m_tt_ += other.m_tt_;

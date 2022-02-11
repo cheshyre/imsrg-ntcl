@@ -11,7 +11,7 @@ namespace imsrg {
 class Isospin {
  public:
   explicit Isospin(int tt) : tt_(tt) { Expects(tt >= 0); }
-  explicit Isospin(JJ tt) : Isospin(tt.AsInt()) { Expects(tt >= JJ(0)); }
+  explicit Isospin(JJ tt) : Isospin(tt.AsInt()) {}
 
   static Isospin Nucleon() { return Isospin(1); }
 
@@ -19,6 +19,9 @@ class Isospin {
 
   int AsInt() const { return tt_; }
   JJ AsJJ() const { return JJ(tt_); }
+
+  bool IsHalfInteger() const { return tt_ % 2 == 1; }
+  bool IsInteger() const { return tt_ % 2 == 0; }
 
   void swap(Isospin& other) noexcept {
     using std::swap;

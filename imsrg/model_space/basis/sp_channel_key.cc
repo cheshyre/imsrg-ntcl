@@ -32,8 +32,7 @@ SPChannelKey::SPChannelKey(TotalAngMom jj, Parity p, IsospinProj m_tt)
       p_(p),
       m_tt_(m_tt),
       index_(imsrg::detail::ComputeSPChannelKeyIndex(jj, p, m_tt)) {
-  // j should be half integer
-  Expects(jj_.AsInt() % 2 != 0);
+  Expects(jj_.IsHalfInteger());
   // m_t should be -1/2 or 1/2 (nucleon)
   Expects(std::abs(m_tt_.AsInt()) == 1);
 }

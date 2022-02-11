@@ -2,6 +2,7 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_COUPLING_M_JJ_H_
 #define IMSRG_QUANTUM_NUMBERS_COUPLING_M_JJ_H_
 
+#include <cmath>
 #include <utility>
 
 namespace imsrg {
@@ -18,6 +19,8 @@ class M_JJ {
   // Default copy, move, and destructor
 
   int AsInt() const { return m_jj_; }
+  bool IsHalfInteger() const { return std::abs(m_jj_) % 2 == 1; }
+  bool IsInteger() const { return std::abs(m_jj_) % 2 == 0; }
 
   M_JJ& operator+=(M_JJ other) {
     m_jj_ += other.m_jj_;

@@ -29,6 +29,24 @@ TEST_CASE("Test M_JJ constructor and AsM_JJ().") {
   }
 }
 
+TEST_CASE("Test IsHalfInteger() and IsInteger() on even m_tt.") {
+  for (const auto& m_tt : {-8, -6, -4, -2, 0, 2, 4, 6, 8}) {
+    imsrg::IsospinProj m_tt_o(m_tt);
+
+    REQUIRE(m_tt_o.IsInteger());
+    REQUIRE_FALSE(m_tt_o.IsHalfInteger());
+  }
+}
+
+TEST_CASE("Test IsHalfInteger() and IsInteger() on odd m_tt.") {
+  for (const auto& m_tt : {-9, -7, -5, -3, -1, 1, 3, 5, 7, 9}) {
+    imsrg::IsospinProj m_tt_o(m_tt);
+
+    REQUIRE_FALSE(m_tt_o.IsInteger());
+    REQUIRE(m_tt_o.IsHalfInteger());
+  }
+}
+
 TEST_CASE("Test proton and neutron.") {
   auto p = imsrg::IsospinProj::Proton();
   auto n = imsrg::IsospinProj::Neutron();

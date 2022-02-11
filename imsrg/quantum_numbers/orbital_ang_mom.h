@@ -13,8 +13,7 @@ class OrbitalAngMom {
  public:
   explicit OrbitalAngMom(int l) : l_(l) { Expects(l >= 0); }
   explicit OrbitalAngMom(JJ ll) : OrbitalAngMom(ll.AsInt() / 2) {
-    Expects(ll >= JJ(0));
-    Expects(ll.AsInt() % 2 == 0);
+    Expects(ll.IsInteger());
   }
 
   // Default copy, move, and destructor
