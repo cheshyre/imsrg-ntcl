@@ -158,6 +158,17 @@ TEST_CASE("Test index.") {
   }
 }
 
+TEST_CASE("Test ChannelKey().") {
+  using imsrg::TotalAngMom;
+
+  for (const auto jjpmtt : ValidJJPMTTs()) {
+    imsrg::SPChannelKey chankey(jjpmtt);
+    auto basis_ptr = GetPartialBasisPtr(chankey);
+    imsrg::SPChannel chan(chankey, basis_ptr);
+    REQUIRE(chan.ChannelKey() == chankey);
+  }
+}
+
 TEST_CASE("Test copy contructor.") {
   REQUIRE(std::is_copy_constructible<imsrg::SPChannel>::value);
 }

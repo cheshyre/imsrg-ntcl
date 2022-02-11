@@ -20,6 +20,8 @@ class SPChannel {
   IsospinProj M_TT() const { return chan_key_.M_TT(); }
   std::size_t Index() const { return chan_key_.Index(); }
 
+  SPChannelKey ChannelKey() const { return chan_key_; }
+
   // Get size of basis
   std::size_t size() const { return size_; }
 
