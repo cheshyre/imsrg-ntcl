@@ -4,13 +4,10 @@
 
 #include <utility>
 
-#include "lib/GSL/include/gsl/assert"
+#include "imsrg/assert.h"
 
 namespace imsrg {
 class JJ {
- private:
-  int jj_;
-
  public:
   /**
    * @brief Construct new JJ (2 * j, where j is angular momentum) from integer.
@@ -23,10 +20,16 @@ class JJ {
 
   int AsInt() const { return jj_; }
 
+  bool IsHalfInteger() const { return jj_ % 2 == 1; }
+  bool IsInteger() const { return jj_ % 2 == 0; }
+
   void swap(JJ& other) noexcept {
     using std::swap;
     swap(jj_, other.jj_);
   }
+
+ private:
+  int jj_;
 };
 
 inline void swap(JJ& a, JJ& b) noexcept { a.swap(b); }

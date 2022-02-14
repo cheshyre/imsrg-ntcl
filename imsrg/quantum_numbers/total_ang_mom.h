@@ -4,30 +4,35 @@
 
 #include <utility>
 
-#include "lib/GSL/include/gsl/assert"
-
+#include "imsrg/assert.h"
 #include "imsrg/quantum_numbers/coupling/jj.h"
 
 namespace imsrg {
 class TotalAngMom {
- private:
-  int jj_;
-
  public:
   explicit TotalAngMom(int jj) : jj_(jj) { Expects(jj >= 0); }
-  explicit TotalAngMom(JJ jj) : TotalAngMom(jj.AsInt()) {
-    Expects(jj >= JJ(0));
-  }
+  explicit TotalAngMom(JJ jj) : TotalAngMom(jj.AsInt()) {}
 
   // Default copy, move, and destructor
 
   int AsInt() const { return jj_; }
   JJ AsJJ() const { return JJ(jj_); }
 
+  bool IsHalfInteger() const { return jj_ % 2 == 1; }
+  bool IsInteger() const { return jj_ % 2 == 0; }
+
   void swap(TotalAngMom& other) noexcept {
     using std::swap;
     swap(jj_, other.jj_);
   }
+
+  template <typename H>
+  friend H AbslHashValue(H h, const TotalAngMom& o) {
+    return H::combine(std::move(h), o.jj_);
+  }
+
+ private:
+  int jj_;
 };
 
 inline void swap(TotalAngMom& a, TotalAngMom& b) noexcept { a.swap(b); }

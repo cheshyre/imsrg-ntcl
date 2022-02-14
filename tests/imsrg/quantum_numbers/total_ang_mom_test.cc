@@ -4,6 +4,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "absl/hash/hash_testing.h"
+
 #include "imsrg/quantum_numbers/coupling/jj.h"
 
 #include "tests/catch.hpp"
@@ -22,6 +24,24 @@ TEST_CASE("Test JJ constructor and AsJJ().") {
     imsrg::TotalAngMom jj_o(jj_p);
 
     REQUIRE(jj_o.AsJJ() == jj_p);
+  }
+}
+
+TEST_CASE("Test IsHalfInteger() and IsInteger() on even jj.") {
+  for (const auto& jj : {0, 2, 4, 6, 8}) {
+    imsrg::TotalAngMom jj_o(jj);
+
+    REQUIRE(jj_o.IsInteger());
+    REQUIRE_FALSE(jj_o.IsHalfInteger());
+  }
+}
+
+TEST_CASE("Test IsHalfInteger() and IsInteger() on odd jj.") {
+  for (const auto& jj : {1, 3, 5, 7, 9}) {
+    imsrg::TotalAngMom jj_o(jj);
+
+    REQUIRE_FALSE(jj_o.IsInteger());
+    REQUIRE(jj_o.IsHalfInteger());
   }
 }
 
@@ -190,4 +210,17 @@ TEST_CASE("Test >=.") {
       REQUIRE((jj1 >= jj2) == (imsrg::JJ(x1) >= imsrg::JJ(x2)));
     }
   }
+}
+
+TEST_CASE("Test proper abseil hash.") {
+  using imsrg::TotalAngMom;
+  REQUIRE(absl::VerifyTypeImplementsAbslHashCorrectly(
+      {TotalAngMom(0),  TotalAngMom(1),  TotalAngMom(2),  TotalAngMom(3),
+       TotalAngMom(4),  TotalAngMom(5),  TotalAngMom(6),  TotalAngMom(7),
+       TotalAngMom(8),  TotalAngMom(9),  TotalAngMom(10), TotalAngMom(11),
+       TotalAngMom(12), TotalAngMom(13), TotalAngMom(14), TotalAngMom(15),
+       TotalAngMom(16), TotalAngMom(17), TotalAngMom(18), TotalAngMom(19),
+       TotalAngMom(20), TotalAngMom(21), TotalAngMom(22), TotalAngMom(23),
+       TotalAngMom(24), TotalAngMom(25), TotalAngMom(26), TotalAngMom(27),
+       TotalAngMom(28), TotalAngMom(29), TotalAngMom(30)}));
 }

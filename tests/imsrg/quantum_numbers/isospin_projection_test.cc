@@ -5,6 +5,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "absl/hash/hash_testing.h"
+
 #include "imsrg/quantum_numbers/coupling/m_jj.h"
 
 #include "tests/catch.hpp"
@@ -24,6 +26,24 @@ TEST_CASE("Test M_JJ constructor and AsM_JJ().") {
     imsrg::IsospinProj m_tt(m_jj_o);
 
     REQUIRE(m_tt.AsM_JJ() == m_jj_o);
+  }
+}
+
+TEST_CASE("Test IsHalfInteger() and IsInteger() on even m_tt.") {
+  for (const auto& m_tt : {-8, -6, -4, -2, 0, 2, 4, 6, 8}) {
+    imsrg::IsospinProj m_tt_o(m_tt);
+
+    REQUIRE(m_tt_o.IsInteger());
+    REQUIRE_FALSE(m_tt_o.IsHalfInteger());
+  }
+}
+
+TEST_CASE("Test IsHalfInteger() and IsInteger() on odd m_tt.") {
+  for (const auto& m_tt : {-9, -7, -5, -3, -1, 1, 3, 5, 7, 9}) {
+    imsrg::IsospinProj m_tt_o(m_tt);
+
+    REQUIRE_FALSE(m_tt_o.IsInteger());
+    REQUIRE(m_tt_o.IsHalfInteger());
   }
 }
 
@@ -230,4 +250,11 @@ TEST_CASE("Test operator-.") {
       REQUIRE(m_tt4.AsInt() == x2 - x1);
     }
   }
+}
+
+TEST_CASE("Test proper abseil hash.") {
+  using imsrg::IsospinProj;
+  REQUIRE(absl::VerifyTypeImplementsAbslHashCorrectly(
+      {IsospinProj(-3), IsospinProj(-2), IsospinProj(-1), IsospinProj(0),
+       IsospinProj(1), IsospinProj(2), IsospinProj(3)}));
 }

@@ -5,6 +5,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "absl/hash/hash_testing.h"
+
 #include "tests/catch.hpp"
 
 TEST_CASE("Test Even factory function with IsEven/IsOdd.") {
@@ -246,4 +248,10 @@ TEST_CASE("Test subtraction rules.") {
   REQUIRE(Parity::Even() - Parity::Odd() == Parity::Odd());
   REQUIRE(Parity::Odd() - Parity::Even() == Parity::Odd());
   REQUIRE(Parity::Even() - Parity::Even() == Parity::Even());
+}
+
+TEST_CASE("Test proper abseil hash.") {
+  using imsrg::Parity;
+  REQUIRE(absl::VerifyTypeImplementsAbslHashCorrectly(
+      {Parity::Even(), Parity::Odd()}));
 }

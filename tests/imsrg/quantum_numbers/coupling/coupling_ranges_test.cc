@@ -25,6 +25,9 @@ TEST_CASE("Test 1/2 and 1/2.") {
   for (std::size_t i = 0; i < expected.size(); i++) {
     REQUIRE(actual[i] == expected[i]);
   }
+
+  REQUIRE(imsrg::CouplingMinimum(a, b) == JJ(0));
+  REQUIRE(imsrg::CouplingMaximum(a, b) == JJ(2));
 }
 
 TEST_CASE("Test 1/2 and 0.") {
@@ -40,6 +43,9 @@ TEST_CASE("Test 1/2 and 0.") {
     for (std::size_t i = 0; i < expected.size(); i++) {
       REQUIRE(actual[i] == expected[i]);
     }
+
+    REQUIRE(imsrg::CouplingMinimum(a, b) == JJ(1));
+    REQUIRE(imsrg::CouplingMaximum(a, b) == JJ(1));
   }
   SECTION("b, a.") {
     auto actual = imsrg::GenerateCouplingRange(b, a);
@@ -49,6 +55,9 @@ TEST_CASE("Test 1/2 and 0.") {
     for (std::size_t i = 0; i < expected.size(); i++) {
       REQUIRE(actual[i] == expected[i]);
     }
+
+    REQUIRE(imsrg::CouplingMinimum(b, a) == JJ(1));
+    REQUIRE(imsrg::CouplingMaximum(b, a) == JJ(1));
   }
 }
 
@@ -65,6 +74,9 @@ TEST_CASE("Test 1/2 and 1.") {
     for (std::size_t i = 0; i < expected.size(); i++) {
       REQUIRE(actual[i] == expected[i]);
     }
+
+    REQUIRE(imsrg::CouplingMinimum(a, b) == JJ(1));
+    REQUIRE(imsrg::CouplingMaximum(a, b) == JJ(3));
   }
   SECTION("b, a.") {
     auto actual = imsrg::GenerateCouplingRange(b, a);
@@ -74,6 +86,9 @@ TEST_CASE("Test 1/2 and 1.") {
     for (std::size_t i = 0; i < expected.size(); i++) {
       REQUIRE(actual[i] == expected[i]);
     }
+
+    REQUIRE(imsrg::CouplingMinimum(b, a) == JJ(1));
+    REQUIRE(imsrg::CouplingMaximum(b, a) == JJ(3));
   }
 }
 
@@ -90,6 +105,9 @@ TEST_CASE("Test 5/2 and 3.") {
     for (std::size_t i = 0; i < expected.size(); i++) {
       REQUIRE(actual[i] == expected[i]);
     }
+
+    REQUIRE(imsrg::CouplingMinimum(a, b) == JJ(1));
+    REQUIRE(imsrg::CouplingMaximum(a, b) == JJ(11));
   }
   SECTION("b, a.") {
     auto actual = imsrg::GenerateCouplingRange(b, a);
@@ -99,6 +117,23 @@ TEST_CASE("Test 5/2 and 3.") {
     for (std::size_t i = 0; i < expected.size(); i++) {
       REQUIRE(actual[i] == expected[i]);
     }
+
+    REQUIRE(imsrg::CouplingMinimum(b, a) == JJ(1));
+    REQUIRE(imsrg::CouplingMaximum(b, a) == JJ(11));
+  }
+}
+
+TEST_CASE("Test CouplingRangeFromMinAndMax (1/2 to 11/2).") {
+  JJ min_jj(1);
+  JJ max_jj(11);
+
+  std::vector<JJ> expected = {JJ(1), JJ(3), JJ(5), JJ(7), JJ(9), JJ(11)};
+  auto actual = imsrg::CouplingRangeFromMinAndMax(min_jj, max_jj);
+
+  REQUIRE(expected.size() == actual.size());
+
+  for (std::size_t i = 0; i < expected.size(); i++) {
+    REQUIRE(actual[i] == expected[i]);
   }
 }
 

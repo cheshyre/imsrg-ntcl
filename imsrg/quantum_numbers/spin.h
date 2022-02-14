@@ -4,30 +4,32 @@
 
 #include <utility>
 
-#include "lib/GSL/include/gsl/assert"
-
+#include "imsrg/assert.h"
 #include "imsrg/quantum_numbers/coupling/jj.h"
 
 namespace imsrg {
 class Spin {
- private:
-  int jj_;
-
  public:
-  explicit Spin(int jj) : jj_(jj) { Expects(jj >= 0); }
-  explicit Spin(JJ jj) : Spin(jj.AsInt()) { Expects(jj >= JJ(0)); }
+  explicit Spin(int ss) : ss_(ss) { Expects(ss >= 0); }
+  explicit Spin(JJ ss) : Spin(ss.AsInt()) {}
 
   static Spin OneHalf() { return Spin(1); }
 
   // Default copy, move, and destructor
 
-  int AsInt() const { return jj_; }
-  JJ AsJJ() const { return JJ(jj_); }
+  int AsInt() const { return ss_; }
+  JJ AsJJ() const { return JJ(ss_); }
+
+  bool IsHalfInteger() const { return ss_ % 2 == 1; }
+  bool IsInteger() const { return ss_ % 2 == 0; }
 
   void swap(Spin& other) noexcept {
     using std::swap;
-    swap(jj_, other.jj_);
+    swap(ss_, other.ss_);
   }
+
+ private:
+  int ss_;
 };
 
 inline void swap(Spin& a, Spin& b) noexcept { a.swap(b); }

@@ -2,37 +2,38 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_COUPLING_COUPLING_RANGES_H_
 #define IMSRG_QUANTUM_NUMBERS_COUPLING_COUPLING_RANGES_H_
 
-#include <cmath>
 #include <vector>
 
 #include "imsrg/quantum_numbers/coupling/jj.h"
 
 namespace imsrg {
 
-std::vector<imsrg::JJ> GenerateCouplingRange(JJ a, JJ b) {
-  imsrg::JJ min_jj(std::abs(a.AsInt() - b.AsInt()));
-  imsrg::JJ max_jj(a.AsInt() + b.AsInt());
-
-  std::vector<imsrg::JJ> jjs;
-  jjs.reserve((max_jj.AsInt() - min_jj.AsInt()) / 2 + 1);
-  for (int jj_i = min_jj.AsInt(); jj_i <= max_jj.AsInt(); jj_i += 2) {
-    jjs.push_back(imsrg::JJ(jj_i));
-  }
-
-  return jjs;
-}
+std::vector<imsrg::JJ> GenerateCouplingRange(JJ a, JJ b);
+JJ CouplingMinimum(JJ a, JJ b);
+JJ CouplingMaximum(JJ a, JJ b);
+std::vector<imsrg::JJ> CouplingRangeFromMinAndMax(JJ min, JJ max);
 
 template <typename T3, typename T1, typename T2>
 std::vector<T3> GenerateCouplingRange(T1 a, T2 b) {
   std::vector<imsrg::JJ> jjs = GenerateCouplingRange(a.AsJJ(), b.AsJJ());
-  std::vector<T3> result;
-  result.reserve(jjs.size());
+  return std::vector<T3>(jjs.begin(), jjs.end());
+}
 
-  for (const auto& jj : jjs) {
-    result.push_back(T3(jj));
-  }
+template <typename T3, typename T1, typename T2>
+T3 CouplingMinimum(T1 a, T2 b) {
+  return T3(CouplingMinimum(a.AsJJ(), b.AsJJ()));
+}
 
-  return result;
+template <typename T3, typename T1, typename T2>
+T3 CouplingMaximum(T1 a, T2 b) {
+  return T3(CouplingMaximum(a.AsJJ(), b.AsJJ()));
+}
+
+template <typename T>
+std::vector<T> CouplingRangeFromMinAndMax(T min, T max) {
+  std::vector<imsrg::JJ> jjs =
+      CouplingRangeFromMinAndMax(min.AsJJ(), max.AsJJ());
+  return std::vector<T>(jjs.begin(), jjs.end());
 }
 
 }  // namespace imsrg

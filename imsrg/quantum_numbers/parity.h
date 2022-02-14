@@ -6,10 +6,6 @@
 
 namespace imsrg {
 class Parity {
- private:
-  bool p_;
-  explicit Parity(bool p) : p_(p) {}
-
  public:
   // Static factory functions for even and odd parity
   static Parity Even() { return Parity(true); }
@@ -33,6 +29,16 @@ class Parity {
     using std::swap;
     swap(p_, other.p_);
   }
+
+  template <typename H>
+  friend H AbslHashValue(H h, const Parity& o) {
+    return H::combine(std::move(h), o.p_);
+  }
+
+ private:
+  bool p_;
+
+  explicit Parity(bool p) : p_(p) {}
 };
 
 inline void swap(Parity& a, Parity& b) noexcept { a.swap(b); }

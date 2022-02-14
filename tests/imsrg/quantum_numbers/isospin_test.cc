@@ -33,6 +33,24 @@ TEST_CASE("Test nucleon static constructor.") {
   REQUIRE(s.AsInt() == 1);
 }
 
+TEST_CASE("Test IsHalfInteger() and IsInteger() on even tt.") {
+  for (const auto& tt : {0, 2, 4, 6, 8}) {
+    imsrg::Isospin tt_o(tt);
+
+    REQUIRE(tt_o.IsInteger());
+    REQUIRE_FALSE(tt_o.IsHalfInteger());
+  }
+}
+
+TEST_CASE("Test IsHalfInteger() and IsInteger() on odd tt.") {
+  for (const auto& tt : {1, 3, 5, 7, 9}) {
+    imsrg::Isospin tt_o(tt);
+
+    REQUIRE_FALSE(tt_o.IsInteger());
+    REQUIRE(tt_o.IsHalfInteger());
+  }
+}
+
 TEST_CASE("Test negative int constructor.", "[!hide][!shouldfail]") {
   imsrg::Isospin tt_o(-1);
 
@@ -63,7 +81,7 @@ TEST_CASE("Test move contructor.") {
   }
 }
 
-TEST_CASE("Test copy attignment.") {
+TEST_CASE("Test copy assignment.") {
   REQUIRE(std::is_copy_assignable<imsrg::Isospin>::value);
 
   for (const auto& tt : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}) {
@@ -78,7 +96,7 @@ TEST_CASE("Test copy attignment.") {
   }
 }
 
-TEST_CASE("Test move attignment.") {
+TEST_CASE("Test move assignment.") {
   REQUIRE(std::is_nothrow_move_assignable<imsrg::Isospin>::value);
 
   for (const auto& tt : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}) {

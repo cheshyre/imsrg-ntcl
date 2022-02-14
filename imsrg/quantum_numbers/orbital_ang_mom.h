@@ -4,21 +4,16 @@
 
 #include <utility>
 
-#include "lib/GSL/include/gsl/assert"
-
+#include "imsrg/assert.h"
 #include "imsrg/quantum_numbers/coupling/jj.h"
 #include "imsrg/quantum_numbers/parity.h"
 
 namespace imsrg {
 class OrbitalAngMom {
- private:
-  int l_;
-
  public:
   explicit OrbitalAngMom(int l) : l_(l) { Expects(l >= 0); }
   explicit OrbitalAngMom(JJ ll) : OrbitalAngMom(ll.AsInt() / 2) {
-    Expects(ll >= JJ(0));
-    Expects(ll.AsInt() % 2 == 0);
+    Expects(ll.IsInteger());
   }
 
   // Default copy, move, and destructor
@@ -36,6 +31,9 @@ class OrbitalAngMom {
     using std::swap;
     swap(l_, other.l_);
   }
+
+ private:
+  int l_;
 };
 
 inline void swap(OrbitalAngMom& a, OrbitalAngMom& b) noexcept { a.swap(b); }
