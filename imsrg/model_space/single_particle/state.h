@@ -5,6 +5,8 @@
 #include <utility>
 
 #include "imsrg/model_space/jj_p_m_tt.h"
+#include "imsrg/model_space/single_particle/state_key.h"
+#include "imsrg/model_space/single_particle/state_string.h"
 #include "imsrg/quantum_numbers/ho_energy.h"
 #include "imsrg/quantum_numbers/isospin_projection.h"
 #include "imsrg/quantum_numbers/occupation_number.h"
@@ -18,6 +20,10 @@ class SPState {
   // Construct single-particle state
   explicit SPState(imsrg::RadialExcitationNumber n, imsrg::OrbitalAngMom l,
                    imsrg::TotalAngMom jj, imsrg::IsospinProj m_tt,
+                   imsrg::OccupationNumber occ);
+
+  // Construct single-particle state
+  explicit SPState(imsrg::SPStateString state_string,
                    imsrg::OccupationNumber occ);
 
   // Construct particle (occ=0) state (at least initially)
@@ -35,6 +41,12 @@ class SPState {
   imsrg::IsospinProj M_TT() const { return m_tt_; }
 
   imsrg::OccupationNumber OccupationN() const { return occ_; }
+
+  imsrg::SPStateKey StateKey() const { return SPStateKey(n_, l_, jj_, m_tt_); }
+
+  imsrg::SPStateString StateString() const {
+    return SPStateString(n_, l_, jj_, m_tt_);
+  }
 
   imsrg::HOEnergy E() const;
 
