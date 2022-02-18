@@ -1,0 +1,49 @@
+SOLVE_MF run at Wed Oct 27 11:02:23 2021
+
+Input 2-body matrix elements:
+path = /data_share6/MEs/SPHO/2B/EMN500_N3LO/hw_24.00/VNN_N3LO_EM500new_lambda_50.00_hw24.00_emax_06.me2j
+fmt = me2j
+emax, e2max, lmax = 6, 12, 6
+
+Input 3-body matrix elements:
+path = none
+type = full
+fmt = me3j
+emax, e2max, e3max = 0, 0, 0
+
+hbar omega = 24
+
+Output NO2B matrix elements:
+emax = 4
+path to 1B MEs = /data_share6/MEs/mean_field_MEs/NN-only/O16/EMN500_N3LO/HF/hw_24.00/calc_emax_04/HNO_O16_NN-only_EMN500_N3LO_HF_mf_calc_emax_04_hw_24.00_emax_04.me1j
+path to 2B MEs = /data_share6/MEs/mean_field_MEs/NN-only/O16/EMN500_N3LO/HF/hw_24.00/calc_emax_04/HNO_O16_NN-only_EMN500_N3LO_HF_mf_calc_emax_04_hw_24.00_emax_04.me2jp
+
+Extra output matrix elements:
+save generator = true
+save commutators = true
+generator type = imaginary-time, denominator type = Moller_Plesset
+
+Mean-field calculation:
+Reference state: O16, A = 16
+basis = HF
+emax, lmax, e3max, lmax3 = 4, 4, 0, 4
+
+Meta-data specifications:
+path to metadata file = /data_share6/MEs/mean_field_MEs/NN-only/O16/EMN500_N3LO/HF/hw_24.00/calc_emax_04/mf_calc_info_emax_04.txt
+LEC specifier = standard_LECs
+
+Additional details:
+Nucleon mass correction: false
+Relativistic correction: false
+Lawson term coefficient = 0
+Lawson term frequency = 0
+
+Advanced parameters:
+no2b_precision: single
+valence_space: O16
+nat_order: occupation
+freeze_occupations: false
+discard_no2b_from_3n: false
+use_nat_occupations: false
+emax_unoccupied: -1
+

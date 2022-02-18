@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 
+#include "imsrg/model_space/single_particle/reference_state.h"
 #include "imsrg/model_space/single_particle/state.h"
 #include "imsrg/quantum_numbers/ho_energy.h"
 
@@ -14,8 +15,8 @@ class SPFullBasis {
  public:
   static SPFullBasis FromEMax(HOEnergy emax);
 
-  // TODO(mheinz): implement factory method that includes reference state
-  // information
+  static SPFullBasis FromEMaxAndReferenceState(HOEnergy emax,
+                                               const ReferenceState& ref);
 
   explicit SPFullBasis(const std::vector<SPState>& states) : states_(states) {}
 

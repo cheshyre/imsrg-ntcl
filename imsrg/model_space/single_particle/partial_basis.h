@@ -24,6 +24,9 @@ class SPPartialBasis {
 
   SPState at(std::size_t index) const { return states_[index]; }
 
+  const std::vector<double>& Occs() const { return occs_; }
+  const std::vector<double>& OccsBar() const { return occs_bar_; }
+
   void swap(SPPartialBasis& other) noexcept {
     using std::swap;
     swap(states_, other.states_);

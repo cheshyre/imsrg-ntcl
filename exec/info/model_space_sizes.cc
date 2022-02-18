@@ -8,13 +8,13 @@
 #include "imsrg/quantum_numbers/ho_energy.h"
 
 #include "imsrg/model_space/single_particle/channel.h"
-#include "imsrg/model_space/single_particle/channel_key.h"
 #include "imsrg/model_space/single_particle/full_basis.h"
 #include "imsrg/model_space/single_particle/model_space.h"
-#include "imsrg/model_space/single_particle/partial_basis.h"
 #include "imsrg/model_space/single_particle/state.h"
 
+#include "imsrg/model_space/scalar/one_body/channel.h"
 #include "imsrg/model_space/scalar/one_body/model_space.h"
+#include "imsrg/model_space/scalar/two_body/channel.h"
 #include "imsrg/model_space/scalar/two_body/model_space.h"
 
 int main(void) {
@@ -32,14 +32,7 @@ int main(void) {
                  full_basis.size() * sizeof(imsrg::SPState));
     spdlog::info(filler);
 
-    const auto basis_part =
-        imsrg::PartitionSPFullBasisIntoSPPartialBases(full_basis);
-    std::vector<imsrg::SPChannel> chans;
-    chans.reserve(basis_part.size());
-    for (const auto& [jjpmtt, basis_ptr] : basis_part) {
-      chans.emplace_back(imsrg::SPChannelKey(jjpmtt), basis_ptr);
-    }
-    const imsrg::SPModelSpace sp_ms(chans);
+    const auto sp_ms = imsrg::SPModelSpace::FromFullBasis(full_basis);
 
     spdlog::info("Single-particle model space size = {} channels",
                  sp_ms.Channels().size());
@@ -47,14 +40,14 @@ int main(void) {
                  sp_ms.Channels().size() * sizeof(imsrg::SPChannel));
     spdlog::info(filler);
 
-    const auto& ms1b = imsrg::Scalar1BModelSpace::FromSPModelSpace(sp_ms);
+    const auto ms1b = imsrg::Scalar1BModelSpace::FromSPModelSpace(sp_ms);
     spdlog::info("One-body model space size = {} channels",
                  ms1b->NumberOfChannels());
     spdlog::info("size in memory = {}",
                  ms1b->NumberOfChannels() * sizeof(imsrg::Scalar1BChannel));
     spdlog::info(filler);
 
-    const auto& ms2b = imsrg::Scalar2BModelSpace::FromSPModelSpace(sp_ms);
+    const auto ms2b = imsrg::Scalar2BModelSpace::FromSPModelSpace(sp_ms);
     spdlog::info("Two-body model space size = {} channels",
                  ms2b->NumberOfChannels());
     spdlog::info("size in memory = {}",

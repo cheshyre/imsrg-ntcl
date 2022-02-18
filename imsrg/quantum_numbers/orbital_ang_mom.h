@@ -27,6 +27,11 @@ class OrbitalAngMom {
     return Parity::Odd();
   }
 
+  template <typename H>
+  friend H AbslHashValue(H h, const OrbitalAngMom& o) {
+    return H::combine(std::move(h), o.l_);
+  }
+
   void swap(OrbitalAngMom& other) noexcept {
     using std::swap;
     swap(l_, other.l_);

@@ -7,11 +7,14 @@
 #include <vector>
 
 #include "imsrg/model_space/single_particle/channel.h"
+#include "imsrg/model_space/single_particle/full_basis.h"
 
 namespace imsrg {
 
 class SPModelSpace {
  public:
+  static SPModelSpace FromFullBasis(const SPFullBasis& full_basis);
+
   // Make model space from vector of *unique* channels
   explicit SPModelSpace(const std::vector<SPChannel>& chans);
 

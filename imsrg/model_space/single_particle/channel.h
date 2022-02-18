@@ -22,6 +22,8 @@ class SPChannel {
 
   SPChannelKey ChannelKey() const { return chan_key_; }
 
+  const SPPartialBasis& ChannelBasis() const { return *basis_ptr_; }
+
   // Get size of basis
   std::size_t size() const { return size_; }
 

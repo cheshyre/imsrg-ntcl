@@ -4,6 +4,7 @@
 #include <utility>
 
 #include "imsrg/model_space/jj_p_m_tt.h"
+#include "imsrg/model_space/single_particle/state_string.h"
 #include "imsrg/quantum_numbers/ho_energy.h"
 #include "imsrg/quantum_numbers/isospin_projection.h"
 #include "imsrg/quantum_numbers/occupation_number.h"
@@ -18,6 +19,13 @@ SPState::SPState(imsrg::RadialExcitationNumber n, imsrg::OrbitalAngMom l,
     : n_(n), l_(l), jj_(jj), m_tt_(m_tt), occ_(occ) {
   // Possible check for |2 * l - jj| == 1
 }
+
+SPState::SPState(imsrg::SPStateString state_string, imsrg::OccupationNumber occ)
+    : n_(state_string.RadialN()),
+      l_(state_string.L()),
+      jj_(state_string.JJ()),
+      m_tt_(state_string.M_TT()),
+      occ_(occ) {}
 
 SPState::SPState(imsrg::RadialExcitationNumber n, imsrg::OrbitalAngMom l,
                  imsrg::TotalAngMom jj, imsrg::IsospinProj m_tt)
