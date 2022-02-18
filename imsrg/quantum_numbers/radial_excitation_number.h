@@ -15,6 +15,11 @@ class RadialExcitationNumber {
 
   int AsInt() const { return n_; }
 
+  template <typename H>
+  friend H AbslHashValue(H h, const RadialExcitationNumber& o) {
+    return H::combine(std::move(h), o.n_);
+  }
+
   void swap(RadialExcitationNumber& other) noexcept {
     using std::swap;
     swap(n_, other.n_);
