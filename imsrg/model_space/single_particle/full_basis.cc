@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "imsrg/error.h"
+#include "imsrg/model_space/single_particle/reference_state.h"
 #include "imsrg/model_space/single_particle/state.h"
 #include "imsrg/quantum_numbers/coupling/coupling_ranges.h"
 #include "imsrg/quantum_numbers/ho_energy.h"
@@ -24,6 +26,21 @@ SPFullBasis SPFullBasis::FromEMax(HOEnergy emax) {
         }
       }
     }
+  }
+
+  return SPFullBasis(states);
+}
+SPFullBasis SPFullBasis::FromEMaxAndReferenceState(HOEnergy emax,
+                                                   const ReferenceState& ref) {
+  const auto emax_validation = ref.ValidateAgainstEMax(emax);
+  if (!emax_validation.valid) {
+    imsrg::Error(emax_validation.first_err_msg);
+  }
+
+  auto states = SPFullBasis::FromEMax(emax).states_;
+
+  for (auto& x : states) {
+    x = ref.GetStateWithOccupations(x);
   }
 
   return SPFullBasis(states);
