@@ -21,15 +21,21 @@
 namespace imsrg {
 
 namespace detail {
+
 static std::size_t GetME1JSize(imsrg::HOEnergy emax);
+
 static absl::flat_hash_map<imsrg::mexj::NLJJTIndex2, std::size_t>
 MakeME1JIndexLookup(imsrg::HOEnergy emax);
+
 template <typename S>
 static std::tuple<double, std::vector<double>> ReadFile(S&& stream,
                                                         HOEnergy emax);
+
 template <typename S>
 static imsrg::ValidationResult ValidateFile(S&& stream, HOEnergy emax);
+
 static imsrg::ValidationResult ValidateHeader(std::string_view header);
+
 }  // namespace detail
 
 ME1JFile ME1JFile::FromTextFile(std::string path_to_file, HOEnergy emax,
