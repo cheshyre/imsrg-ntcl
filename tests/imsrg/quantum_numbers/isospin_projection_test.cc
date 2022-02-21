@@ -47,6 +47,27 @@ TEST_CASE("Test IsHalfInteger() and IsInteger() on odd m_tt.") {
   }
 }
 
+TEST_CASE("Test Phase() on even m_tt.") {
+  for (const auto& m_tt : {-8, -6, -4, -2, 0, 2, 4, 6, 8}) {
+    imsrg::IsospinProj m_tt_o(m_tt);
+
+    REQUIRE(m_tt_o.Phase().IsValidAsInt());
+    if (m_tt % 4 == 0) {
+      REQUIRE(m_tt_o.Phase().AsInt() == 1);
+    } else {
+      REQUIRE(m_tt_o.Phase().AsInt() == -1);
+    }
+  }
+}
+
+TEST_CASE("Test Phase() on odd m_tt.") {
+  for (const auto& m_tt : {-9, -7, -5, -3, -1, 1, 3, 5, 7, 9}) {
+    imsrg::IsospinProj m_tt_o(m_tt);
+
+    REQUIRE_FALSE(m_tt_o.Phase().IsValidAsInt());
+  }
+}
+
 TEST_CASE("Test proton and neutron.") {
   auto p = imsrg::IsospinProj::Proton();
   auto n = imsrg::IsospinProj::Neutron();

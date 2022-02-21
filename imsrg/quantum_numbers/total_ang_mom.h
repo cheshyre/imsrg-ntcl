@@ -6,6 +6,7 @@
 
 #include "imsrg/assert.h"
 #include "imsrg/quantum_numbers/coupling/jj.h"
+#include "imsrg/quantum_numbers/coupling/phases.h"
 
 namespace imsrg {
 class TotalAngMom {
@@ -17,6 +18,7 @@ class TotalAngMom {
 
   int AsInt() const { return jj_; }
   JJ AsJJ() const { return JJ(jj_); }
+  JJPhase Phase(int prefactor = 1) const { return AsJJ().Phase(prefactor); }
 
   bool IsHalfInteger() const { return jj_ % 2 == 1; }
   bool IsInteger() const { return jj_ % 2 == 0; }

@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "imsrg/quantum_numbers/coupling/m_jj.h"
+#include "imsrg/quantum_numbers/coupling/phases.h"
 
 namespace imsrg {
 
@@ -19,6 +20,7 @@ class IsospinProj {
 
   int AsInt() const { return m_tt_; }
   M_JJ AsM_JJ() const { return M_JJ(m_tt_); }
+  JJPhase Phase(int prefactor = 1) const { return AsM_JJ().Phase(prefactor); }
 
   bool IsHalfInteger() const { return std::abs(m_tt_) % 2 == 1; }
   bool IsInteger() const { return std::abs(m_tt_) % 2 == 0; }

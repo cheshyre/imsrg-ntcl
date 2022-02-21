@@ -6,6 +6,7 @@
 
 #include "imsrg/assert.h"
 #include "imsrg/quantum_numbers/coupling/jj.h"
+#include "imsrg/quantum_numbers/coupling/phases.h"
 
 namespace imsrg {
 class Spin {
@@ -19,6 +20,7 @@ class Spin {
 
   int AsInt() const { return ss_; }
   JJ AsJJ() const { return JJ(ss_); }
+  JJPhase Phase(int prefactor = 1) const { return AsJJ().Phase(prefactor); }
 
   bool IsHalfInteger() const { return ss_ % 2 == 1; }
   bool IsInteger() const { return ss_ % 2 == 0; }

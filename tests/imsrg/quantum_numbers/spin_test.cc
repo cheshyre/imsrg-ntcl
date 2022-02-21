@@ -51,6 +51,27 @@ TEST_CASE("Test IsHalfInteger() and IsInteger() on odd ss.") {
   }
 }
 
+TEST_CASE("Test Phase() on even ss.") {
+  for (const auto& ss : {0, 2, 4, 6, 8}) {
+    imsrg::Spin ss_o(ss);
+
+    REQUIRE(ss_o.Phase().IsValidAsInt());
+    if (ss % 4 == 0) {
+      REQUIRE(ss_o.Phase().AsInt() == 1);
+    } else {
+      REQUIRE(ss_o.Phase().AsInt() == -1);
+    }
+  }
+}
+
+TEST_CASE("Test Phase() on odd ss.") {
+  for (const auto& ss : {1, 3, 5, 7, 9}) {
+    imsrg::Spin ss_o(ss);
+
+    REQUIRE_FALSE(ss_o.Phase().IsValidAsInt());
+  }
+}
+
 TEST_CASE("Test negative int constructor.", "[!hide][!shouldfail]") {
   imsrg::Spin ss_o(-1);
 

@@ -26,6 +26,16 @@ TEST_CASE("Test JJ constructor and AsJJ().") {
   }
 }
 
+TEST_CASE("Test Phase().") {
+  for (const auto& l : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}) {
+    imsrg::JJ ll_p(2 * l);
+    imsrg::OrbitalAngMom l_o(ll_p);
+
+    REQUIRE(l_o.Phase().IsValidAsInt());
+    REQUIRE(l_o.Phase().AsInt() == ll_p.Phase().AsInt());
+  }
+}
+
 TEST_CASE("Test odd JJ constructor.", "[!hide][!shouldfail]") {
   imsrg::JJ ll_p(1);
   imsrg::OrbitalAngMom l_o(ll_p);

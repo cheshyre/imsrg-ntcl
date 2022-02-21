@@ -5,6 +5,8 @@
 #include <cmath>
 #include <utility>
 
+#include "imsrg/quantum_numbers/coupling/phases.h"
+
 namespace imsrg {
 class M_JJ {
  public:
@@ -21,6 +23,7 @@ class M_JJ {
   int AsInt() const { return m_jj_; }
   bool IsHalfInteger() const { return std::abs(m_jj_) % 2 == 1; }
   bool IsInteger() const { return std::abs(m_jj_) % 2 == 0; }
+  JJPhase Phase(int prefactor = 1) const { return JJPhase(m_jj_, prefactor); }
 
   M_JJ& operator+=(M_JJ other) {
     m_jj_ += other.m_jj_;

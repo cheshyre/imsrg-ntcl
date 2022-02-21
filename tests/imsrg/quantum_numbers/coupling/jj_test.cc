@@ -4,6 +4,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "imsrg/quantum_numbers/coupling/phases.h"
+
 #include "tests/catch.hpp"
 
 TEST_CASE("Test int constructor and AsInt().") {
@@ -29,6 +31,27 @@ TEST_CASE("Test IsHalfInteger() and IsInteger() on odd jj.") {
 
     REQUIRE_FALSE(jj_o.IsInteger());
     REQUIRE(jj_o.IsHalfInteger());
+  }
+}
+
+TEST_CASE("Test Phase() on even jj.") {
+  for (const auto& jj : {0, 2, 4, 6, 8}) {
+    imsrg::JJ jj_o(jj);
+
+    REQUIRE(jj_o.Phase().IsValidAsInt());
+    if (jj % 4 == 0) {
+      REQUIRE(jj_o.Phase().AsInt() == 1);
+    } else {
+      REQUIRE(jj_o.Phase().AsInt() == -1);
+    }
+  }
+}
+
+TEST_CASE("Test Phase() on odd jj.") {
+  for (const auto& jj : {1, 3, 5, 7, 9}) {
+    imsrg::JJ jj_o(jj);
+
+    REQUIRE_FALSE(jj_o.Phase().IsValidAsInt());
   }
 }
 
