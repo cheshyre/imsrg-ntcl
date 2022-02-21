@@ -30,7 +30,10 @@ class ME1JFile {
 
   void swap(ME1JFile& other) noexcept {
     using std::swap;
+    swap(me_0b_, other.me_0b_);
+    swap(herm_, other.herm_);
     swap(mes_, other.mes_);
+    swap(me_lookup_, other.me_lookup_);
   }
 
  private:
