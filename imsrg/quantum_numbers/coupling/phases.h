@@ -23,6 +23,7 @@ inline int Modulus(int x, int mod) {
 class JJPhase {
  public:
   static JJPhase One() { return JJPhase(0); }
+  static JJPhase MinusOne() { return JJPhase(2); }
 
   explicit JJPhase(int jj, int prefactor = 1) : jj_(prefactor * jj) {
     Expects((prefactor == 1) || (prefactor == -1));
