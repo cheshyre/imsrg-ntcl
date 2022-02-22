@@ -54,6 +54,16 @@ TEST_CASE("Test odd J have phase == -1.") {
   }
 }
 
+TEST_CASE("Test One() factory method.") {
+  REQUIRE(imsrg::JJPhase::One().IsValidAsInt());
+  REQUIRE(imsrg::JJPhase::One().AsInt() == 1);
+}
+
+TEST_CASE("Test MinusOne() factory method.") {
+  REQUIRE(imsrg::JJPhase::MinusOne().IsValidAsInt());
+  REQUIRE(imsrg::JJPhase::MinusOne().AsInt() == -1);
+}
+
 TEST_CASE("Test odd JJ (half-integer J) are not valid as int.") {
   using imsrg::JJPhase;
 
