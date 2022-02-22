@@ -19,6 +19,9 @@ JJ CouplingMinimum(JJ a, JJ b) { return JJ(std::abs(a.AsInt() - b.AsInt())); }
 JJ CouplingMaximum(JJ a, JJ b) { return JJ(a.AsInt() + b.AsInt()); }
 std::vector<imsrg::JJ> CouplingRangeFromMinAndMax(JJ min, JJ max) {
   std::vector<imsrg::JJ> jjs;
+  if (max < min) {
+    return jjs;
+  }
   jjs.reserve((max.AsInt() - min.AsInt()) / 2 + 1);
   for (int jj_i = min.AsInt(); jj_i <= max.AsInt(); jj_i += 2) {
     jjs.push_back(imsrg::JJ(jj_i));
