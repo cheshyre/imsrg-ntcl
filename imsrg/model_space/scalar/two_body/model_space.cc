@@ -19,9 +19,9 @@ std::shared_ptr<const Scalar2BModelSpace> Scalar2BModelSpace::FromSPModelSpace(
 
   for (const auto& chan_p : sp_chans) {
     for (const auto& chan_q : sp_chans) {
-      if (chan_q.Index() > chan_p.Index()) {
-        continue;
-      }
+      // if (chan_q.Index() > chan_p.Index()) {
+      //   continue;
+      // }
       // p, q coupling range
       const auto jj_pq_min =
           CouplingMinimum<TotalAngMom>(chan_p.JJ(), chan_q.JJ());
@@ -29,9 +29,9 @@ std::shared_ptr<const Scalar2BModelSpace> Scalar2BModelSpace::FromSPModelSpace(
           CouplingMaximum<TotalAngMom>(chan_p.JJ(), chan_q.JJ());
       for (const auto& chan_r : sp_chans) {
         for (const auto& chan_s : sp_chans) {
-          if (chan_s.Index() > chan_r.Index()) {
-            continue;
-          }
+          // if (chan_s.Index() > chan_r.Index()) {
+          //   continue;
+          // }
           // Parity conservation
           if (chan_p.P() + chan_q.P() != chan_r.P() + chan_s.P()) {
             continue;
