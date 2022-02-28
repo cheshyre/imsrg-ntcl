@@ -1,6 +1,11 @@
 // Copyright 2022 Matthias Heinz
 #include "imsrg/commutator/scalar/comm_121.h"
 
+#include <vector>
+
+#include "ntcl/algorithms/easy_tensor_contraction_interface_cbind.h"
+#include "ntcl/data/f_array.h"
+
 #include "imsrg/model_space/scalar/one_body/channel_key.h"
 #include "imsrg/operator/scalar/one_body/operator.h"
 #include "imsrg/operator/scalar/two_body/operator.h"
@@ -9,6 +14,10 @@
 namespace imsrg {
 
 namespace detail {
+
+static ntcl::FArray<double, 2> WeightMatrixElementsWithOccs(
+    const std::vector<double>& occs_p, const std::vector<double>& occs_q,
+    const ntcl::FArray<double, 2>& tensor);
 
 static void EvaluateScalar121CommutatorWithFactor(const Scalar1BOperator& a,
                                                   const Scalar2BOperator& b,
@@ -49,10 +58,96 @@ void EvaluateScalar211CommutatorRefImpl(const Scalar2BOperator& a,
 
 namespace detail {
 
+ntcl::FArray<double, 2> WeightMatrixElementsWithOccs(
+    const std::vector<double>& occs_p, const std::vector<double>& occs_q,
+    const ntcl::FArray<double, 2>& tensor) {
+  Expects(occs_p.size() == tensor.dim_size(0));
+  Expects(occs_q.size() == tensor.dim_size(1));
+
+  ntcl::FArray<double, 2> new_tensor(tensor);
+
+  for (std::size_t p = 0; p < occs_p.size(); p += 1) {
+    for (std::size_t q = 0; q < occs_q.size(); q += 1) {
+      new_tensor(p, q) *= occs_p[p] * occs_q[q];
+    }
+  }
+  return new_tensor;
+}
+
 void EvaluateScalar121CommutatorWithFactor(const Scalar1BOperator& a,
                                            const Scalar2BOperator& b,
                                            Scalar1BOperator& c, int factor) {
-  return EvaluateScalar121CommutatorRefImplWithFactor(a, b, c, factor);
+  Expects(a.GetModelSpacePtr() == c.GetModelSpacePtr());
+  Expects(c.Herm() == Hermiticity::CommutatorHermiticity(a.Herm(), b.Herm()));
+
+  const auto& ntcl_engine = ntcl::AlgorithmsEngine::GetInstance();
+
+  const auto& ms_1b = a.GetModelSpace();
+  const auto& ms_2b = b.GetModelSpace();
+
+  for (std::size_t chan_b_index = 0; chan_b_index < ms_2b.NumberOfChannels();
+       chan_b_index += 1) {
+    const auto& chan_b = ms_2b.ChannelAtIndex(chan_b_index);
+    const auto& chan_1 = chan_b.BraChannel1();
+    const auto& chan_q = chan_b.BraChannel2();
+    const auto& chan_2 = chan_b.KetChannel1();
+    const auto& chan_p = chan_b.KetChannel2();
+
+    if (chan_1.ChannelKey() != chan_2.ChannelKey()) {
+      continue;
+    }
+
+    if (chan_p.ChannelKey() != chan_q.ChannelKey()) {
+      continue;
+    }
+
+    // Derived channels
+    const imsrg::Scalar1BChannelKey chankey_a(chan_p.ChannelKey(),
+                                              chan_q.ChannelKey());
+    if (!ms_1b.IsChannelInModelSpace(chankey_a)) {
+      continue;
+    }
+    const auto chan_a_index = ms_1b.IndexOfChannelInModelSpace(chankey_a);
+
+    const imsrg::Scalar1BChannelKey chankey_c(chan_1.ChannelKey(),
+                                              chan_2.ChannelKey());
+    if (!ms_1b.IsChannelInModelSpace(chankey_c)) {
+      continue;
+    }
+    const auto chan_c_index = ms_1b.IndexOfChannelInModelSpace(chankey_c);
+
+    double channel_factor =
+        (1.0 * factor *
+         imsrg::HatSquared(chan_b.ChannelKey().OpChannel().JJ())) /
+        imsrg::HatSquared(chankey_c.OpChannel().JJ());
+
+    // Tensors
+    auto& tensor_c = c.GetMutableTensorAtIndex(chan_c_index);
+    const auto& tensor_a = a.GetTensorAtIndex(chan_a_index);
+    const auto& tensor_b = b.GetTensorAtIndex(chan_b_index);
+
+    // Dims
+    const auto dim_p = chan_p.size();
+    const auto dim_q = chan_q.size();
+    const auto dim_1 = chan_1.size();
+    const auto dim_2 = chan_2.size();
+
+    // Occs
+    const auto& occs_p = chan_p.ChannelBasis().Occs();
+    const auto& occsbar_p = chan_p.ChannelBasis().OccsBar();
+    const auto& occs_q = chan_q.ChannelBasis().Occs();
+    const auto& occsbar_q = chan_q.ChannelBasis().OccsBar();
+
+    const auto tensor_a_occs_occsbar =
+        WeightMatrixElementsWithOccs(occs_p, occsbar_q, tensor_a);
+    const auto tensor_a_occsbar_occs =
+        WeightMatrixElementsWithOccs(occsbar_p, occs_q, tensor_a);
+
+    ntcl_engine.Contract(tensor_c, tensor_a_occs_occsbar, tensor_b,
+                         "C(i,j)=A(p,q)*B(i,q,j,p)", channel_factor, 1.0);
+    ntcl_engine.Contract(tensor_c, tensor_a_occsbar_occs, tensor_b,
+                         "C(i,j)=A(p,q)*B(i,q,j,p)", -1 * channel_factor, 1.0);
+  }
 }
 
 static void EvaluateScalar121CommutatorRefImplWithFactor(
