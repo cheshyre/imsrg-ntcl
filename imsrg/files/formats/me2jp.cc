@@ -85,7 +85,7 @@ double ME2JPFile::Get2BMatrixElement(const SPState& p, const SPState& q,
        (nljjt_s.Index() > nljjt_q.Index()))) {
     factor *= herm_.Factor();
     swap(nljjt_r, nljjt_p);
-    swap(nljjt_s, nljjt_r);
+    swap(nljjt_s, nljjt_q);
   }
 
   NLJJTIndex4 lookup_key(nljjt_p.Index(), nljjt_q.Index(), nljjt_r.Index(),

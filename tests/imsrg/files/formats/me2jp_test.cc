@@ -38,6 +38,7 @@ TEST_CASE("Test read-in of Ragnar emax=4 NAT ME2JP Hamiltonian.") {
   SPState p0p3_2(SPStateString("p0p3/2"), OccupationNumber::Particle());
   SPState n1s1_2(SPStateString("n1s1/2"), OccupationNumber::Particle());
   SPState p1s1_2(SPStateString("p1s1/2"), OccupationNumber::Particle());
+  SPState n1p1_2(SPStateString("n1p1/2"), OccupationNumber::Particle());
 
   TotalAngMom jj_0(0);
   TotalAngMom jj_2(2);
@@ -79,6 +80,11 @@ TEST_CASE("Test read-in of Ragnar emax=4 NAT ME2JP Hamiltonian.") {
             Approx(-1.817153409162).epsilon(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n0p1_2, n0s1_2, n0p1_2, jj_0) ==
             Approx(-1.817153409162).epsilon(1e-5));
+
+    REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n0p1_2, n0s1_2, n1p1_2, jj_0) ==
+            Approx(-0.404961996136).epsilon(1e-5));
+    REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n1p1_2, n0s1_2, n0p1_2, jj_0) ==
+            Approx(-0.404961996136).epsilon(1e-5));
   }
 
   SECTION("Prohibited by symmetries") {
