@@ -33,6 +33,8 @@ class Scalar2BChannel {
   }
 
  private:
+  // TODO(mheinz): consider reimplementing with pointer to SPModelSpace to save
+  // memory
   Scalar2BStateChannel bra_chan_;
   Scalar2BStateChannel ket_chan_;
   Scalar2BChannelKey full_chan_key_;
