@@ -2,6 +2,7 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_TOTAL_ANG_MOM_H_
 #define IMSRG_QUANTUM_NUMBERS_TOTAL_ANG_MOM_H_
 
+#include <cstdint>
 #include <utility>
 
 #include "imsrg/assert.h"
@@ -34,7 +35,7 @@ class TotalAngMom {
   }
 
  private:
-  int jj_;
+  std::int8_t jj_;
 };
 
 inline void swap(TotalAngMom& a, TotalAngMom& b) noexcept { a.swap(b); }

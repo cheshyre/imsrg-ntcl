@@ -3,6 +3,7 @@
 #define IMSRG_QUANTUM_NUMBERS_ISOSPIN_PROJECTION_H_
 
 #include <cmath>
+#include <cstdint>
 #include <utility>
 
 #include "imsrg/quantum_numbers/coupling/m_jj.h"
@@ -45,7 +46,7 @@ class IsospinProj {
   }
 
  private:
-  int m_tt_;
+  std::int8_t m_tt_;
 };
 
 inline void swap(IsospinProj& a, IsospinProj& b) noexcept { a.swap(b); }

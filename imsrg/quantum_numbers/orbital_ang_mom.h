@@ -2,6 +2,7 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_ORBITAL_ANG_MOM_H_
 #define IMSRG_QUANTUM_NUMBERS_ORBITAL_ANG_MOM_H_
 
+#include <cstdint>
 #include <utility>
 
 #include "imsrg/assert.h"
@@ -40,7 +41,7 @@ class OrbitalAngMom {
   }
 
  private:
-  int l_;
+  std::int8_t l_;
 };
 
 inline void swap(OrbitalAngMom& a, OrbitalAngMom& b) noexcept { a.swap(b); }

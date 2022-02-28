@@ -2,6 +2,7 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_ISOSPIN_H_
 #define IMSRG_QUANTUM_NUMBERS_ISOSPIN_H_
 
+#include <cstdint>
 #include <utility>
 
 #include "imsrg/assert.h"
@@ -31,7 +32,7 @@ class Isospin {
   }
 
  private:
-  int tt_;
+  std::int8_t tt_;
 };
 
 inline void swap(Isospin& a, Isospin& b) noexcept { a.swap(b); }

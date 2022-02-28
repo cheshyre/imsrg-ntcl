@@ -2,6 +2,7 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_SPIN_H_
 #define IMSRG_QUANTUM_NUMBERS_SPIN_H_
 
+#include <cstdint>
 #include <utility>
 
 #include "imsrg/assert.h"
@@ -31,7 +32,7 @@ class Spin {
   }
 
  private:
-  int ss_;
+  std::int8_t ss_;
 };
 
 inline void swap(Spin& a, Spin& b) noexcept { a.swap(b); }
