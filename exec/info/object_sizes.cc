@@ -4,6 +4,8 @@
 
 #include "spdlog/spdlog.h"
 
+#include "ntcl/data/f_array.h"
+
 #include "imsrg/quantum_numbers/coupling/jj.h"
 #include "imsrg/quantum_numbers/coupling/m_jj.h"
 #include "imsrg/quantum_numbers/ho_energy.h"
@@ -67,6 +69,13 @@ int main(void) {
   spdlog::info("Scalar1BChannelKey = {}", sizeof(imsrg::Scalar1BChannelKey));
   spdlog::info("Scalar1BChannel = {}", sizeof(imsrg::Scalar1BChannel));
   spdlog::info("Scalar1BModelSpace = {}", sizeof(imsrg::Scalar1BModelSpace));
+
+  spdlog::info(filler);
+  spdlog::info("Tensors");
+  spdlog::info(filler);
+  spdlog::info("FArray<double, 2> = {}", sizeof(ntcl::FArray<double, 2>));
+  spdlog::info("FArray<double, 4> = {}", sizeof(ntcl::FArray<double, 4>));
+  spdlog::info("FArray<double, 6> = {}", sizeof(ntcl::FArray<double, 6>));
 
   return 0;
 }
