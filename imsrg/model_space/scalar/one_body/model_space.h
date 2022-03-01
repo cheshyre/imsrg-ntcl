@@ -43,6 +43,7 @@ class Scalar1BModelSpace {
   void swap(Scalar1BModelSpace& other) noexcept {
     using std::swap;
     swap(chans_, other.chans_);
+    swap(chan_index_lookup_, other.chan_index_lookup_);
   }
 
  private:
