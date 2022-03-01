@@ -45,56 +45,56 @@ TEST_CASE("Test read-in of Ragnar emax=4 NAT ME2JP Hamiltonian.") {
 
   SECTION("Allowed by symmetries") {
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n0s1_2, n0s1_2, n0s1_2, jj_0) ==
-            Approx(-13.187302933647).epsilon(1e-5));
+            Approx(-13.187302933647).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n0s1_2, n0s1_2, n0s1_2, jj_2) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
 
     REQUIRE(me2jp.Get2BMatrixElement(p0s1_2, n0s1_2, p0s1_2, n0s1_2, jj_0) ==
-            Approx(-6.802379901960).epsilon(1e-5));
+            Approx(-6.802379901960).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, p0s1_2, p0s1_2, n0s1_2, jj_0) ==
-            Approx(-6.802379901960).epsilon(1e-5));
+            Approx(-6.802379901960).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, p0s1_2, n0s1_2, p0s1_2, jj_0) ==
-            Approx(-6.802379901960).epsilon(1e-5));
+            Approx(-6.802379901960).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(p0s1_2, n0s1_2, n0s1_2, p0s1_2, jj_0) ==
-            Approx(-6.802379901960).epsilon(1e-5));
+            Approx(-6.802379901960).margin(1e-5));
 
     REQUIRE(me2jp.Get2BMatrixElement(p0s1_2, n0s1_2, p0s1_2, n0s1_2, jj_2) ==
-            Approx(-8.418805711231).epsilon(1e-5));
+            Approx(-8.418805711231).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, p0s1_2, p0s1_2, n0s1_2, jj_2) ==
-            Approx(8.418805711231).epsilon(1e-5));
+            Approx(8.418805711231).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(p0s1_2, n0s1_2, n0s1_2, p0s1_2, jj_2) ==
-            Approx(8.418805711231).epsilon(1e-5));
+            Approx(8.418805711231).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, p0s1_2, n0s1_2, p0s1_2, jj_2) ==
-            Approx(-8.418805711231).epsilon(1e-5));
+            Approx(-8.418805711231).margin(1e-5));
 
     REQUIRE(me2jp.Get2BMatrixElement(p0s1_2, p0s1_2, p0s1_2, p0s1_2, jj_0) ==
-            Approx(-11.354616553188).epsilon(1e-5));
+            Approx(-11.354616553188).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(p0s1_2, p0s1_2, p0s1_2, p0s1_2, jj_2) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
 
     REQUIRE(me2jp.Get2BMatrixElement(n0p1_2, n0s1_2, n0p1_2, n0s1_2, jj_0) ==
-            Approx(-1.817153409162).epsilon(1e-5));
+            Approx(-1.817153409162).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n0p1_2, n0p1_2, n0s1_2, jj_0) ==
-            Approx(-1.817153409162).epsilon(1e-5));
+            Approx(-1.817153409162).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0p1_2, n0s1_2, n0s1_2, n0p1_2, jj_0) ==
-            Approx(-1.817153409162).epsilon(1e-5));
+            Approx(-1.817153409162).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n0p1_2, n0s1_2, n0p1_2, jj_0) ==
-            Approx(-1.817153409162).epsilon(1e-5));
+            Approx(-1.817153409162).margin(1e-5));
 
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n0p1_2, n0s1_2, n1p1_2, jj_0) ==
-            Approx(-0.404961996136).epsilon(1e-5));
+            Approx(-0.404961996136).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n1p1_2, n0s1_2, n0p1_2, jj_0) ==
-            Approx(-0.404961996136).epsilon(1e-5));
+            Approx(-0.404961996136).margin(1e-5));
   }
 
   SECTION("Prohibited by symmetries") {
     REQUIRE(me2jp.Get2BMatrixElement(p0s1_2, n0s1_2, n0s1_2, n0s1_2, jj_0) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, p0s1_2, n0s1_2, n0s1_2, jj_0) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n0s1_2, p0s1_2, n0s1_2, jj_0) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
     REQUIRE(me2jp.Get2BMatrixElement(n0s1_2, n0s1_2, n0s1_2, p0s1_2, jj_0) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
   }
 }

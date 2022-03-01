@@ -80,8 +80,7 @@ TEST_CASE("Test emax=4 NAT O16 [1, 1] -> 1 commutator (anti-herm, herm).") {
 
       for (std::size_t p = 0; p < dim_p; p += 1) {
         for (std::size_t q = 0; q < dim_q; q += 1) {
-          REQUIRE(actual_tensor(p, q) ==
-                  Approx(exp_tensor(p, q)).epsilon(1e-5));
+          REQUIRE(actual_tensor(p, q) == Approx(exp_tensor(p, q)).margin(1e-5));
         }
       }
     }
@@ -115,8 +114,7 @@ TEST_CASE("Test emax=4 NAT O16 [1, 1] -> 1 commutator (anti-herm, herm).") {
 
       for (std::size_t p = 0; p < dim_p; p += 1) {
         for (std::size_t q = 0; q < dim_q; q += 1) {
-          REQUIRE(actual_tensor(p, q) ==
-                  Approx(exp_tensor(p, q)).epsilon(1e-5));
+          REQUIRE(actual_tensor(p, q) == Approx(exp_tensor(p, q)).margin(1e-5));
         }
       }
     }
@@ -186,8 +184,7 @@ TEST_CASE("Test emax=6 NAT O16 [1, 1] -> 1 commutator (anti-herm, herm).") {
 
       for (std::size_t p = 0; p < dim_p; p += 1) {
         for (std::size_t q = 0; q < dim_q; q += 1) {
-          REQUIRE(actual_tensor(p, q) ==
-                  Approx(exp_tensor(p, q)).epsilon(1e-5));
+          REQUIRE(actual_tensor(p, q) == Approx(exp_tensor(p, q)).margin(1e-5));
         }
       }
     }
@@ -221,8 +218,7 @@ TEST_CASE("Test emax=6 NAT O16 [1, 1] -> 1 commutator (anti-herm, herm).") {
 
       for (std::size_t p = 0; p < dim_p; p += 1) {
         for (std::size_t q = 0; q < dim_q; q += 1) {
-          REQUIRE(actual_tensor(p, q) ==
-                  Approx(exp_tensor(p, q)).epsilon(1e-5));
+          REQUIRE(actual_tensor(p, q) == Approx(exp_tensor(p, q)).margin(1e-5));
         }
       }
     }

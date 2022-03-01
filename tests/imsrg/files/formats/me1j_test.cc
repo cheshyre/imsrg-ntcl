@@ -28,7 +28,7 @@ TEST_CASE("Test read-in of Ragnar emax=4 NAT ME1J Hamiltonian.") {
   const auto me1j = ME1JFile::FromTextFile(path_to_file, HOEnergy(4),
                                            Hermiticity::Hermitian());
 
-  REQUIRE(me1j.Get0BPart() == Approx(-11.2193398436).epsilon(1e-5));
+  REQUIRE(me1j.Get0BPart() == Approx(-11.2193398436).margin(1e-5));
 
   SPState n0s1_2(SPStateString("n0s1/2"), OccupationNumber::Particle());
   SPState p0s1_2(SPStateString("p0s1/2"), OccupationNumber::Particle());
@@ -41,43 +41,43 @@ TEST_CASE("Test read-in of Ragnar emax=4 NAT ME1J Hamiltonian.") {
 
   SECTION("Allowed by symmetries") {
     REQUIRE(me1j.Get1BMatrixElement(n0s1_2, n0s1_2) ==
-            Approx(-42.596206348055).epsilon(1e-5));
+            Approx(-42.596206348055).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(p0s1_2, p0s1_2) ==
-            Approx(-38.422543350179).epsilon(1e-5));
+            Approx(-38.422543350179).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(n0p1_2, n0p1_2) ==
-            Approx(-11.208007715079).epsilon(1e-5));
+            Approx(-11.208007715079).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(p0p1_2, p0p1_2) ==
-            Approx(-7.268378287724).epsilon(1e-5));
+            Approx(-7.268378287724).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(n0p3_2, n0p3_2) ==
-            Approx(-18.694839908723).epsilon(1e-5));
+            Approx(-18.694839908723).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(p0p3_2, p0p3_2) ==
-            Approx(-14.677726887030).epsilon(1e-5));
+            Approx(-14.677726887030).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(n1s1_2, n1s1_2) ==
-            Approx(15.265075691710).epsilon(1e-5));
+            Approx(15.265075691710).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(n1s1_2, n0s1_2) ==
-            Approx(-0.325566592806).epsilon(1e-5));
+            Approx(-0.325566592806).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(n0s1_2, n1s1_2) ==
-            Approx(-0.325566592806).epsilon(1e-5));
+            Approx(-0.325566592806).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(p1s1_2, p1s1_2) ==
-            Approx(19.306670490911).epsilon(1e-5));
+            Approx(19.306670490911).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(p1s1_2, p0s1_2) ==
-            Approx(-0.234885691021).epsilon(1e-5));
+            Approx(-0.234885691021).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(p0s1_2, p1s1_2) ==
-            Approx(-0.234885691021).epsilon(1e-5));
+            Approx(-0.234885691021).margin(1e-5));
   }
 
   SECTION("Prohibited by symmetries") {
     REQUIRE(me1j.Get1BMatrixElement(n0s1_2, p0s1_2) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(p0s1_2, n0s1_2) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(n0s1_2, n0p1_2) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(p0s1_2, p0p1_2) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(n0s1_2, n0p1_2) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
     REQUIRE(me1j.Get1BMatrixElement(p0s1_2, p0p1_2) ==
-            Approx(0.0).epsilon(1e-5));
+            Approx(0.0).margin(1e-5));
   }
 }
