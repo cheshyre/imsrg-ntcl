@@ -220,7 +220,8 @@ TEST_CASE("Test emax=4 NAT O16 [1, 2] -> 1 commutator (anti-herm, herm).") {
   }
 }
 
-TEST_CASE("Test emax=6 NAT O16 [1, 2] -> 1 commutator (anti-herm, herm).") {
+TEST_CASE("Test emax=6 NAT O16 [1, 2] -> 1 commutator (anti-herm, herm).",
+          "[!hide][big]") {
   using imsrg::Hermiticity;
   using imsrg::HOEnergy;
   using imsrg::ME1JFile;
