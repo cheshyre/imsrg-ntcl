@@ -20,7 +20,6 @@ bool OpenMPRuntime::IsInitialized() {
 
 const OpenMPRuntime& OpenMPRuntime::InitializeRuntime() {
   auto& instance = OpenMPRuntime::GetMutableInstance();
-  Expects(!instance.Initialized());
   instance.Init();
   return instance;
 }
@@ -28,7 +27,6 @@ const OpenMPRuntime& OpenMPRuntime::InitializeRuntime() {
 const OpenMPRuntime& OpenMPRuntime::InitializeRuntime(
     int max_number_of_threads) {
   auto& instance = OpenMPRuntime::GetMutableInstance();
-  Expects(!instance.Initialized());
   instance.Init(max_number_of_threads);
   return instance;
 }
