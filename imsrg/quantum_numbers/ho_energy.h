@@ -2,6 +2,7 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_HO_ENERGY_H_
 #define IMSRG_QUANTUM_NUMBERS_HO_ENERGY_H_
 
+#include <cstdint>
 #include <utility>
 #include <vector>
 
@@ -37,7 +38,7 @@ class HOEnergy {
   }
 
  private:
-  int e_;
+  std::int8_t e_;
 };
 
 inline void swap(HOEnergy& a, HOEnergy& b) noexcept { a.swap(b); }

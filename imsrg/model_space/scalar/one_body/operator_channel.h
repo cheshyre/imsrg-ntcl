@@ -22,7 +22,7 @@ class Scalar1BOpChannel {
   IsospinProj M_TT() const { return m_tt_; }
 
   template <typename H>
-  friend H AbslHashValue(H h, Scalar1BOpChannel& o) {
+  friend H AbslHashValue(H h, const Scalar1BOpChannel& o) {
     return H::combine(std::move(h), o.jj_, o.p_, o.m_tt_);
   }
 

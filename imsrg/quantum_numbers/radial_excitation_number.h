@@ -2,6 +2,7 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_RADIAL_EXCITATION_NUMBER_H_
 #define IMSRG_QUANTUM_NUMBERS_RADIAL_EXCITATION_NUMBER_H_
 
+#include <cstdint>
 #include <utility>
 
 #include "imsrg/assert.h"
@@ -26,7 +27,7 @@ class RadialExcitationNumber {
   }
 
  private:
-  int n_;
+  std::int8_t n_;
 };
 
 inline void swap(RadialExcitationNumber& a,

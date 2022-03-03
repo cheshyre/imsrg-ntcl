@@ -32,6 +32,27 @@ TEST_CASE("Test IsHalfInteger() and IsInteger() on odd m_jj.") {
   }
 }
 
+TEST_CASE("Test Phase() on even m_jj.") {
+  for (const auto& m_jj : {-8, -6, -4, -2, 0, 2, 4, 6, 8}) {
+    imsrg::M_JJ m_jj_o(m_jj);
+
+    REQUIRE(m_jj_o.Phase().IsValidAsInt());
+    if (m_jj % 4 == 0) {
+      REQUIRE(m_jj_o.Phase().AsInt() == 1);
+    } else {
+      REQUIRE(m_jj_o.Phase().AsInt() == -1);
+    }
+  }
+}
+
+TEST_CASE("Test Phase() on odd m_jj.") {
+  for (const auto& m_jj : {-9, -7, -5, -3, -1, 1, 3, 5, 7, 9}) {
+    imsrg::M_JJ m_jj_o(m_jj);
+
+    REQUIRE_FALSE(m_jj_o.Phase().IsValidAsInt());
+  }
+}
+
 TEST_CASE("Test copy contructor.") {
   REQUIRE(std::is_copy_constructible<imsrg::M_JJ>::value);
 

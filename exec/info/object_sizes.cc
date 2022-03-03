@@ -4,6 +4,8 @@
 
 #include "spdlog/spdlog.h"
 
+#include "ntcl/data/f_array.h"
+
 #include "imsrg/quantum_numbers/coupling/jj.h"
 #include "imsrg/quantum_numbers/coupling/m_jj.h"
 #include "imsrg/quantum_numbers/ho_energy.h"
@@ -27,6 +29,11 @@
 #include "imsrg/model_space/scalar/one_body/channel_key.h"
 #include "imsrg/model_space/scalar/one_body/model_space.h"
 #include "imsrg/model_space/scalar/one_body/operator_channel.h"
+
+#include "imsrg/model_space/scalar/two_body/channel.h"
+#include "imsrg/model_space/scalar/two_body/channel_key.h"
+#include "imsrg/model_space/scalar/two_body/model_space.h"
+#include "imsrg/model_space/scalar/two_body/operator_channel.h"
 
 int main(void) {
   std::string filler(72, '*');
@@ -67,6 +74,20 @@ int main(void) {
   spdlog::info("Scalar1BChannelKey = {}", sizeof(imsrg::Scalar1BChannelKey));
   spdlog::info("Scalar1BChannel = {}", sizeof(imsrg::Scalar1BChannel));
   spdlog::info("Scalar1BModelSpace = {}", sizeof(imsrg::Scalar1BModelSpace));
+  spdlog::info(filler);
+  spdlog::info("Scalar 2-body model space");
+  spdlog::info(filler);
+  spdlog::info("Scalar2BOpChannel = {}", sizeof(imsrg::Scalar2BOpChannel));
+  spdlog::info("Scalar2BChannelKey = {}", sizeof(imsrg::Scalar2BChannelKey));
+  spdlog::info("Scalar2BChannel = {}", sizeof(imsrg::Scalar2BChannel));
+  spdlog::info("Scalar2BModelSpace = {}", sizeof(imsrg::Scalar2BModelSpace));
+
+  spdlog::info(filler);
+  spdlog::info("Tensors");
+  spdlog::info(filler);
+  spdlog::info("FArray<double, 2> = {}", sizeof(ntcl::FArray<double, 2>));
+  spdlog::info("FArray<double, 4> = {}", sizeof(ntcl::FArray<double, 4>));
+  spdlog::info("FArray<double, 6> = {}", sizeof(ntcl::FArray<double, 6>));
 
   return 0;
 }

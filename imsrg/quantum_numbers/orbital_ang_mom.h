@@ -2,10 +2,12 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_ORBITAL_ANG_MOM_H_
 #define IMSRG_QUANTUM_NUMBERS_ORBITAL_ANG_MOM_H_
 
+#include <cstdint>
 #include <utility>
 
 #include "imsrg/assert.h"
 #include "imsrg/quantum_numbers/coupling/jj.h"
+#include "imsrg/quantum_numbers/coupling/phases.h"
 #include "imsrg/quantum_numbers/parity.h"
 
 namespace imsrg {
@@ -20,6 +22,7 @@ class OrbitalAngMom {
 
   int AsInt() const { return l_; }
   JJ AsJJ() const { return JJ(2 * l_); }
+  JJPhase Phase(int prefactor = 1) const { return AsJJ().Phase(prefactor); }
   imsrg::Parity Parity() const {
     if (l_ % 2 == 0) {
       return Parity::Even();
@@ -38,7 +41,7 @@ class OrbitalAngMom {
   }
 
  private:
-  int l_;
+  std::int8_t l_;
 };
 
 inline void swap(OrbitalAngMom& a, OrbitalAngMom& b) noexcept { a.swap(b); }

@@ -5,6 +5,7 @@
 #include <utility>
 
 #include "imsrg/assert.h"
+#include "imsrg/quantum_numbers/coupling/phases.h"
 
 namespace imsrg {
 class JJ {
@@ -22,6 +23,7 @@ class JJ {
 
   bool IsHalfInteger() const { return jj_ % 2 == 1; }
   bool IsInteger() const { return jj_ % 2 == 0; }
+  JJPhase Phase(int prefactor = 1) const { return JJPhase(jj_, prefactor); }
 
   void swap(JJ& other) noexcept {
     using std::swap;

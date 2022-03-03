@@ -64,7 +64,7 @@ TEST_CASE("Test emax=4 NAT O16 [1, 1] -> 0 commutator (anti-herm, herm).") {
 
     auto actual_result_0b = imsrg::EvaluateScalar110Commutator(h1, gen1);
 
-    REQUIRE(actual_result_0b == Approx(exp_result_0b).epsilon(1e-5));
+    REQUIRE(actual_result_0b == Approx(exp_result_0b).margin(1e-5));
   }
 
   SECTION("[gen1, h1]") {
@@ -79,7 +79,7 @@ TEST_CASE("Test emax=4 NAT O16 [1, 1] -> 0 commutator (anti-herm, herm).") {
 
     auto actual_result_0b = imsrg::EvaluateScalar110Commutator(gen1, h1);
 
-    REQUIRE(actual_result_0b == Approx(exp_result_0b).epsilon(1e-5));
+    REQUIRE(actual_result_0b == Approx(exp_result_0b).margin(1e-5));
   }
 }
 
@@ -130,7 +130,7 @@ TEST_CASE("Test emax=6 NAT O16 [1, 1] -> 0 commutator (anti-herm, herm).") {
 
     auto actual_result_0b = imsrg::EvaluateScalar110Commutator(h1, gen1);
 
-    REQUIRE(actual_result_0b == Approx(exp_result_0b).epsilon(1e-5));
+    REQUIRE(actual_result_0b == Approx(exp_result_0b).margin(1e-5));
   }
 
   SECTION("[gen1, h1]") {
@@ -145,6 +145,6 @@ TEST_CASE("Test emax=6 NAT O16 [1, 1] -> 0 commutator (anti-herm, herm).") {
 
     auto actual_result_0b = imsrg::EvaluateScalar110Commutator(gen1, h1);
 
-    REQUIRE(actual_result_0b == Approx(exp_result_0b).epsilon(1e-5));
+    REQUIRE(actual_result_0b == Approx(exp_result_0b).margin(1e-5));
   }
 }

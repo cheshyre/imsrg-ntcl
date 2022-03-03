@@ -51,6 +51,27 @@ TEST_CASE("Test IsHalfInteger() and IsInteger() on odd tt.") {
   }
 }
 
+TEST_CASE("Test Phase() on even tt.") {
+  for (const auto& tt : {0, 2, 4, 6, 8}) {
+    imsrg::Isospin tt_o(tt);
+
+    REQUIRE(tt_o.Phase().IsValidAsInt());
+    if (tt % 4 == 0) {
+      REQUIRE(tt_o.Phase().AsInt() == 1);
+    } else {
+      REQUIRE(tt_o.Phase().AsInt() == -1);
+    }
+  }
+}
+
+TEST_CASE("Test Phase() on odd tt.") {
+  for (const auto& tt : {1, 3, 5, 7, 9}) {
+    imsrg::Isospin tt_o(tt);
+
+    REQUIRE_FALSE(tt_o.Phase().IsValidAsInt());
+  }
+}
+
 TEST_CASE("Test negative int constructor.", "[!hide][!shouldfail]") {
   imsrg::Isospin tt_o(-1);
 

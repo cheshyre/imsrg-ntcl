@@ -2,10 +2,12 @@
 #ifndef IMSRG_QUANTUM_NUMBERS_SPIN_H_
 #define IMSRG_QUANTUM_NUMBERS_SPIN_H_
 
+#include <cstdint>
 #include <utility>
 
 #include "imsrg/assert.h"
 #include "imsrg/quantum_numbers/coupling/jj.h"
+#include "imsrg/quantum_numbers/coupling/phases.h"
 
 namespace imsrg {
 class Spin {
@@ -19,6 +21,7 @@ class Spin {
 
   int AsInt() const { return ss_; }
   JJ AsJJ() const { return JJ(ss_); }
+  JJPhase Phase(int prefactor = 1) const { return AsJJ().Phase(prefactor); }
 
   bool IsHalfInteger() const { return ss_ % 2 == 1; }
   bool IsInteger() const { return ss_ % 2 == 0; }
@@ -29,7 +32,7 @@ class Spin {
   }
 
  private:
-  int ss_;
+  std::int8_t ss_;
 };
 
 inline void swap(Spin& a, Spin& b) noexcept { a.swap(b); }

@@ -6,7 +6,10 @@
 #include <utility>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
+
 #include "imsrg/model_space/scalar/one_body/channel.h"
+#include "imsrg/model_space/scalar/one_body/channel_key.h"
 #include "imsrg/model_space/single_particle/model_space.h"
 
 namespace imsrg {
@@ -34,13 +37,18 @@ class Scalar1BModelSpace {
     return chans_[index];
   }
 
+  bool IsChannelInModelSpace(Scalar1BChannelKey chankey) const;
+  std::size_t IndexOfChannelInModelSpace(Scalar1BChannelKey chankey) const;
+
   void swap(Scalar1BModelSpace& other) noexcept {
     using std::swap;
     swap(chans_, other.chans_);
+    swap(chan_index_lookup_, other.chan_index_lookup_);
   }
 
  private:
   std::vector<Scalar1BChannel> chans_;
+  absl::flat_hash_map<Scalar1BChannelKey, std::size_t> chan_index_lookup_;
 };
 
 inline void swap(Scalar1BModelSpace& a, Scalar1BModelSpace& b) noexcept {
