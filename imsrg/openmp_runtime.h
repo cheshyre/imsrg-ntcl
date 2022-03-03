@@ -22,6 +22,7 @@ class OpenMPRuntime {
   static OpenMPRuntime& GetMutableInstance();
 
   OpenMPRuntime();
+  ~OpenMPRuntime();
 
   void Init();
   void Init(int max_number_of_threads);

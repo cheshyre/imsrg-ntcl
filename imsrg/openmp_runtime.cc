@@ -43,6 +43,7 @@ OpenMPRuntime& OpenMPRuntime::GetMutableInstance() {
 }
 
 OpenMPRuntime::OpenMPRuntime() {}
+OpenMPRuntime::~OpenMPRuntime() {}
 
 void OpenMPRuntime::Init() {
   int num_threads = 1;
