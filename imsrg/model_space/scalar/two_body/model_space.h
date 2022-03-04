@@ -10,6 +10,7 @@
 
 #include "imsrg/model_space/scalar/two_body/channel.h"
 #include "imsrg/model_space/scalar/two_body/channel_key.h"
+#include "imsrg/model_space/scalar/two_body/state_channel_key.h"
 #include "imsrg/model_space/single_particle/model_space.h"
 
 namespace imsrg {
@@ -21,7 +22,11 @@ class Scalar2BModelSpace {
 
   // Ctor from a vector of channels
   // YOU SHOULD NOT CALL THIS DIRECTLY.
-  explicit Scalar2BModelSpace(std::vector<Scalar2BChannel>&& chans);
+  explicit Scalar2BModelSpace(
+      std::vector<Scalar2BChannel>&& chans,
+      absl::flat_hash_map<Scalar2BOpChannel,
+                          std::vector<Scalar2BStateChannelKey>>&&
+          state_keys_lookup);
 
   // Not copyable or movable (only pointers)
   Scalar2BModelSpace(const Scalar2BModelSpace&) = delete;
@@ -41,15 +46,21 @@ class Scalar2BModelSpace {
   bool IsChannelInModelSpace(Scalar2BChannelKey chankey) const;
   std::size_t IndexOfChannelInModelSpace(Scalar2BChannelKey chankey) const;
 
+  const std::vector<Scalar2BStateChannelKey>& GetStateChannelsInOperatorChannel(
+      Scalar2BOpChannel op_chan) const;
+
   void swap(Scalar2BModelSpace& other) noexcept {
     using std::swap;
     swap(chans_, other.chans_);
     swap(chan_index_lookup_, other.chan_index_lookup_);
+    swap(state_keys_lookup_, other.state_keys_lookup_);
   }
 
  private:
   std::vector<Scalar2BChannel> chans_;
   absl::flat_hash_map<Scalar2BChannelKey, std::size_t> chan_index_lookup_;
+  absl::flat_hash_map<Scalar2BOpChannel, std::vector<Scalar2BStateChannelKey>>
+      state_keys_lookup_;
 };
 
 inline void swap(Scalar2BModelSpace& a, Scalar2BModelSpace& b) noexcept {
