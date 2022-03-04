@@ -101,7 +101,7 @@ TEST_CASE("Test emax=4 NAT O16 [1, 2] -> 2 commutator (anti-herm, herm).") {
 
     imsrg::EvaluateScalar122Commutator(gen1, h2, actual_result);
 
-    for (std::size_t chan_index = 0; chan_index < ms_1b->NumberOfChannels();
+    for (std::size_t chan_index = 0; chan_index < ms_2b->NumberOfChannels();
          chan_index += 1) {
       const auto& exp_tensor = expected_result.GetTensorAtIndex(chan_index);
       const auto& actual_tensor = actual_result.GetTensorAtIndex(chan_index);
