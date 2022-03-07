@@ -2,6 +2,7 @@
 #ifndef IMSRG_MODEL_SPACE_SINGLE_PARTICLE_CHANNEL_KEY_H_
 #define IMSRG_MODEL_SPACE_SINGLE_PARTICLE_CHANNEL_KEY_H_
 
+#include <cstdint>
 #include <utility>
 
 #include "imsrg/model_space/jj_p_m_tt.h"
@@ -19,32 +20,26 @@ class SPChannelKey {
 
   // Default copy, move, and destructor
 
-  TotalAngMom JJ() const { return jj_; }
-  Parity P() const { return p_; }
-  IsospinProj M_TT() const { return m_tt_; }
+  TotalAngMom JJ() const;
+  Parity P() const;
+  IsospinProj M_TT() const;
 
   // Unique index, computed from jj, p, m_tt
-  std::size_t Index() const { return index_; }
+  std::size_t Index() const { return packed_rep_; }
 
   void swap(SPChannelKey& other) noexcept {
     using std::swap;
-    swap(jj_, other.jj_);
-    swap(p_, other.p_);
-    swap(m_tt_, other.m_tt_);
-    swap(index_, other.index_);
+    swap(packed_rep_, other.packed_rep_);
   }
 
   // Hash value, independent of secured basis ptr
   template <typename H>
   friend H AbslHashValue(H h, const SPChannelKey& o) {
-    return H::combine(std::move(h), o.jj_, o.p_, o.m_tt_);
+    return H::combine(std::move(h), o.packed_rep_);
   }
 
  private:
-  TotalAngMom jj_;
-  Parity p_;
-  IsospinProj m_tt_;
-  std::size_t index_;
+  std::uint8_t packed_rep_;
 };
 
 inline void swap(SPChannelKey& a, SPChannelKey& b) noexcept { a.swap(b); }
