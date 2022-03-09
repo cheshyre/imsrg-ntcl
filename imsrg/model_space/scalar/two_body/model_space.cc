@@ -106,17 +106,19 @@ std::shared_ptr<const Scalar2BModelSpace> Scalar2BModelSpace::FromSPModelSpace(
     }
   }
   return std::make_shared<const Scalar2BModelSpace>(
-      std::move(chans), imsrg::detail::Generate2BStateKeyLookup(*sp_ms),
+      sp_ms, std::move(chans), imsrg::detail::Generate2BStateKeyLookup(*sp_ms),
       imsrg::detail::GenerateBareChannels(*sp_ms));
 }
 
 Scalar2BModelSpace::Scalar2BModelSpace(
+    const std::shared_ptr<const SPModelSpace>& sp_ms,
     std::vector<Scalar2BChannel>&& chans,
     absl::flat_hash_map<Scalar2BOpChannel,
                         std::vector<Scalar2BStateChannelKey>>&&
         state_keys_lookup,
     std::vector<Scalar2BBareChannelKey>&& sp_chans)
-    : chans_(std::move(chans)),
+    : sp_ms_(sp_ms),
+      chans_(std::move(chans)),
       chan_index_lookup_(imsrg::detail::GenerateChannelIndexLookup(chans_)),
       state_keys_lookup_(std::move(state_keys_lookup)),
       sp_chans_(std::move(sp_chans)) {}

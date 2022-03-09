@@ -24,6 +24,7 @@ class Scalar2BModelSpace {
   // Ctor from a vector of channels
   // YOU SHOULD NOT CALL THIS DIRECTLY.
   explicit Scalar2BModelSpace(
+      const std::shared_ptr<const SPModelSpace>& sp_ms,
       std::vector<Scalar2BChannel>&& chans,
       absl::flat_hash_map<Scalar2BOpChannel,
                           std::vector<Scalar2BStateChannelKey>>&&
@@ -40,6 +41,13 @@ class Scalar2BModelSpace {
 
   std::size_t size() const { return chans_.size(); }
   std::size_t NumberOfChannels() const { return size(); }
+
+  const std::shared_ptr<const SPModelSpace>& SingleParticleModelSpacePtr()
+      const {
+    return sp_ms_;
+  }
+
+  const SPModelSpace& SingleParticleModelSpace() const { return *sp_ms_; }
 
   const Scalar2BChannel& ChannelAtIndex(std::size_t index) const {
     return chans_[index];
@@ -64,6 +72,7 @@ class Scalar2BModelSpace {
   }
 
  private:
+  std::shared_ptr<const SPModelSpace> sp_ms_;
   std::vector<Scalar2BChannel> chans_;
   absl::flat_hash_map<Scalar2BChannelKey, std::size_t> chan_index_lookup_;
   absl::flat_hash_map<Scalar2BOpChannel, std::vector<Scalar2BStateChannelKey>>
