@@ -36,9 +36,9 @@ int main(void) {
     const auto sp_ms = imsrg::SPModelSpace::FromFullBasis(full_basis);
 
     spdlog::info("Single-particle model space size = {} channels",
-                 sp_ms.Channels().size());
+                 sp_ms->Channels().size());
     spdlog::info("size in memory = {}",
-                 sp_ms.Channels().size() * sizeof(imsrg::SPChannel));
+                 sp_ms->Channels().size() * sizeof(imsrg::SPChannel));
     spdlog::info(filler);
 
     const auto ms1b = imsrg::Scalar1BModelSpace::FromSPModelSpace(sp_ms);
