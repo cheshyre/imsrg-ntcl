@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "imsrg/model_space/single_particle/channel.h"
+#include "imsrg/model_space/single_particle/channel_key.h"
 #include "imsrg/model_space/single_particle/full_basis.h"
 
 namespace imsrg {
@@ -27,10 +28,18 @@ class SPModelSpace {
   void swap(SPModelSpace& other) noexcept {
     using std::swap;
     swap(chans_, other.chans_);
+    swap(max_index_, other.max_index_);
+    swap(chankeys_, other.chankeys_);
+    swap(defined_, other.defined_);
+    swap(dims_, other.dims_);
   }
 
  private:
   std::vector<SPChannel> chans_;
+  std::size_t max_index_;
+  std::vector<SPChannelKey> chankeys_;
+  std::vector<bool> defined_;
+  std::vector<std::size_t> dims_;
 };
 
 inline void swap(SPModelSpace& a, SPModelSpace& b) noexcept { a.swap(b); }
