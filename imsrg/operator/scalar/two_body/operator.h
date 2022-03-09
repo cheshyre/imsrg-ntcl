@@ -9,6 +9,7 @@
 #include "ntcl/data/f_array.h"
 
 #include "imsrg/model_space/scalar/two_body/model_space.h"
+#include "imsrg/model_space/scalar/two_body/pandya_channel_key.h"
 #include "imsrg/quantum_numbers/hermiticity.h"
 
 namespace imsrg {
@@ -39,6 +40,13 @@ class Scalar2BOperator {
   std::shared_ptr<const Scalar2BModelSpace> GetModelSpacePtr() const {
     return ms_ptr_;
   }
+
+  ntcl::FArray<double, 4> GeneratePandyaTensorInPandyaChannel(
+      const Scalar2BPandyaChannelKey& pandya_channel) const;
+
+  void AddPandyaTensor(const Scalar2BPandyaChannelKey& pandya_channel,
+                       const ntcl::FArray<double, 4>& pandya_tensor,
+                       double factor = 1.0);
 
   void swap(Scalar2BOperator& other) noexcept {
     using std::swap;

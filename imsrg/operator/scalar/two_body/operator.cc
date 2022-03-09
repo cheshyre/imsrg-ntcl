@@ -9,6 +9,7 @@
 
 #include "imsrg/assert.h"
 #include "imsrg/model_space/scalar/two_body/model_space.h"
+#include "imsrg/model_space/scalar/two_body/pandya_channel_key.h"
 #include "imsrg/quantum_numbers/hermiticity.h"
 
 namespace imsrg {
@@ -38,6 +39,18 @@ Scalar2BOperator::Scalar2BOperator(
     std::vector<ntcl::FArray<double, 4>>&& tensors)
     : ms_ptr_(ms_ptr), herm_(herm), tensors_(std::move(tensors)) {
   Expects(ms_ptr_->NumberOfChannels() == tensors_.size());
+}
+
+ntcl::FArray<double, 4> Scalar2BOperator::GeneratePandyaTensorInPandyaChannel(
+    const Scalar2BPandyaChannelKey& pandya_channel) const {
+  // TODO(mheinz): implement
+  return ntcl::FArray<double, 4>(1, 1, 1, 1);
+}
+
+void Scalar2BOperator::AddPandyaTensor(
+    const Scalar2BPandyaChannelKey& pandya_channel,
+    const ntcl::FArray<double, 4>& pandya_tensor, double factor) {
+  // TODO(mheinz): implement
 }
 
 }  // namespace imsrg
