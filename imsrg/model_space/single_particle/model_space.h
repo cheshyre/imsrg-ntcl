@@ -25,6 +25,12 @@ class SPModelSpace {
 
   const std::vector<SPChannel>& Channels() const { return chans_; }
 
+  bool IsChannelInModelSpace(SPChannelKey chankey) const {
+    return defined_[chankey.Index()];
+  }
+
+  std::size_t ChannelDim(SPChannelKey chankey) const;
+
   void swap(SPModelSpace& other) noexcept {
     using std::swap;
     swap(chans_, other.chans_);

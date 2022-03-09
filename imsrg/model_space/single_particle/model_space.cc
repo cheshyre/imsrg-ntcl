@@ -50,6 +50,11 @@ SPModelSpace::SPModelSpace(const std::vector<SPChannel>& chans)
   // Ensures(chans are sorted)
 }
 
+std::size_t SPModelSpace::ChannelDim(SPChannelKey chankey) const {
+  Expects(IsChannelInModelSpace(chankey));
+  return dims_[chankey.Index()];
+}
+
 namespace detail {
 std::vector<imsrg::SPChannel> SortChannels(
     const std::vector<SPChannel>& chans) {
