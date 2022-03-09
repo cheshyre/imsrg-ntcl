@@ -36,8 +36,8 @@ std::size_t Scalar1BModelSpace::IndexOfChannelInModelSpace(
 }
 
 std::shared_ptr<const Scalar1BModelSpace> Scalar1BModelSpace::FromSPModelSpace(
-    const SPModelSpace& sp_ms) {
-  const auto& sp_chans = sp_ms.Channels();
+    const std::shared_ptr<const SPModelSpace>& sp_ms) {
+  const auto& sp_chans = sp_ms->Channels();
   std::vector<Scalar1BChannel> chans;
   chans.reserve(sp_chans.size());
 
@@ -46,7 +46,7 @@ std::shared_ptr<const Scalar1BModelSpace> Scalar1BModelSpace::FromSPModelSpace(
   }
 
   return std::make_shared<const Scalar1BModelSpace>(std::move(chans));
-}
+}  // namespace imsrg
 
 Scalar1BModelSpace::Scalar1BModelSpace(std::vector<Scalar1BChannel>&& chans)
     : chans_(std::move(chans)),

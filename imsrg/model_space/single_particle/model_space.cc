@@ -2,6 +2,7 @@
 #include "imsrg/model_space/single_particle/model_space.h"
 
 #include <algorithm>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -10,7 +11,8 @@
 #include "imsrg/model_space/single_particle/partial_basis.h"
 
 namespace imsrg {
-SPModelSpace SPModelSpace::FromFullBasis(const SPFullBasis& full_basis) {
+std::shared_ptr<const SPModelSpace> SPModelSpace::FromFullBasis(
+    const SPFullBasis& full_basis) {
   const auto basis_part = PartitionSPFullBasisIntoSPPartialBases(full_basis);
 
   std::vector<SPChannel> chans;
@@ -19,7 +21,7 @@ SPModelSpace SPModelSpace::FromFullBasis(const SPFullBasis& full_basis) {
     chans.emplace_back(SPChannelKey(jjpmtt), basis_ptr);
   }
 
-  return SPModelSpace(chans);
+  return std::make_shared<const SPModelSpace>(chans);
 }
 
 SPModelSpace::SPModelSpace(const std::vector<SPChannel>& chans)

@@ -19,7 +19,7 @@ namespace imsrg {
 class Scalar2BModelSpace {
  public:
   static std::shared_ptr<const Scalar2BModelSpace> FromSPModelSpace(
-      const SPModelSpace& sp_ms);
+      const std::shared_ptr<const SPModelSpace>& sp_ms);
 
   // Ctor from a vector of channels
   // YOU SHOULD NOT CALL THIS DIRECTLY.

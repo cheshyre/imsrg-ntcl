@@ -3,6 +3,7 @@
 #define IMSRG_MODEL_SPACE_SINGLE_PARTICLE_MODEL_SPACE_H_
 
 #include <algorithm>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -13,7 +14,8 @@ namespace imsrg {
 
 class SPModelSpace {
  public:
-  static SPModelSpace FromFullBasis(const SPFullBasis& full_basis);
+  static std::shared_ptr<const SPModelSpace> FromFullBasis(
+      const SPFullBasis& full_basis);
 
   // Make model space from vector of *unique* channels
   explicit SPModelSpace(const std::vector<SPChannel>& chans);

@@ -56,8 +56,8 @@ Scalar2BModelSpace::GetStateChannelsInOperatorChannel(
 }
 
 std::shared_ptr<const Scalar2BModelSpace> Scalar2BModelSpace::FromSPModelSpace(
-    const SPModelSpace& sp_ms) {
-  const auto& sp_chans = sp_ms.Channels();
+    const std::shared_ptr<const SPModelSpace>& sp_ms) {
+  const auto& sp_chans = sp_ms->Channels();
   std::vector<Scalar2BChannel> chans;
 
   for (const auto& chan_p : sp_chans) {
@@ -106,8 +106,8 @@ std::shared_ptr<const Scalar2BModelSpace> Scalar2BModelSpace::FromSPModelSpace(
     }
   }
   return std::make_shared<const Scalar2BModelSpace>(
-      std::move(chans), imsrg::detail::Generate2BStateKeyLookup(sp_ms),
-      imsrg::detail::GenerateBareChannels(sp_ms));
+      std::move(chans), imsrg::detail::Generate2BStateKeyLookup(*sp_ms),
+      imsrg::detail::GenerateBareChannels(*sp_ms));
 }
 
 Scalar2BModelSpace::Scalar2BModelSpace(
