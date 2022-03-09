@@ -14,6 +14,7 @@
 
 #include "imsrg/model_space/scalar/one_body/channel.h"
 #include "imsrg/model_space/scalar/one_body/model_space.h"
+#include "imsrg/model_space/scalar/two_body/bare_channel_key.h"
 #include "imsrg/model_space/scalar/two_body/channel.h"
 #include "imsrg/model_space/scalar/two_body/model_space.h"
 
@@ -52,6 +53,9 @@ int main(void) {
                  ms2b->NumberOfChannels());
     spdlog::info("size in memory = {}",
                  ms2b->NumberOfChannels() * sizeof(imsrg::Scalar2BChannel));
+    spdlog::info(
+        "bare_channels size in memory = {}",
+        ms2b->BareChannels().size() * sizeof(imsrg::Scalar2BBareChannelKey));
     spdlog::info(filler);
   }
 
