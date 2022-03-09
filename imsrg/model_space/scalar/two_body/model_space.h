@@ -8,6 +8,7 @@
 
 #include "absl/container/flat_hash_map.h"
 
+#include "imsrg/model_space/scalar/two_body/bare_channel_key.h"
 #include "imsrg/model_space/scalar/two_body/channel.h"
 #include "imsrg/model_space/scalar/two_body/channel_key.h"
 #include "imsrg/model_space/scalar/two_body/state_channel_key.h"
@@ -26,7 +27,8 @@ class Scalar2BModelSpace {
       std::vector<Scalar2BChannel>&& chans,
       absl::flat_hash_map<Scalar2BOpChannel,
                           std::vector<Scalar2BStateChannelKey>>&&
-          state_keys_lookup);
+          state_keys_lookup,
+      std::vector<Scalar2BBareChannelKey>&& sp_chans);
 
   // Not copyable or movable (only pointers)
   Scalar2BModelSpace(const Scalar2BModelSpace&) = delete;
@@ -49,11 +51,16 @@ class Scalar2BModelSpace {
   const std::vector<Scalar2BStateChannelKey>& GetStateChannelsInOperatorChannel(
       Scalar2BOpChannel op_chan) const;
 
+  const std::vector<Scalar2BBareChannelKey>& BareChannels() const {
+    return sp_chans_;
+  }
+
   void swap(Scalar2BModelSpace& other) noexcept {
     using std::swap;
     swap(chans_, other.chans_);
     swap(chan_index_lookup_, other.chan_index_lookup_);
     swap(state_keys_lookup_, other.state_keys_lookup_);
+    swap(sp_chans_, other.sp_chans_);
   }
 
  private:
@@ -61,6 +68,7 @@ class Scalar2BModelSpace {
   absl::flat_hash_map<Scalar2BChannelKey, std::size_t> chan_index_lookup_;
   absl::flat_hash_map<Scalar2BOpChannel, std::vector<Scalar2BStateChannelKey>>
       state_keys_lookup_;
+  std::vector<Scalar2BBareChannelKey> sp_chans_;
 };
 
 inline void swap(Scalar2BModelSpace& a, Scalar2BModelSpace& b) noexcept {

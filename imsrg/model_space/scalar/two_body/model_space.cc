@@ -9,6 +9,7 @@
 #include "absl/container/flat_hash_map.h"
 
 #include "imsrg/assert.h"
+#include "imsrg/model_space/scalar/two_body/bare_channel_key.h"
 #include "imsrg/model_space/scalar/two_body/channel.h"
 #include "imsrg/model_space/scalar/two_body/channel_key.h"
 #include "imsrg/model_space/scalar/two_body/state_channel_key.h"
@@ -25,6 +26,9 @@ GenerateChannelIndexLookup(const std::vector<imsrg::Scalar2BChannel>& chans);
 static absl::flat_hash_map<imsrg::Scalar2BOpChannel,
                            std::vector<imsrg::Scalar2BStateChannelKey>>
 Generate2BStateKeyLookup(const imsrg::SPModelSpace& sp_ms);
+
+static std::vector<imsrg::Scalar2BBareChannelKey> GenerateBareChannels(
+    const imsrg::SPModelSpace& sp_ms);
 }  // namespace detail
 
 bool Scalar2BModelSpace::IsChannelInModelSpace(
@@ -102,17 +106,20 @@ std::shared_ptr<const Scalar2BModelSpace> Scalar2BModelSpace::FromSPModelSpace(
     }
   }
   return std::make_shared<const Scalar2BModelSpace>(
-      std::move(chans), imsrg::detail::Generate2BStateKeyLookup(sp_ms));
+      std::move(chans), imsrg::detail::Generate2BStateKeyLookup(sp_ms),
+      imsrg::detail::GenerateBareChannels(sp_ms));
 }
 
 Scalar2BModelSpace::Scalar2BModelSpace(
     std::vector<Scalar2BChannel>&& chans,
     absl::flat_hash_map<Scalar2BOpChannel,
                         std::vector<Scalar2BStateChannelKey>>&&
-        state_keys_lookup)
+        state_keys_lookup,
+    std::vector<Scalar2BBareChannelKey>&& sp_chans)
     : chans_(std::move(chans)),
       chan_index_lookup_(imsrg::detail::GenerateChannelIndexLookup(chans_)),
-      state_keys_lookup_(std::move(state_keys_lookup)) {}
+      state_keys_lookup_(std::move(state_keys_lookup)),
+      sp_chans_(std::move(sp_chans)) {}
 
 namespace detail {
 
@@ -160,6 +167,58 @@ Generate2BStateKeyLookup(const imsrg::SPModelSpace& sp_ms) {
   }
   return state_key_lookup;
 }
+
+std::vector<imsrg::Scalar2BBareChannelKey> GenerateBareChannels(
+    const imsrg::SPModelSpace& sp_ms) {
+  std::vector<imsrg::Scalar2BBareChannelKey> bare_chans;
+  const auto& sp_chans = sp_ms.Channels();
+  std::vector<Scalar2BChannel> chans;
+
+  for (const auto& chan_p : sp_chans) {
+    for (const auto& chan_q : sp_chans) {
+      // if (chan_q.Index() > chan_p.Index()) {
+      //   continue;
+      // }
+      // p, q coupling range
+      const auto jj_pq_min =
+          CouplingMinimum<TotalAngMom>(chan_p.JJ(), chan_q.JJ());
+      const auto jj_pq_max =
+          CouplingMaximum<TotalAngMom>(chan_p.JJ(), chan_q.JJ());
+      for (const auto& chan_r : sp_chans) {
+        for (const auto& chan_s : sp_chans) {
+          // if (chan_s.Index() > chan_r.Index()) {
+          //   continue;
+          // }
+          // Parity conservation
+          if (chan_p.P() + chan_q.P() != chan_r.P() + chan_s.P()) {
+            continue;
+          }
+          // Isospin conservation
+          if (chan_p.M_TT() + chan_q.M_TT() != chan_r.M_TT() + chan_s.M_TT()) {
+            continue;
+          }
+
+          // r, s coupling range
+          const auto jj_rs_min =
+              CouplingMinimum<TotalAngMom>(chan_r.JJ(), chan_s.JJ());
+          const auto jj_rs_max =
+              CouplingMaximum<TotalAngMom>(chan_r.JJ(), chan_s.JJ());
+
+          // Overlapping coupling range
+          const auto jj_min = std::max(jj_pq_min, jj_rs_min);
+          const auto jj_max = std::min(jj_pq_max, jj_rs_max);
+          if (jj_max >= jj_min) {
+            bare_chans.push_back(Scalar2BBareChannelKey{
+                chan_p.ChannelKey(), chan_q.ChannelKey(), chan_r.ChannelKey(),
+                chan_s.ChannelKey()});
+          }
+        }
+      }
+    }
+  }
+  return bare_chans;
+}
+
 }  // namespace detail
 
 }  // namespace imsrg
