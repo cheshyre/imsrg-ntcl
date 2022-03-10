@@ -57,6 +57,9 @@ inline bool operator!=(const Scalar2BPandyaChannelKey& a,
 std::vector<Scalar2BPandyaChannelKey> GeneratePandyaChannels(
     Scalar2BBareChannelKey bare_chankey);
 
+Scalar2BBareChannelKey BareChannelKeyPandyaSwap(
+    Scalar2BBareChannelKey sp_chans);
+
 }  // namespace imsrg
 
 #endif  // IMSRG_MODEL_SPACE_SCALAR_TWO_BODY_PANDYA_CHANNEL_KEY_H_

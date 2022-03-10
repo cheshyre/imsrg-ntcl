@@ -35,9 +35,9 @@ TEST_CASE("Test double Panyda is identity (emax=4).") {
     const auto op_me2jp = ME2JPFile::FromTextFile(path_to_op_me2jp, emax, herm);
     imsrg::ReadOperatorFromME2JP(op_me2jp, op);
 
-    for (const auto [chan_p, chan_q, chan_r, chan_s] : ms_2b->BareChannels()) {
-      const auto pandya_chans =
-          imsrg::GeneratePandyaChannels({chan_p, chan_s, chan_r, chan_q});
+    for (const auto sp_chans : ms_2b->BareChannels()) {
+      const auto pandya_chans = imsrg::GeneratePandyaChannels(
+          imsrg::BareChannelKeyPandyaSwap(sp_chans));
       for (const auto pandya_chan : pandya_chans) {
         const auto panyda_tensor =
             op.GeneratePandyaTensorInPandyaChannel(pandya_chan);
@@ -82,9 +82,9 @@ TEST_CASE("Test double Panyda is identity (emax=4).") {
     const auto op_me2jp = ME2JPFile::FromTextFile(path_to_op_me2jp, emax, herm);
     imsrg::ReadOperatorFromME2JP(op_me2jp, op);
 
-    for (const auto [chan_p, chan_q, chan_r, chan_s] : ms_2b->BareChannels()) {
-      const auto pandya_chans =
-          imsrg::GeneratePandyaChannels({chan_p, chan_s, chan_r, chan_q});
+    for (const auto sp_chans : ms_2b->BareChannels()) {
+      const auto pandya_chans = imsrg::GeneratePandyaChannels(
+          imsrg::BareChannelKeyPandyaSwap(sp_chans));
       for (const auto pandya_chan : pandya_chans) {
         const auto panyda_tensor =
             op.GeneratePandyaTensorInPandyaChannel(pandya_chan);

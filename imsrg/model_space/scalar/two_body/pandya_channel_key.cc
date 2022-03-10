@@ -90,6 +90,14 @@ std::vector<Scalar2BPandyaChannelKey> GeneratePandyaChannels(
   return chans;
 }
 
+Scalar2BBareChannelKey BareChannelKeyPandyaSwap(
+    Scalar2BBareChannelKey sp_chans) {
+  using std::swap;
+  Scalar2BBareChannelKey pandya_sp_chans = {sp_chans};
+  swap(pandya_sp_chans.chankey_2, pandya_sp_chans.chankey_4);
+  return pandya_sp_chans;
+}
+
 namespace detail {
 static imsrg::Scalar2BPanydaOpChannel CreateOpChan(
     imsrg::Scalar2BBareChannelKey sp_chankeys, imsrg::TotalAngMom jj_2b) {
