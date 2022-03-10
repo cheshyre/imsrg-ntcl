@@ -16,17 +16,17 @@ static std::uint16_t GeneratePackedRepresentation(imsrg::TotalAngMom jj,
                                                   imsrg::IsospinProj m_ttau);
 }
 
-Scalar2BPanydaOpChannel::Scalar2BPanydaOpChannel(TotalAngMom jj, Parity p,
+Scalar2BPandyaOpChannel::Scalar2BPandyaOpChannel(TotalAngMom jj, Parity p,
                                                  IsospinProj m_ttau)
     : packed_rep_(imsrg::detail::GeneratePackedRepresentation(jj, p, m_ttau)) {}
 
 // Default copy, move, dtor
 
-imsrg::TotalAngMom Scalar2BPanydaOpChannel::JJ() const {
+imsrg::TotalAngMom Scalar2BPandyaOpChannel::JJ() const {
   return imsrg::TotalAngMom((packed_rep_ >> 3) * 2);
 }
 
-imsrg::Parity Scalar2BPanydaOpChannel::P() const {
+imsrg::Parity Scalar2BPandyaOpChannel::P() const {
   const std::int16_t mask = 1;
   if (static_cast<bool>(packed_rep_ & mask)) {
     return imsrg::Parity::Odd();
@@ -34,7 +34,7 @@ imsrg::Parity Scalar2BPanydaOpChannel::P() const {
   return imsrg::Parity::Even();
 }
 
-imsrg::IsospinProj Scalar2BPanydaOpChannel::M_TTau() const {
+imsrg::IsospinProj Scalar2BPandyaOpChannel::M_TTau() const {
   const std::int16_t mask = 3;
   return imsrg::IsospinProj(static_cast<int>((packed_rep_ >> 1) & mask) * 2 -
                             2);

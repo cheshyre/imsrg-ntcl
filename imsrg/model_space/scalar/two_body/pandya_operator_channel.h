@@ -10,9 +10,9 @@
 #include "imsrg/quantum_numbers/total_ang_mom.h"
 
 namespace imsrg {
-class Scalar2BPanydaOpChannel {
+class Scalar2BPandyaOpChannel {
  public:
-  explicit Scalar2BPanydaOpChannel(TotalAngMom jj, Parity p,
+  explicit Scalar2BPandyaOpChannel(TotalAngMom jj, Parity p,
                                    IsospinProj m_ttau);
 
   // Default copy, move, dtor
@@ -22,21 +22,21 @@ class Scalar2BPanydaOpChannel {
   imsrg::IsospinProj M_TTau() const;
 
   template <typename H>
-  friend H AbslHashValue(H h, const Scalar2BPanydaOpChannel& o) {
+  friend H AbslHashValue(H h, const Scalar2BPandyaOpChannel& o) {
     return H::combine(std::move(h), o.packed_rep_);
   }
 
-  friend bool operator==(const Scalar2BPanydaOpChannel& a,
-                         const Scalar2BPanydaOpChannel& b) {
+  friend bool operator==(const Scalar2BPandyaOpChannel& a,
+                         const Scalar2BPandyaOpChannel& b) {
     return a.packed_rep_ == b.packed_rep_;
   }
 
-  friend bool operator!=(const Scalar2BPanydaOpChannel& a,
-                         const Scalar2BPanydaOpChannel& b) {
+  friend bool operator!=(const Scalar2BPandyaOpChannel& a,
+                         const Scalar2BPandyaOpChannel& b) {
     return a.packed_rep_ != b.packed_rep_;
   }
 
-  void swap(Scalar2BPanydaOpChannel& other) noexcept {
+  void swap(Scalar2BPandyaOpChannel& other) noexcept {
     using std::swap;
     swap(packed_rep_, other.packed_rep_);
   }
@@ -45,8 +45,8 @@ class Scalar2BPanydaOpChannel {
   std::uint16_t packed_rep_;
 };
 
-inline void swap(Scalar2BPanydaOpChannel& a,
-                 Scalar2BPanydaOpChannel& b) noexcept {
+inline void swap(Scalar2BPandyaOpChannel& a,
+                 Scalar2BPandyaOpChannel& b) noexcept {
   a.swap(b);
 }
 

@@ -26,7 +26,7 @@ class Scalar2BPandyaChannelKey {
   // Default copy, move, dtor
 
   Scalar2BBareChannelKey SingleParticleChannels() const { return sp_chankeys_; }
-  Scalar2BPanydaOpChannel OperatorChannel() const { return op_chan_; }
+  Scalar2BPandyaOpChannel OperatorChannel() const { return op_chan_; }
 
   std::vector<Scalar2BChannelKey> StandardChannels() const;
 
@@ -38,7 +38,7 @@ class Scalar2BPandyaChannelKey {
 
  private:
   Scalar2BBareChannelKey sp_chankeys_;
-  Scalar2BPanydaOpChannel op_chan_;
+  Scalar2BPandyaOpChannel op_chan_;
 };
 
 inline void swap(Scalar2BPandyaChannelKey& a,

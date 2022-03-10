@@ -9,7 +9,7 @@
 
 #include "tests/catch.hpp"
 
-TEST_CASE("Test double Panyda is identity (emax=4).") {
+TEST_CASE("Test double Pandya is identity (emax=4).") {
   using imsrg::Hermiticity;
   using imsrg::HOEnergy;
   using imsrg::ME2JPFile;
@@ -39,9 +39,9 @@ TEST_CASE("Test double Panyda is identity (emax=4).") {
       const auto pandya_chans = imsrg::GeneratePandyaChannels(
           imsrg::BareChannelKeyPandyaSwap(sp_chans));
       for (const auto pandya_chan : pandya_chans) {
-        const auto panyda_tensor =
+        const auto pandya_tensor =
             op.GeneratePandyaTensorInPandyaChannel(pandya_chan);
-        op_out.AddPandyaTensor(pandya_chan, panyda_tensor);
+        op_out.AddPandyaTensor(pandya_chan, pandya_tensor);
       }
     }
 
@@ -86,9 +86,9 @@ TEST_CASE("Test double Panyda is identity (emax=4).") {
       const auto pandya_chans = imsrg::GeneratePandyaChannels(
           imsrg::BareChannelKeyPandyaSwap(sp_chans));
       for (const auto pandya_chan : pandya_chans) {
-        const auto panyda_tensor =
+        const auto pandya_tensor =
             op.GeneratePandyaTensorInPandyaChannel(pandya_chan);
-        op_out.AddPandyaTensor(pandya_chan, panyda_tensor);
+        op_out.AddPandyaTensor(pandya_chan, pandya_tensor);
       }
     }
 

@@ -13,7 +13,7 @@
 
 #include "tests/catch.hpp"
 
-TEST_CASE("Test generation of Panyda channels (ps1/2 ps1/2 ps1/2 ps1/2).") {
+TEST_CASE("Test generation of Pandya channels (ps1/2 ps1/2 ps1/2 ps1/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;
   using imsrg::Scalar2BBareChannelKey;
@@ -36,7 +36,7 @@ TEST_CASE("Test generation of Panyda channels (ps1/2 ps1/2 ps1/2 ps1/2).") {
   REQUIRE(imsrg::test::AreVectorsEqual(expected, actual));
 }
 
-TEST_CASE("Test generation of Panyda channels (ps1/2 pp1/2 ps1/2 pp1/2).") {
+TEST_CASE("Test generation of Pandya channels (ps1/2 pp1/2 ps1/2 pp1/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;
   using imsrg::Scalar2BBareChannelKey;
@@ -61,7 +61,7 @@ TEST_CASE("Test generation of Panyda channels (ps1/2 pp1/2 ps1/2 pp1/2).") {
   REQUIRE(imsrg::test::AreVectorsEqual(expected, actual));
 }
 
-TEST_CASE("Test generation of Panyda channels (ps1/2 pp1/2 pp1/2 ps1/2).") {
+TEST_CASE("Test generation of Pandya channels (ps1/2 pp1/2 pp1/2 ps1/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;
   using imsrg::Scalar2BBareChannelKey;
@@ -86,7 +86,7 @@ TEST_CASE("Test generation of Panyda channels (ps1/2 pp1/2 pp1/2 ps1/2).") {
   REQUIRE(imsrg::test::AreVectorsEqual(expected, actual));
 }
 
-TEST_CASE("Test generation of Panyda channels (ps1/2 np1/2 ps1/2 np1/2).") {
+TEST_CASE("Test generation of Pandya channels (ps1/2 np1/2 ps1/2 np1/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;
   using imsrg::Scalar2BBareChannelKey;
@@ -111,7 +111,7 @@ TEST_CASE("Test generation of Panyda channels (ps1/2 np1/2 ps1/2 np1/2).") {
   REQUIRE(imsrg::test::AreVectorsEqual(expected, actual));
 }
 
-TEST_CASE("Test generation of Panyda channels (ps1/2 ps1/2 np1/2 np1/2).") {
+TEST_CASE("Test generation of Pandya channels (ps1/2 ps1/2 np1/2 np1/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;
   using imsrg::Scalar2BBareChannelKey;
@@ -136,7 +136,7 @@ TEST_CASE("Test generation of Panyda channels (ps1/2 ps1/2 np1/2 np1/2).") {
   REQUIRE(imsrg::test::AreVectorsEqual(expected, actual));
 }
 
-TEST_CASE("Test generation of Panyda channels (ps1/2 ps1/2 np3/2 np3/2).") {
+TEST_CASE("Test generation of Pandya channels (ps1/2 ps1/2 np3/2 np3/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;
   using imsrg::Scalar2BBareChannelKey;
@@ -161,7 +161,7 @@ TEST_CASE("Test generation of Panyda channels (ps1/2 ps1/2 np3/2 np3/2).") {
   REQUIRE(imsrg::test::AreVectorsEqual(expected, actual));
 }
 
-TEST_CASE("Test generation of Panyda channels (pd3/2 pd3/2 np3/2 np3/2).") {
+TEST_CASE("Test generation of Pandya channels (pd3/2 pd3/2 np3/2 np3/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;
   using imsrg::Scalar2BBareChannelKey;
@@ -188,7 +188,7 @@ TEST_CASE("Test generation of Panyda channels (pd3/2 pd3/2 np3/2 np3/2).") {
   REQUIRE(imsrg::test::AreVectorsEqual(expected, actual));
 }
 
-TEST_CASE("Test generation of Panyda channels (pd5/2 pd5/2 np3/2 np3/2).") {
+TEST_CASE("Test generation of Pandya channels (pd5/2 pd5/2 np3/2 np3/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;
   using imsrg::Scalar2BBareChannelKey;
@@ -215,7 +215,7 @@ TEST_CASE("Test generation of Panyda channels (pd5/2 pd5/2 np3/2 np3/2).") {
   REQUIRE(imsrg::test::AreVectorsEqual(expected, actual));
 }
 
-TEST_CASE("Test generation of Panyda channels (pd5/2 ps1/2 np3/2 np3/2).") {
+TEST_CASE("Test generation of Pandya channels (pd5/2 ps1/2 np3/2 np3/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;
   using imsrg::Scalar2BBareChannelKey;
@@ -243,7 +243,7 @@ TEST_CASE("Test generation of Panyda channels (pd5/2 ps1/2 np3/2 np3/2).") {
 }
 
 TEST_CASE(
-    "Test generation of standard channels from Panyda chan (pd5/2 ps1/2 np3/2 "
+    "Test generation of standard channels from Pandya chan (pd5/2 ps1/2 np3/2 "
     "np3/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;
@@ -287,7 +287,7 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "Test generation of standard channels from Panyda chan (pd5/2 ps1/2 np3/2 "
+    "Test generation of standard channels from Pandya chan (pd5/2 ps1/2 np3/2 "
     "nf5/2).") {
   using imsrg::IsospinProj;
   using imsrg::Parity;

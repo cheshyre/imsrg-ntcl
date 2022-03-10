@@ -15,7 +15,7 @@
 namespace imsrg {
 
 namespace detail {
-static imsrg::Scalar2BPanydaOpChannel CreateOpChan(
+static imsrg::Scalar2BPandyaOpChannel CreateOpChan(
     imsrg::Scalar2BBareChannelKey sp_chankeys, imsrg::TotalAngMom jj_2b);
 }
 
@@ -99,7 +99,7 @@ Scalar2BBareChannelKey BareChannelKeyPandyaSwap(
 }
 
 namespace detail {
-static imsrg::Scalar2BPanydaOpChannel CreateOpChan(
+static imsrg::Scalar2BPandyaOpChannel CreateOpChan(
     imsrg::Scalar2BBareChannelKey sp_chankeys, imsrg::TotalAngMom jj_2b) {
   Expects(sp_chankeys.chankey_1.P() - sp_chankeys.chankey_2.P() ==
           sp_chankeys.chankey_3.P() - sp_chankeys.chankey_4.P());
@@ -114,7 +114,7 @@ static imsrg::Scalar2BPanydaOpChannel CreateOpChan(
   Expects(jj_2b <= imsrg::CouplingMaximum<imsrg::TotalAngMom>(
                        sp_chankeys.chankey_3.JJ(), sp_chankeys.chankey_4.JJ()));
 
-  return imsrg::Scalar2BPanydaOpChannel(
+  return imsrg::Scalar2BPandyaOpChannel(
       jj_2b, sp_chankeys.chankey_1.P() - sp_chankeys.chankey_2.P(),
       sp_chankeys.chankey_1.M_TT() - sp_chankeys.chankey_2.M_TT());
 }
