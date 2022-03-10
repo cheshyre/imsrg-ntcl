@@ -11,6 +11,7 @@
 #include "imsrg/model_space/scalar/two_body/bare_channel_key.h"
 #include "imsrg/model_space/scalar/two_body/channel.h"
 #include "imsrg/model_space/scalar/two_body/channel_key.h"
+#include "imsrg/model_space/scalar/two_body/pandya_operator_channel.h"
 #include "imsrg/model_space/scalar/two_body/state_channel_key.h"
 #include "imsrg/model_space/single_particle/model_space.h"
 
@@ -29,6 +30,9 @@ class Scalar2BModelSpace {
       absl::flat_hash_map<Scalar2BOpChannel,
                           std::vector<Scalar2BStateChannelKey>>&&
           state_keys_lookup,
+      absl::flat_hash_map<Scalar2BPandyaOpChannel,
+                          std::vector<Scalar2BStateChannelKey>>&&
+          pandya_state_keys_lookup,
       std::vector<Scalar2BBareChannelKey>&& sp_chans);
 
   // Not copyable or movable (only pointers)
@@ -59,6 +63,10 @@ class Scalar2BModelSpace {
   const std::vector<Scalar2BStateChannelKey>& GetStateChannelsInOperatorChannel(
       Scalar2BOpChannel op_chan) const;
 
+  const std::vector<Scalar2BStateChannelKey>&
+  GetStateChannelsInPandyaOperatorChannel(
+      Scalar2BPandyaOpChannel op_chan) const;
+
   const std::vector<Scalar2BBareChannelKey>& BareChannels() const {
     return sp_chans_;
   }
@@ -68,6 +76,7 @@ class Scalar2BModelSpace {
     swap(chans_, other.chans_);
     swap(chan_index_lookup_, other.chan_index_lookup_);
     swap(state_keys_lookup_, other.state_keys_lookup_);
+    swap(pandya_state_keys_lookup_, other.pandya_state_keys_lookup_);
     swap(sp_chans_, other.sp_chans_);
   }
 
@@ -77,6 +86,9 @@ class Scalar2BModelSpace {
   absl::flat_hash_map<Scalar2BChannelKey, std::size_t> chan_index_lookup_;
   absl::flat_hash_map<Scalar2BOpChannel, std::vector<Scalar2BStateChannelKey>>
       state_keys_lookup_;
+  absl::flat_hash_map<Scalar2BPandyaOpChannel,
+                      std::vector<Scalar2BStateChannelKey>>
+      pandya_state_keys_lookup_;
   std::vector<Scalar2BBareChannelKey> sp_chans_;
 };
 
