@@ -6,7 +6,10 @@
 #include "ntcl/data/f_array.h"
 
 #include "imsrg/model_space/scalar/two_body/channel_key.h"
+#include "imsrg/openmp_runtime.h"
+#include "imsrg/operator/scalar/two_body/antisymmetry.h"
 #include "imsrg/operator/scalar/two_body/operator.h"
+#include "imsrg/quantum_numbers/coupling/wigner_symbols.h"
 #include "imsrg/quantum_numbers/hermiticity.h"
 
 namespace imsrg {
@@ -48,6 +51,10 @@ void EvaluateScalar222CommutatorDirectTermRefImpl(const Scalar2BOperator& a,
   Expects(a.GetModelSpacePtr() == c.GetModelSpacePtr());
   Expects(b.GetModelSpacePtr() == c.GetModelSpacePtr());
   Expects(c.Herm() == Hermiticity::CommutatorHermiticity(a.Herm(), b.Herm()));
+
+  if (!imsrg::OpenMPRuntime::IsInitialized()) {
+    imsrg::OpenMPRuntime::InitializeRuntime();
+  }
 
   const auto& ms_2b = a.GetModelSpace();
 
@@ -104,13 +111,13 @@ void EvaluateScalar222CommutatorDirectTermRefImpl(const Scalar2BOperator& a,
           0.5 * a.Herm().Factor());
       Scalar222CommutatorDirectTermRefImplCore(
           occsbar_p, occsbar_q, tensor_b_pq12, tensor_a_pq34, tensor_c,
-          -0.5 * a.Herm().Factor());
+          -0.5 * b.Herm().Factor());
       Scalar222CommutatorDirectTermRefImplCore(occs_p, occs_q, tensor_a_pq12,
                                                tensor_b_pq34, tensor_c,
                                                -0.5 * a.Herm().Factor());
       Scalar222CommutatorDirectTermRefImplCore(occs_p, occs_q, tensor_b_pq12,
                                                tensor_a_pq34, tensor_c,
-                                               0.5 * a.Herm().Factor());
+                                               0.5 * b.Herm().Factor());
     }
   }
 }
@@ -118,7 +125,89 @@ void EvaluateScalar222CommutatorDirectTermRefImpl(const Scalar2BOperator& a,
 void EvaluateScalar222CommutatorPandyaTermRefImpl(const Scalar2BOperator& a,
                                                   const Scalar2BOperator& b,
                                                   Scalar2BOperator& c) {
-  // TODO(mheinz): implement
+  Expects(a.GetModelSpacePtr() == c.GetModelSpacePtr());
+  Expects(b.GetModelSpacePtr() == c.GetModelSpacePtr());
+  Expects(c.Herm() == Hermiticity::CommutatorHermiticity(a.Herm(), b.Herm()));
+
+  if (!imsrg::OpenMPRuntime::IsInitialized()) {
+    imsrg::OpenMPRuntime::InitializeRuntime();
+  }
+  imsrg::WignerSymbolEngine::GetInstance();
+
+  const auto& ms_2b = a.GetModelSpace();
+  const auto& sp_ms = ms_2b.SingleParticleModelSpace();
+  const auto& bare_channels = ms_2b.BareChannels();
+
+  const int factor = 4 * b.Herm().Factor();
+
+#pragma omp parallel for schedule(dynamic, 100)
+  for (std::size_t i = 0; i < bare_channels.size(); i += 1) {
+    const auto pandya_bare_chan =
+        imsrg::BareChannelKeyPandyaSwap(bare_channels[i]);
+
+    const auto [chan_1, chan_4, chan_3, chan_2] = pandya_bare_chan;
+    const auto dim_1 = sp_ms.ChannelDim(chan_1);
+    const auto dim_2 = sp_ms.ChannelDim(chan_2);
+    const auto dim_3 = sp_ms.ChannelDim(chan_3);
+    const auto dim_4 = sp_ms.ChannelDim(chan_4);
+
+    const auto pandya_chans = imsrg::GeneratePandyaChannels(pandya_bare_chan);
+    for (const auto pandya_chan : pandya_chans) {
+      ntcl::FArray<double, 4> tensor_c(dim_1, dim_4, dim_3, dim_2);
+
+      const auto op_chan = pandya_chan.OperatorChannel();
+
+      const auto& state_chankeys_pq =
+          ms_2b.GetStateChannelsInPandyaOperatorChannel(op_chan);
+
+      for (const auto [chan_p, chan_q] : state_chankeys_pq) {
+        const auto& occs_p = sp_ms.Occs(chan_p);
+        const auto& occsbar_p = sp_ms.OccsBar(chan_p);
+        const auto& occs_q = sp_ms.Occs(chan_q);
+        const auto& occsbar_q = sp_ms.OccsBar(chan_q);
+
+        const auto dim_p = occs_p.size();
+        const auto dim_q = occs_q.size();
+
+        Scalar2BPandyaChannelKey a_chankey({chan_p, chan_q, chan_3, chan_2},
+                                           op_chan.JJ());
+        Scalar2BPandyaChannelKey b_chankey({chan_p, chan_q, chan_1, chan_4},
+                                           op_chan.JJ());
+
+        const auto tensor_a = a.GeneratePandyaTensorInPandyaChannel(a_chankey);
+        // tensor_c(0, 0, 0, 0) += tensor_a(0, 0, 0, 0);
+        const auto tensor_b = b.GeneratePandyaTensorInPandyaChannel(b_chankey);
+
+        for (std::size_t i1 = 0; i1 < dim_1; i1 += 1) {
+          for (std::size_t i2 = 0; i2 < dim_2; i2 += 1) {
+            for (std::size_t i3 = 0; i3 < dim_3; i3 += 1) {
+              for (std::size_t i4 = 0; i4 < dim_4; i4 += 1) {
+                double sum_val = 0.0;
+                for (std::size_t q = 0; q < dim_q; q += 1) {
+                  for (std::size_t p = 0; p < dim_p; p += 1) {
+                    sum_val += tensor_a(p, q, i3, i2) * tensor_b(p, q, i1, i4) *
+                               occs_p[p] * occsbar_q[q];
+                    sum_val -= tensor_a(p, q, i3, i2) * tensor_b(p, q, i1, i4) *
+                               occsbar_p[p] * occs_q[q];
+                  }
+                }
+                tensor_c(i1, i4, i3, i2) += sum_val;
+              }
+            }
+          }
+        }
+      }
+
+      c.AddPandyaTensor(pandya_chan, tensor_c, factor);
+    }
+  }
+
+  for (std::size_t chan_c_index = 0; chan_c_index < ms_2b.NumberOfChannels();
+       chan_c_index += 1) {
+    const auto chankey_c = ms_2b.ChannelAtIndex(chan_c_index).ChannelKey();
+
+    imsrg::AntisymmetrizeOperatorInChannel(c, chankey_c);
+  }
 }
 
 void Scalar222CommutatorDirectTermRefImplCore(
