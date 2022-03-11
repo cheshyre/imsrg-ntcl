@@ -30,6 +30,8 @@ class SPModelSpace {
   }
 
   std::size_t ChannelDim(SPChannelKey chankey) const;
+  const std::vector<double>& Occs(SPChannelKey chankey) const;
+  const std::vector<double>& OccsBar(SPChannelKey chankey) const;
 
   void swap(SPModelSpace& other) noexcept {
     using std::swap;
@@ -38,6 +40,8 @@ class SPModelSpace {
     swap(chankeys_, other.chankeys_);
     swap(defined_, other.defined_);
     swap(dims_, other.dims_);
+    swap(occs_, other.occs_);
+    swap(occs_bar_, other.occs_bar_);
   }
 
  private:
@@ -46,6 +50,8 @@ class SPModelSpace {
   std::vector<SPChannelKey> chankeys_;
   std::vector<bool> defined_;
   std::vector<std::size_t> dims_;
+  std::vector<std::vector<double>> occs_;
+  std::vector<std::vector<double>> occs_bar_;
 };
 
 inline void swap(SPModelSpace& a, SPModelSpace& b) noexcept { a.swap(b); }
