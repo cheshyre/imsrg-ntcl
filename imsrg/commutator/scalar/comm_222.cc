@@ -175,13 +175,12 @@ void EvaluateScalar222CommutatorPandyaTermRefImpl(const Scalar2BOperator& a,
                                            op_chan.JJ());
 
         const auto tensor_a = a.GeneratePandyaTensorInPandyaChannel(a_chankey);
-        // tensor_c(0, 0, 0, 0) += tensor_a(0, 0, 0, 0);
         const auto tensor_b = b.GeneratePandyaTensorInPandyaChannel(b_chankey);
 
-        for (std::size_t i1 = 0; i1 < dim_1; i1 += 1) {
-          for (std::size_t i2 = 0; i2 < dim_2; i2 += 1) {
-            for (std::size_t i3 = 0; i3 < dim_3; i3 += 1) {
-              for (std::size_t i4 = 0; i4 < dim_4; i4 += 1) {
+        for (std::size_t i2 = 0; i2 < dim_2; i2 += 1) {
+          for (std::size_t i3 = 0; i3 < dim_3; i3 += 1) {
+            for (std::size_t i4 = 0; i4 < dim_4; i4 += 1) {
+              for (std::size_t i1 = 0; i1 < dim_1; i1 += 1) {
                 double sum_val = 0.0;
                 for (std::size_t q = 0; q < dim_q; q += 1) {
                   for (std::size_t p = 0; p < dim_p; p += 1) {
