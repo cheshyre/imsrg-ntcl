@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "ntcl/algorithms/easy_tensor_contraction_interface_cbind.h"
 #include "ntcl/data/f_array.h"
 
 #include "imsrg/model_space/scalar/two_body/channel_key.h"
@@ -69,6 +70,8 @@ void EvaluateScalar222CommutatorDirectTermNTCLImpl(const Scalar2BOperator& a,
     imsrg::OpenMPRuntime::InitializeRuntime();
   }
 
+  // const auto& ntcl_engine = ntcl::AlgorithmsEngine::GetInstance();
+
   const auto& ms_2b = a.GetModelSpace();
 
   for (std::size_t chan_c_index = 0; chan_c_index < ms_2b.NumberOfChannels();
@@ -130,6 +133,12 @@ void EvaluateScalar222CommutatorDirectTermNTCLImpl(const Scalar2BOperator& a,
       Scalar222CommutatorDirectTermRefImplCorePreweighted(
           tensor_a_pq12_nbar_nbar, tensor_b_pq34, tensor_c,
           0.5 * a.Herm().Factor());
+      // For some reason the following NTCL call does not work
+      // I need to debug this in a simpler setting
+      // For now we rely on a loop based implementation
+      // ntcl_engine.Contract(tensor_c, tensor_a_pq12_nbar_nbar, tensor_b_pq34,
+      //                      "C(i,j,k,l)=A(p,q,i,j)*B(p,q,k,l)",
+      //                      0.5 * a.Herm().Factor(), 1.0);
       Scalar222CommutatorDirectTermRefImplCorePreweighted(
           tensor_b_pq12_nbar_nbar, tensor_a_pq34, tensor_c,
           -0.5 * b.Herm().Factor());
