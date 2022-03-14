@@ -9,7 +9,7 @@
 
 #include "imsrg/model_space/scalar/one_body/channel_key.h"
 #include "imsrg/operator/scalar/one_body/operator.h"
-#include "imsrg/operator/scalar/two_body/operator.h"
+#include "imsrg/operator/scalar/two_body/antisymmetry.h"
 
 namespace imsrg {
 
@@ -119,24 +119,31 @@ void EvaluateScalar122CommutatorWithFactor(const Scalar1BOperator& a,
           for (std::size_t i4 = 0; i4 < dim_4; i4 += 1) {
             for (std::size_t p = 0; p < dim_1; p += 1) {
               tensor_c(i1, i2, i3, i4) +=
-                  factor * tensor_a_1(i1, p) * tensor_b(p, i2, i3, i4);
+                  2 * factor * tensor_a_1(i1, p) * tensor_b(p, i2, i3, i4);
             }
-            for (std::size_t p = 0; p < dim_2; p += 1) {
-              tensor_c(i1, i2, i3, i4) +=
-                  factor * tensor_a_2(i2, p) * tensor_b(i1, p, i3, i4);
-            }
+            // for (std::size_t p = 0; p < dim_2; p += 1) {
+            //   tensor_c(i1, i2, i3, i4) +=
+            //       factor * tensor_a_2(i2, p) * tensor_b(i1, p, i3, i4);
+            // }
             for (std::size_t p = 0; p < dim_3; p += 1) {
               tensor_c(i1, i2, i3, i4) -=
-                  factor * tensor_a_3(p, i3) * tensor_b(i1, i2, p, i4);
+                  2 * factor * tensor_a_3(p, i3) * tensor_b(i1, i2, p, i4);
             }
-            for (std::size_t p = 0; p < dim_4; p += 1) {
-              tensor_c(i1, i2, i3, i4) -=
-                  factor * tensor_a_4(p, i4) * tensor_b(i1, i2, i3, p);
-            }
+            // for (std::size_t p = 0; p < dim_4; p += 1) {
+            //   tensor_c(i1, i2, i3, i4) -=
+            //       factor * tensor_a_4(p, i4) * tensor_b(i1, i2, i3, p);
+            // }
           }
         }
       }
     }
+  }
+
+  for (std::size_t chan_c_index = 0; chan_c_index < ms_2b.NumberOfChannels();
+       chan_c_index += 1) {
+    const auto chankey_c = ms_2b.ChannelAtIndex(chan_c_index).ChannelKey();
+
+    imsrg::AntisymmetrizeOperatorInChannel(c, chankey_c);
   }
 }
 
