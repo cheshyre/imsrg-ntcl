@@ -1,0 +1,117 @@
+// Copyright 2022 Matthias Heinz
+#include "imsrg/model_space/scalar/two_body/operator_channel.h"
+
+#include <type_traits>
+#include <utility>
+
+#include "absl/hash/hash_testing.h"
+
+#include "imsrg/quantum_numbers/isospin_projection.h"
+#include "imsrg/quantum_numbers/parity.h"
+#include "imsrg/quantum_numbers/total_ang_mom.h"
+
+#include "tests/catch.hpp"
+
+TEST_CASE("Test proper abseil hash.") {
+  using imsrg::IsospinProj;
+  using imsrg::Parity;
+  using imsrg::Scalar2BOpChannel;
+  using imsrg::TotalAngMom;
+  REQUIRE(absl::VerifyTypeImplementsAbslHashCorrectly(
+      {Scalar2BOpChannel(TotalAngMom(0), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(2), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(4), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(6), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(8), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(10), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(12), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(14), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(16), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(18), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(20), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(22), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(24), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(26), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(28), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(30), Parity::Even(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(0), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(2), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(4), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(6), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(8), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(10), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(12), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(14), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(16), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(18), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(20), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(22), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(24), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(26), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(28), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(30), Parity::Even(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(0), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(2), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(4), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(6), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(8), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(10), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(12), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(14), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(16), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(18), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(20), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(22), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(24), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(26), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(28), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(30), Parity::Even(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(0), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(2), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(4), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(6), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(8), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(10), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(12), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(14), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(16), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(18), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(20), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(22), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(24), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(26), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(28), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(30), Parity::Odd(), IsospinProj(-2)),
+       Scalar2BOpChannel(TotalAngMom(0), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(2), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(4), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(6), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(8), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(10), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(12), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(14), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(16), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(18), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(20), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(22), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(24), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(26), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(28), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(30), Parity::Odd(), IsospinProj(0)),
+       Scalar2BOpChannel(TotalAngMom(0), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(2), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(4), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(6), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(8), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(10), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(12), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(14), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(16), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(18), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(20), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(22), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(24), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(26), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(28), Parity::Odd(), IsospinProj(2)),
+       Scalar2BOpChannel(TotalAngMom(30), Parity::Odd(), IsospinProj(2))}));
+}
